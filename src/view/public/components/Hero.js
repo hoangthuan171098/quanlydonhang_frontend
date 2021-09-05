@@ -10,7 +10,7 @@ class Hero extends Component {
                 <div className="carousel-container">
                   <div className="carousel-content animate__animated animate__fadeInUp">
                     <h2>Chào mừng tới <span>TTD</span></h2>
-                    <p>Công ty Cổ Phần TTD là một trong những doanh nghiệp dệt may cung cấp sản phẩm và
+                    <p style={{color:'white'}}>Công ty Cổ Phần TTD là một trong những doanh nghiệp dệt may cung cấp sản phẩm và
                        dịch vụ thời trang hàng đầu Việt Nam, chuyên sản xuất vải dệt Jacquard, vải in bông trên công nghệ in digital
                       , vải đơn sắc, vải đa sắc … từ sợi polyester, spandex, visco, …. với công nghệ tiên tiến được chuyển giao từ Nhật Bản và Châu Âu.</p>
                     <div className="text-center"><a href='/' className="btn-get-started">Thêm</a></div>

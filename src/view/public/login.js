@@ -18,7 +18,7 @@ class Login extends Component {
     } 
     async componentDidMount(){
         if(Cookie.get('username')){
-            this.state.isLogined = true
+            this.setState({isLogined:true})
         }
     }
 

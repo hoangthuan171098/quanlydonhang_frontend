@@ -6,13 +6,15 @@
 import React from 'react'
 
 import { render } from 'react-dom'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
+import thunkMiddleware from 'redux-thunk';
 
 import App from './App.js'
-import app from './reducers/reducers'
+import  app from './reducers/index'
 
-let store = createStore(app)
+const store =  createStore(app,applyMiddleware(thunkMiddleware));
+
 let rootElement = document.getElementById('root')
 
 render(

@@ -92,7 +92,7 @@ class AccountInfo extends Component {
 		if (!this.state.loading && Cookie.get('token')) {
 			return (
 				<div className="container bootstrap snippet">
-					<h2>THÔNG TIN TÀI KHOẢN :</h2>
+                	<h5><strong>THÔNG TIN TÀI KHOẢN :</strong><br/></h5>
 	  
 					<div className="container col-lg-10">
 	  
@@ -149,13 +149,13 @@ class AccountInfo extends Component {
 									<this.detailInfo />
 			
 									<tr>
-										<td className="last-row">  
+										<td>
 											<button className="btn btn-primary" onClick={clickUpdate} style={{marginRight:30+"px"}}>Thay đổi</button>
 										</td>
 										<td>
 											<button className="btn btn-primary" onClick={clickBack}>Trở về</button>
 										</td>
-									</tr>                                
+									</tr>         
 								</tbody>
 							</table>
 						</div>

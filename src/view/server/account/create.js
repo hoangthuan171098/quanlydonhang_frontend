@@ -12,7 +12,7 @@ class AccountCreate extends Component {
 			user: {
 				username: "",
 				email: "",
-				type: "none",
+				type: {name:'none'},
 				password: "",
 				confirmPassword: "",
 			}
@@ -27,7 +27,13 @@ class AccountCreate extends Component {
 					'Authorization':'bearer '+ Cookie.get('token'),
 				},
 			})
-			if (!response.ok) {
+			let response2 = await fetch(process.env.REACT_APP_BACKEND_URL + "/product-categories",{
+				headers: {
+					'Authorization':'bearer '+ Cookie.get('token'),
+				},
+			})
+			if (!response.ok || !response2.ok) {
+				alert('Không thể kết nối với database!')
 				return
 			}
 			this.setState({ loading: false, authenticate: true })
@@ -47,7 +53,7 @@ class AccountCreate extends Component {
 				.post(process.env.REACT_APP_BACKEND_URL + '/users/', {
 					username: this.state.user.username,
 					email: this.state.user.email,
-					type: this.state.user.type,
+					role: this.state.user.type.id,
 					password: this.state.user.password,
 					confirm: true
 				},{
@@ -72,16 +78,20 @@ class AccountCreate extends Component {
 		}
 		
 		const handleChangeType = async (typeName) =>{
-			let response = await fetch(process.env.REACT_APP_BACKEND_URL + '/users-permissions/roles?name=' + typeName ,{
+			let response = await fetch(process.env.REACT_APP_BACKEND_URL + '/users-permissions/roles' ,{
 				headers: {
 					'Authorization':'bearer '+ Cookie.get('token'),
 				},
 			})
 			if (!response.ok) {
-			return
+				return
 			}
 			let data = await response.json()
-			this.setState({ user: {...this.state.user,type: data[0]} })
+			let roleList = data.roles
+			let role = roleList.find((index) => typeName===index.name)
+			console.log(role)
+			this.setState({ user: {...this.state.user,type: role} })
+			console.log(data)
 		}
 		
 		
@@ -133,10 +143,11 @@ class AccountCreate extends Component {
 								<div className="col-lg-6">
 									<div className="form-group">
 										<label htmlFor="form_type">Loại :</label>
-										<select id="form_type" className="form-control" value={this.state.user.type}
+										<select id="form_type" className="form-control" value={this.state.user.type.name}
 										onChange={(e)=>handleChangeType(e.target.value)}>
 											<option value="none">Chọn loại</option>
-											<option value="Authenticated"> Customer</option>
+											<option value="Customer"> Customer</option>
+											<option value="Manager"> Manager</option>
 											<option value="Admin"> Admin </option>
 										</select>
 									</div>

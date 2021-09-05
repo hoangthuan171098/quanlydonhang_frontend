@@ -5,6 +5,7 @@
     }
 
     label{
+        margin-bottom: 10px;
         font-size: 15px;
         font-weight: bold;
         color: rgb(0, 110, 255);
@@ -14,8 +15,23 @@
         color:black;
     }
 
+    input{
+        border-radius: 0% !important;
+        box-sizing: border-box;
+    }
+
+    button{
+        border-radius: 0%;
+    }
+
+    form{
+        padding: 22px 10px 10px 10px;
+        background-color: white;
+        margin-top: 20px;
+    }
+
     .form-group{
-        margin-bottom: 20px;
+        margin-bottom: 27px;
     }
     
     min-height:550px;

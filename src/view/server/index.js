@@ -1,12 +1,22 @@
 import React, {Component} from 'react'
-import {Route,Switch } from 'react-router-dom'
+import {Route, Switch, Redirect } from 'react-router-dom'
+import Cookie from 'js-cookie'
+
 import AdminAccount from './account'
+import AdminProduct from './product'
+
 import SideBar from './components/SideBar'
-// import Header from './components/Header'
+
 import './index.scss'
 
-export default class Server extends Component{
+class Server extends Component{
     render(){
+        if(Cookie.get('role')!=='Admin'){
+            alert('You need to login Admin account!')
+            return(
+                <Redirect to='/'/>
+            )
+        }
         return(
             <div className='Sever'>
                 <SideBar/>
@@ -15,12 +25,16 @@ export default class Server extends Component{
                         <Route exact path='/admin' component={DashBoard} />
                         <Route path='/admin/accounts' component={AdminAccount} />
                         <Route path='/admin/account' component={AdminAccount} />
+                        <Route path='/admin/products' component={AdminProduct} />
+                        <Route path='/admin/product' component={AdminProduct} />
                     </Switch>
                 </div>
             </div>
         )
     }
 }
+
+export default Server
 
 class DashBoard extends Component{
     render(){

@@ -3,11 +3,18 @@ import {BrowserRouter as Router,Switch,Route} from "react-router-dom"
 
 import NavBar from './components/Navbar'
 import Topbar from './components/Topbar'
-import {Home,Login,Register,Contact,About,Products} from './view/public/export'
+import {Home,Login,Register,Contact,About} from './view/public/export'
+import ProductList from './view/public/Shops/ProductList'
+import ProductDetail from './view/public/ProductDetails/ProductDetail'
+import Shopcart from './view/client/Shopcart'
+import Checkout from './view/client/Checkout'
+
 import Server from './view/server/'
 import {Services,News,Team} from './view/public/components/export'
 
+
 import './App.css'
+
 
 class App extends Component {
 	render() {
@@ -15,6 +22,7 @@ class App extends Component {
 			<div className='App'>
 				<Router>
 					
+
 					<Topbar />
 					<NavBar />
 					
@@ -25,7 +33,10 @@ class App extends Component {
 						<Route path='/services' component={Services} />
 						<Route path='/team' component={Team} />
 						<Route path='/news' component={News} />
-						<Route path='/products' component={Products} />
+						<Route path='/products' component={ProductList} />
+						<Route path='/product/:productId' component={ProductDetail} />						
+						<Route path='/shopping-cart' component={Shopcart} />
+						<Route path='/checkout' component={Checkout} />
 						<Route path='/admin' component={Server} />
 						<Route path='/login' component={Login} />
 						<Route path='/register' component={Register} />

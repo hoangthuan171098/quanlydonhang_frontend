@@ -2,7 +2,15 @@ import { combineReducers } from 'redux'
 import Cookie from 'js-cookie'
 import { LOGIN,LOGOUT } from '../actions/auth'
 
-function auth(state = {}, action){
+const defaultState={
+   username : Cookie.get('username') ? Cookie.get('username') : '',
+   role: Cookie.get('role') ? Cookie.get('role') : '',
+   id: Cookie.get('id') ? Cookie.get('id') : '',
+   token: Cookie.get('token') ? Cookie.get('token') : '',
+   authenticate: Cookie.get('username') ? true : false
+}
+
+function auth(state = defaultState, action){
    switch (action.type) {
          case LOGIN:
             Cookie.set("id",action.payload.user.id)

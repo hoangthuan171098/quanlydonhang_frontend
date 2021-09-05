@@ -16,27 +16,23 @@ class NavBar extends Component {
         if(Cookie.get('username')){
           if(Cookie.get('role') === 'Admin'){
             return(
-              <>
-                <li className="drop-down"><a href="profile">{Cookie.get('username')}</a>
-                  <ul>
+                <li className="drop-down"><Link to='/profile'>{Cookie.get('username')}</Link>
+                  <ul className='dropdown-ul'>
                     <li><Link to='/admin'> ADMIN </Link></li>
                     <li><Link to='/profile'> PROFILE </Link></li>
                     <li><button onClick={(e)=>this.logoutHandle(e)} className="more-button"> LOG OUT</button></li>
                   </ul>
                 </li>
-              </>
       
             )
           }
           return(
-            <>
-              <li className="drop-down"><span>{Cookie.get('username')}</span>
-                <ul>
+              <li className="drop-down"><Link to='/profile'>{Cookie.get('username')}</Link>
+                <ul className='dropdown-ul'>
                   <li><Link to='/profile'> PROFILE </Link></li>
                   <li><button onClick={(e)=>this.logoutHandle(e)} className="more-button"> LOG OUT</button></li>
                 </ul>
               </li>
-            </>
           );
         }
         return(
@@ -51,7 +47,7 @@ class NavBar extends Component {
         return (
             <div className="Navbar d-flex">
                 <div className="logo mr-auto">
-                    <h1 className="text-light"><Link to="/">TTD</Link></h1>
+                    <h2><Link to="/">TTD</Link></h2>
                 </div>
                 <nav className="nav-menu d-none d-lg-block">
                 <ul>

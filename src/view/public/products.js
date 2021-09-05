@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Cookie from "js-cookie"
 import axios from "axios"
-// import '../styles/components/style.scss';
 import './style/products.scss'
 
 
@@ -159,7 +158,12 @@ class ProductList extends Component {
     }
 
     const clickAddToCart = (product) =>{
-      this.setState({buyingProduct : product});
+      if(Cookie.get('username')){
+        this.setState({buyingProduct : product});
+      }
+      else{
+        alert('Xin hãy đăng nhập để đặt hàng')
+      }
     }
 
     const handleSubmitBuyProduct = (e) =>{
@@ -201,9 +205,11 @@ class ProductList extends Component {
       itemsList.map((item,index)=>{
         if(item === this.state.filter.page ){  
           returnList.push(<button className="active" onClick={()=>this.setState({filter:{...this.state.filter,page:item}})} key={index}>{item}</button>);
+          return 1;
         }
         else{
           returnList.push(<button onClick={()=>this.setState({filter:{...this.state.filter,page:item}})} key={index}>{item}</button>);
+          return 0;
         }
       })
       return returnList;
@@ -305,7 +311,7 @@ class ProductList extends Component {
       return (
       <div className="productList">
 
-        {/* <div className="cart" style={{"display":loginDisplay}}>
+        <div className="cart" style={{"display":loginDisplay}}>
           <div className="cart-show" >
             <button className="btn btn-warning" onClick={clickCartShow}>SHOW CART ({this.state.cart.items.length})</button>
           </div>
@@ -333,7 +339,7 @@ class ProductList extends Component {
               <button className="btn btn-primary" onClick={clickCartCancle}>Cancle</button>
             </div>
           </div>
-        </div> */}
+        </div>
 
       <div className="container_fullwidth">
         <div className="container">
@@ -413,7 +419,7 @@ class ProductList extends Component {
               </div>
             </div>
             <div className="col-md-9">
-              <div className="banner">
+              {/* <div className="banner">
                 <div className="bannerslide" id="bannerslide">
                   <ul className="slides">
                     <li>
@@ -428,7 +434,7 @@ class ProductList extends Component {
                     </li>
                   </ul>
                 </div>
-              </div>
+              </div> */}
               <div className="clearfix">
               </div>
               <div className="products-list">
