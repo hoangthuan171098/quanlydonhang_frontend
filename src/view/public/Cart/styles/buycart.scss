@@ -1,0 +1,176 @@
+.colors {
+    margin-top: 5px
+}
+
+.colors ul {
+    list-style: none;
+    display: flex;
+    padding-left: 0px
+}
+
+.colors ul li {
+    height: 20px;
+    width: 20px;
+    display: flex;
+    border-radius: 50%;
+    margin-right: 10px;
+    cursor: pointer
+}
+
+.colors ul li:nth-child(1) {
+    background-color: #6c704d
+}
+
+.colors ul li:nth-child(2) {
+    background-color: #96918b
+}
+
+.colors ul li:nth-child(3) {
+    background-color: #68778e
+}
+
+.colors ul li:nth-child(4) {
+    background-color: #263f55
+}
+
+.colors ul li:nth-child(5) {
+    background-color: black
+}
+.colors ul li:nth-child(6) {
+    background-color:red;
+}
+.colors ul li:nth-child(7) {
+    background-color:blue
+}
+.colors ul li:nth-child(8) {
+    background-color: yellow
+}
+.colors ul li:nth-child(9) {
+    background-color:pink
+}
+.colors ul li:nth-child(10) {
+    background-color: green
+}
+.btn-primary {
+    background-color: green;
+    color: #fff
+}
+
+.close {
+    position: relative;
+    top: 50px;
+    left: 15px;
+    z-index: 1;
+    font-size: 30px;
+    line-height: 1;
+    color: black
+}
+
+.modal.fade.show {
+    
+    padding-left: 15px;
+    padding-right: 15px
+}
+
+.modal-content {
+    border: none;
+    background: transparent;
+    padding: 0 19px
+}
+
+.modal-header {
+    border: none
+}
+
+.modal-body {
+    border: none;
+    background-color: white;
+    padding-bottom: 5px
+}
+
+.close.focus,
+.close:focus {
+    outline: 0;
+    box-shadow: none !important
+}
+
+h1 {
+    font-weight: bold;
+    padding-top: 120px
+}
+
+small.para {
+    font-weight: bold;
+    color: #6c757d;
+    font-size: 15px
+}
+
+@media (min-width:599px) {
+    .modal-dialog {
+        max-width: 45rem
+    }
+
+    .details {
+        padding: 60px 20px 20px 50px
+    }
+
+    div.jkl:after {
+        content: '.';
+        font-size: 0;
+        display: block;
+        height: 2px;
+        width: 70%;
+        background: #6c757d
+    }
+
+    .btn-dark {
+        width: 70%;
+        height: 45px;
+        border: 1px solid black;
+        background: #151718;
+        color: #dae0e5
+    }
+}
+
+div.form-control:focus {
+    border-color: #fff !important;
+    outline: 0;
+    top: 0;
+    left: 0
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, .25) !important
+}
+
+.form-control.inp input[type=email]:focus {
+    border: none
+}
+
+.rone {
+    margin-top: 30px
+}
+
+.form-control.inp {
+    border: none;
+    padding-left: 0;
+    font-weight: bold;
+    font-color: black
+}
+
+div.jkl:after {
+    content: '.';
+    font-size: 0;
+    display: block;
+    height: 2px;
+    width: 70%;
+    background: #6c757d
+}
+
+.btn-dark {
+    width: 70%;
+    height: 45px;
+    border: 1px solid black;
+    background: #151718;
+    color: #dae0e5
+}

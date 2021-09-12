@@ -1,0 +1,180 @@
+.AdminOrder{
+
+    .OrderCreate{
+        .img-preview{
+            display: block;
+            padding: 10px 5px;
+            width: 130px;
+        }
+
+        button{
+            min-height: 35px;
+        }
+
+        .short-input{
+            width: 100%;
+        }
+        
+        label{
+            font-weight: 900;
+            margin-right: 10px;
+            margin-bottom: 0px;
+            color: #212529;
+        }
+    }
+
+    
+    .OrderUpdate{
+        .img-preview{
+            display: block;
+            padding: 10px 5px;
+            width: 130px;
+        }
+
+        button{
+            min-height: 35px;
+        }
+
+        .short-input{
+            width: 100%;
+        }
+        
+        label{
+            font-weight: 900;
+            margin-right: 10px;
+            margin-bottom: 0px;
+            color: #212529;
+        }
+
+    }
+
+    .radio-inputs{ 
+        input[type="radio"] {
+            opacity: 0;
+            position: fixed;
+            width: 0;
+        }
+        label {
+            display: inline-block;
+            background-color: #ddd;
+            padding: 10px 20px;
+            font-weight: normal;
+            font-family: sans-serif, Arial;
+            font-size: 13px;
+        }
+        input[type="radio"]:checked + label {
+            background-color:#bfb;
+            border: 3px solid #444;
+        }
+    }
+    
+    .order-list{
+        label{
+            font-weight: normal;
+            margin-right: 10px;
+            margin-bottom: 0px;
+            color: #212529;
+        }
+    }
+
+    select,input{
+        border-radius: 0% !important;
+        box-sizing: border-box;
+        color: black;
+    }
+
+    input[type='file']{
+        border: none;
+    }
+
+    input[type='submit']{
+        color: white;
+    }
+
+    button{
+        border-radius: 0%;
+    }
+
+    form{
+        padding: 22px 10px 10px 10px;
+        background-color: white;
+        margin-top: 20px;
+    }
+
+    select{
+        margin: 0;
+    }
+
+    label{
+        margin-bottom: 10px;
+        font-size: 15px;
+        font-weight: bold;
+        color: rgb(0, 110, 255);
+    }
+
+    .form-check-lable{
+        color:black;
+    }
+
+    .form-group{
+        padding-right: 100px
+    }
+
+    min-height:550px;
+    padding: 10px;
+
+    .DataList{
+        .DataList-title{
+            margin-bottom: 20px;
+        }
+
+        .DataList-container{
+            margin: auto;
+            .DataList-filter{
+                form{
+                    margin: 20px;
+                    input{
+                        margin-right: 60px;
+                    }
+                }
+            }
+            table{
+                background-color: white;
+                box-shadow: 0px 0px 4px 4px rgb(227,233,243);
+                thead{
+                    background-color: #29b7d3;
+                    color: white;
+                }
+                tbody{
+                    tr:hover{
+                        background-color:rgb(247, 248, 248);
+                    }
+                }
+            }
+        }
+    }
+
+    .table-user-information{
+        background-color: white;
+        box-shadow: 0px 0px 4px 4px whitesmoke;
+        margin-top: 20px;
+        tr{
+            border: none;
+            td{
+                border: none;
+            }
+
+            td:first-child{
+                width: 20%;
+            }
+            .last-row{
+                width: 100% !important;
+                display: flex;
+            }
+        }
+        tr:last-child{
+            padding-bottom: 20px;
+        }
+    }
+
+}
