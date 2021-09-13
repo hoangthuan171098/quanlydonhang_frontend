@@ -5,7 +5,6 @@ class Home extends Component{
     render(){
         return (
             <div>
-                <button className='btn btn-success'></button>
                 <section id="hero">
                     <Hero/>
                 </section>

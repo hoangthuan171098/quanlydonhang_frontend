@@ -11,6 +11,10 @@ class OrderList extends Component {
     this.state = {
       loading: true,
       authenticate: true,
+      filter:{
+        status: 'all',
+        buyer: ''
+      },
       orders: []
     }
   }
@@ -74,8 +78,17 @@ class OrderList extends Component {
             <div className="DataList-filter" onSubmit={this.filterSubmmitHandle}>
               <form className="form-inline w-100">
                 <div className='input-prepend'>
+                  <span className='add-on'>Buyer</span>
+                  <input
+                    type="text"
+                    onChange={e=>this.setState({filter:{...this.state.filter,buyer:e.target.value}})}
+                  />
+                </div>
+                <div className='input-prepend'>
                   <span className='add-on'>status</span>
-                  <select >
+                  <select value={this.state.filter.status}
+                    onChange={e=>this.setState({filter:{...this.state.filter,status:e.target.value}})}>
+                    <option value='all'>All</option>
                     <option value='checking'>Checking</option>
                     <option value='confirmed'>Confirmed</option>
                     <option value='delivering'>Delivering</option>
@@ -96,7 +109,10 @@ class OrderList extends Component {
               </tr>
               </thead>
               <tbody>
-                {this.state.orders.map((order, index) => {
+                {this.state.orders.filter(order=>
+                  order.buyer.username.includes(this.state.filter.buyer) &&
+                  (this.state.filter.status==='all' ? true :  order.status===this.state.filter.status)
+                ).reverse().map((order, index) => {
                   return (
                     <tr key={index}>
                       <td onClick={()=>clickInfo(order.id)}>{order.id}</td>
