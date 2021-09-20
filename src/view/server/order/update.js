@@ -12,7 +12,7 @@ class OrderUpdate extends Component {
       authenticate: true,
       products: [],
       users: [],
-      buyingItem:{color:'',quantity:0},
+      buyingItem:{color:'RED',quantity:'',quantity_m:''},
       order: {
         productList: []
       },
@@ -121,12 +121,12 @@ class OrderUpdate extends Component {
     event.preventDefault()
     let newList = [...this.state.order.productList,item]
     this.setState({order:{...this.state.order,productList:newList}})
-    this.setState({buyingItem:{...this.state.buyingItem,color:'',quantity: 0}})
+    this.setState({buyingItem:{...this.state.buyingItem,color:'RED',quantity:'',quantity_m:''}})
   }
 
   closeProductClick = (event) =>{
     event.preventDefault()
-    this.setState({buyingItem:{color:'',quantity:0}})
+    this.setState({buyingItem:{color:'RED',quantity:'',quantity:''}})
   }
 
   chooseProductClick = (product) =>{
@@ -160,7 +160,8 @@ class OrderUpdate extends Component {
           <div className='col-10 m-auto'>
             <div className='row d-flex align-items-center'  style={{marginTop: 15+ 'px'}}>
               <div className='col-2'>
-                <img src={process.env.REACT_APP_BACKEND_URL + this.state.buyingItem.product.image.url}></img>
+                <img src={process.env.REACT_APP_BACKEND_URL + this.state.buyingItem.product.image.url}
+                  description image></img>
               </div>
               <div className='col-2'>
                 <span>{this.state.buyingItem.product.name}</span><br/>
@@ -181,10 +182,17 @@ class OrderUpdate extends Component {
                     </div>
                   </div>
 
-                  <div className='col-lg-4 d-flex align-items-center'>
-                    <label className='float-left'>Quantity:</label>
-                    <input onChange={e=>this.setState({buyingItem:{...this.state.buyingItem,quantity:e.target.value}})}
+                  <div className='col-lg-3 d-flex align-items-center'>
+                    <label className='float-left'>roll:</label>
+                    <input onChange={e=>this.setState({buyingItem:{...this.state.buyingItem,quantity:Number(e.target.value)}})}
                       type='number' value={this.state.buyingItem.quantity} className='float-left short-input'
+                    />
+                  </div>
+
+                  <div className='col-lg-3 d-flex align-items-center'>
+                    <label className='float-left'>m:</label>
+                    <input onChange={e=>this.setState({buyingItem:{...this.state.buyingItem,quantity_m:Number(e.target.value)}})}
+                      type='number' value={this.state.buyingItem.quantity_m} className='float-left short-input'
                     />
                   </div>
 
@@ -297,31 +305,18 @@ class OrderUpdate extends Component {
                   <div className='col-lg-12'>
                     <div className="form-group">
                       <label> Status: </label>
-                      <div className='radio-inputs m-auto'>
-                        <input type="radio" id="checking" name='status' value='checking'
-                          checked={this.state.order.status === 'checking'}
-                          onChange={e=>this.setState({order:{...this.state.order,status:e.target.value}})}
-                        />
-                        <label for="checking" className='bg-checking'>Checking</label>
-
-                        <input type="radio" id="confirmed" name='status' value='confirmed'
-                          checked={this.state.order.status === 'confirmed'}
-                          onChange={e=>this.setState({order:{...this.state.order,status:e.target.value}})}
-                        />
-                        <label for="confirmed" className='bg-confirmed'>Confirmed</label>
-
-                        <input type="radio" id="delivering" name='status' value='delivering'
-                          checked={this.state.order.status === 'delivering'}
-                          onChange={e=>this.setState({order:{...this.state.order,status:e.target.value}})}
-                        />
-                        <label for="delivering" className='bg-delivering'>Delivering</label>
-
-                        <input type="radio" id="delivered" name='status' value='delivered'
-                          checked={this.state.order.status === 'delivered'}
-                          onChange={e=>this.setState({order:{...this.state.order,status:e.target.value}})}
-                        />
-                        <label for="delivered" className='bg-delivered'>Delivered</label>
-                      </div>
+                      <select value={this.state.order.status}
+                        onChange={e=>this.setState({order:{...this.state.order,status:e.target.value}})}>
+                        <option value='waiting'>Waiting</option>
+                        <option value='processing'>Processing</option>
+                        <option value='waiting to deliver'>Waiting to deliver</option>
+                        <option value='delivering'>Delivering</option>
+                        <option value='delivered'>Delivered</option>
+                        <option value='partial delivering'>Partial delivering</option>
+                        <option value='partial delivered'>partial delivered</option>
+                        <option value='done'>Done</option>
+                        <option value='cancled'>Cancled</option>
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -345,11 +340,19 @@ class OrderUpdate extends Component {
                         return(
                           <tr key={index}>
                             <td style={{width: 200 + 'px'}}>
-                              <img className='img-preview' src={process.env.REACT_APP_BACKEND_URL + item.product.image.url}></img>
+                              <img className='img-preview' src={process.env.REACT_APP_BACKEND_URL + item.product.image.url}
+                                alt='preview image'></img>
                             </td>
                             <td>{item.product.name}</td>
                             <td style={{color:item.color.toLowerCase()}}>{item.color}</td>
-                            <td>{item.quantity}</td>
+                            <td>
+                              {item.quantity_m ? 
+                                (item.quantity? 
+                                item.quantity_m + ' x m,' + item.quantity + ' x roll'
+                                : item.quantity_m + ' x m')
+                                :item.quantity + ' x roll'
+                              }
+                            </td>
                             <td>
                               <button className='hiden-btn' onClick={e=>this.removeProductClick(e,index)}>
                                 <i className='fa fa-trash icon' style={{color:'red'}}></i>

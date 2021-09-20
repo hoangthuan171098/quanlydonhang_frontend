@@ -3,13 +3,13 @@ import ModalBuyProduct from '../Cart/ModalBuyProduct';
 import Category from '../components/Category';
 import '../Cart/styles/buycart.scss';
 import { Link } from 'react-router-dom';
-
+import './styleproductitem.scss';
 export default class ProductDetailItem extends Component {
     render() {
         var {productdetail} = this.props;
       
         return (
-            <div>
+      <div className="productDetailItem">
         <div className="breacrumb-section">
           <div className="container">
             <div className="row">
@@ -107,6 +107,7 @@ export default class ProductDetailItem extends Component {
                           productdetail ={productdetail}
                         />
                       </div>
+                      
                       <ul className="pd-tags">
                         <li>
                           <span>CATEGORIES</span>: {productdetail.category.name}

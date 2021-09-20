@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import reactDom from "react-dom"
 import { Link } from "react-router-dom"
 import { withRouter } from "react-router"
 
@@ -37,7 +38,7 @@ class SideBar extends Component{
 
                 <ul class="widget widget-menu unstyled">
                         <li><Link to="/manager/orders"><i class="menu-icon icon-tasks"></i> Orders </Link></li>
-                        <li><Link to="/manager/shipements"><i class="menu-icon icon-tasks"></i> Shipments </Link></li>
+                        <li><Link to="/manager/shipments"><i class="menu-icon icon-tasks"></i> Shipments </Link></li>
                         <li><Link to="#"><i class="menu-icon icon-tasks"></i> More </Link></li>
                         <li><Link to="#"><i class="menu-icon icon-tasks"></i> More </Link></li>
                         <li><Link to="#"><i class="menu-icon icon-tasks"></i> More </Link></li>

@@ -12,7 +12,10 @@ import Checkout from './view/client/Checkout'
 import Profile from './view/client/profile'
 
 import Server from './view/server/'
+import Manager from './view/manager'
 import {Services,News,Team} from './view/public/components/export'
+import index from './view/client/Purchase/index';
+import Orderspurchase from './view/client/Purchase/Orderspurchase';
 
 
 import './App.css'
@@ -41,8 +44,11 @@ class App extends Component {
 						<Route path='/checkout' component={Checkout} />
 						<Route path='/profile' component={Profile} />
 						<Route path='/admin' component={Server} />
+						<Route path='/manager' component={Manager} />
 						<Route path='/login' component={Login} />
 						<Route path='/register' component={Register} />
+						<Route path='/purchase/:id' component={index} />
+						<Route path='/purchase' component={Orderspurchase} />
 					</Switch>
 				</Router>
 			</div>

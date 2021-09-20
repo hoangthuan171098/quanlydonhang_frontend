@@ -3,7 +3,7 @@ import Cookie from "js-cookie"
 import axios from "axios"
 import Modal from 'react-modal'
 
-class OrderCreate extends Component {
+class OrderUpdate extends Component {
   constructor(props) {
     super(props);
 
@@ -30,7 +30,16 @@ class OrderCreate extends Component {
   }
 
   async componentDidMount() {
-    if(Cookie.get('role') === 'Admin'){
+    if(Cookie.get('role') === 'Admin'){     
+      let response = await fetch(process.env.REACT_APP_BACKEND_URL + "/orders/" + this.props.match.params.id,{
+        headers: {
+          'Authorization':'bearer '+ Cookie.get('token'),
+        },
+      });
+      if (!response.ok) {
+        return
+      }
+
       axios
         .get(process.env.REACT_APP_BACKEND_URL + "/product-categories",{
           headers:{
@@ -72,28 +81,28 @@ class OrderCreate extends Component {
           alert('Cannot connect to server!!!!')
           console.log(err.response)
         })
-      this.setState({authenticate: true,loading: false})
+
+      let data = await response.json();
+      this.setState({ loading: false, authenticate: true, order: data});
       return
     }
     this.setState({authenticate: false});
   }
 
-  createOrderClick = (event) =>{
+  updateOrderClick = (event) =>{
     event.preventDefault()
     axios
-      .post(process.env.REACT_APP_BACKEND_URL + '/orders', {
-        status: 'waiting',
+      .put(process.env.REACT_APP_BACKEND_URL + '/orders/' + this.state.order.id, {
         productList: this.state.order.productList,
-        note: this.state.order.note,
-        buyer: this.state.order.buyer
+        note: this.state.order.note
       },{
         headers: {
           'Authorization':'bearer '+ Cookie.get('token'),
         },
       })
       .then(response => {
-        alert("Create order success!");
-        this.props.history.push('/admin/orders')
+        alert("Update order success!");
+        this.props.history.push('/manager/orders/' + this.state.order.id)
       })
       .catch(error => {
         alert('An error occurred, please check again.');
@@ -109,15 +118,17 @@ class OrderCreate extends Component {
 
   confirmProductClick = (event,item) =>{
     event.preventDefault()
-
+    if(item.quantity===0 && item.quantity_m===0){
+      return
+    }
     let newList = [...this.state.order.productList,item]
     this.setState({order:{...this.state.order,productList:newList}})
     this.setState({buyingItem:{...this.state.buyingItem,color:'RED',quantity:'',quantity_m:''}})
   }
 
-  closeProductClick = async (event) =>{
+  closeProductClick = (event) =>{
     event.preventDefault()
-    await this.setState({buyingItem:{color:'RED',quantity:0}})
+    this.setState({buyingItem:{color:'RED',quantity:'',quantity_m:''}})
   }
 
   chooseProductClick = (product) =>{
@@ -140,21 +151,19 @@ class OrderCreate extends Component {
     this.setState({modal:{isOpen: false}})
   }
 
-
+  backClick = (e) =>{
+    e.preventDefault()
+    this.props.history.push('/manager/orders/' + this.state.order.id)
+  }
 
   render() {
-
-    const clickBack = async (event) =>{
-      event.preventDefault()
-      this.props.history.push('/admin/orders')
-    }  
     const showBuyingProduct = () =>{
       if(this.state.buyingItem.product !== undefined){
         return (
-          <div className='col-10 m-auto'>
+          <div className='col-11 m-auto'>
             <div className='row d-flex align-items-center'  style={{marginTop: 15+ 'px'}}>
               <div className='col-2'>
-                <img src={process.env.REACT_APP_BACKEND_URL + this.state.buyingItem.product.image.url} alt='preview img'></img>
+                <img src={process.env.REACT_APP_BACKEND_URL + this.state.buyingItem.product.image.url}></img>
               </div>
               <div className='col-2'>
                 <span>{this.state.buyingItem.product.name}</span><br/>
@@ -162,7 +171,7 @@ class OrderCreate extends Component {
               </div>
               <div className='col-8'>
                 <div className='row d-flex align-items-center'>
-                  <div className='col-lg-4 d-flex align-items-center'>
+                  <div className='col-lg-3 d-flex align-items-center'>
                     <label className='float-left'>Color:</label>
                     <div className='float-left'>
                       <select onChange={e=>this.setState({buyingItem:{...this.state.buyingItem,color:e.target.value}})} 
@@ -289,31 +298,11 @@ class OrderCreate extends Component {
 
           <div className='module'>
             <div className='module-head'>
-              <h2>Create Order</h2>
+              <h2>Update Order</h2>
             </div>
 
             <div className='module-body'>
               <form>
-                <div className='row'>
-                  <div className='col-lg-6'>
-                    <div className="form-group">
-                      <label> Buyer: </label>
-                      <input type='text' className='row-fluid' list='user-list'
-                        onChange={e=>this.setState({order:{...this.state.order,buyer:e.target.value}})}
-                      />
-                      <datalist id='user-list'>
-                        {this.state.users
-                          .filter(user=>user.username.includes(this.state.userFilter))
-                          .map((user,index)=>{
-                            return(
-                              <option value={user.id} key={index}>{user.username}</option>
-                            )
-                          })}
-                      </datalist>
-                    </div>
-                  </div>
-                </div>
-
                 <div className='row' style={{marginBottom:20+'px'}}>
                   <div className='col-lg-12'>
                     <label>Products list:</label>
@@ -333,16 +322,15 @@ class OrderCreate extends Component {
                         return(
                           <tr key={index}>
                             <td style={{width: 200 + 'px'}}>
-                              <img className='img-preview' src={process.env.REACT_APP_BACKEND_URL + item.product.image.url}
-                                alt='preview img'></img>
+                              <img className='img-preview' src={process.env.REACT_APP_BACKEND_URL + item.product.image.url}></img>
                             </td>
                             <td>{item.product.name}</td>
-                            <td style={{color:item.color.toLowerCase()}}>{item.color}</td>
+                            <td><div className='color-div' style={{backgroundColor:item.color}}></div></td>
                             <td>
                               {item.quantity_m ? 
                                 (item.quantity? 
-                                item.quantity_m + ' x m,' + item.quantity + ' x roll'
-                                : item.quantity_m + ' x m')
+                                  item.quantity_m + ' x m,' + item.quantity + ' x roll'
+                                  : item.quantity_m + ' x m')
                                 :item.quantity + ' x roll'
                               }
                             </td>
@@ -363,17 +351,17 @@ class OrderCreate extends Component {
                   <div className='col-lg-6'>
                     <div className="form-group">
                       <label> Note: </label>
-                      ​<textarea className='row-fluid' 
-                        onChange={e=>{this.setState({order:{...this.state.order,note:e.target.value}});console.log(this.state.order.note)}}></textarea>
+                      ​<textarea className='row-fluid' value={this.state.order.note}
+                        onChange={e=>this.setState({order:{...this.state.order,note:e.target.value}})}></textarea>
                     </div>
                   </div>
                 </div>
 
                 <div className='row'>
                   <div className='col-2'>
-                    <button className='btn btn-primary' onClick={e=>this.createOrderClick(e)}>Create</button>
+                    <button className='btn btn-primary' onClick={e=>this.updateOrderClick(e)}>Update</button>
                   </div>
-                  <button className='btn btn-primary' onClick={e=>clickBack(e)}>Back</button>
+                  <button className='btn btn-primary' onClick={e=>this.backClick(e)}>Back</button>
                 </div>
               </form>
             </div>
@@ -388,4 +376,4 @@ class OrderCreate extends Component {
   }
 }
 
-export default OrderCreate;
+export default OrderUpdate;

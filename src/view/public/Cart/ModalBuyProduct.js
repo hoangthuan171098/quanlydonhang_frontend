@@ -11,8 +11,14 @@ class ModalBuyProduct extends Component {
       loading :true,
       authenticate: true,
       quantity:1,
-      color : "RED"
+      color : "RED",
+      met :1
     }
+  }
+  handleMeter = (e) =>{
+    this.setState({
+      met : e.target.value
+    })
   }
   handleQuantity = (e) =>{
     this.setState({
@@ -41,7 +47,8 @@ class ModalBuyProduct extends Component {
           price : productdetail.price
         },
       color: this.state.color,
-      quantity: this.state.quantity
+      quantity: Number(this.state.quantity),
+      quantity_m : Number(this.state.met)
     }
     let itemList = Cookie.get('cart')
     if(typeof(itemList)=== "string" && itemList !==undefined){
@@ -54,6 +61,7 @@ class ModalBuyProduct extends Component {
       Cookie.set('cart',JSON.stringify([item]))
     }
     alert('Them san pham vao gio hang thanh cong!')
+    
   }
   render() {
     
@@ -62,13 +70,14 @@ class ModalBuyProduct extends Component {
       <div className='ModalBuyProduct'>
         <div className="modal fade" id="exampleModal" tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div className="modal-dialog" role="document">
-            <div className="modal-content m-4">
+            <div className="modal-content">
               <div className="modal-header"> <button type="button" className="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button> </div>
               <div className="modal-body p-0 row">
                 <div className="col-12">
                   <h1 className="modal-title" id="exampleModalLabel">{productdetail.name}</h1>
                   <p><small className="para">{productdetail.description}</small></p>
-                  <div className="form-group jkl pt-3"><input type="email" className="form-control inp" placeholder="Số Cuộn" onChange={(e)=>this.handleQuantity(e)}/></div>
+                  <div className="form-group jkl"><input type="number" className="form-control inp" placeholder="Số Cuộn" onChange={(e)=>this.handleQuantity(e)}/></div>
+                  <div className="form-group jkl"><input type="number" className="form-control inp" placeholder="Số mét" onChange={(e)=>this.handleMeter(e)}/></div>
                   <div className="mt-1"> <span className="fw-bold">Color</span>
                     <select onChange={(e) =>this.handlecolor(e)}>
                       <option value="RED">Đỏ</option>

@@ -87,12 +87,18 @@ class OrderList extends Component {
                 <div className='input-prepend'>
                   <span className='add-on'>status</span>
                   <select value={this.state.filter.status}
-                    onChange={e=>this.setState({filter:{...this.state.filter,status:e.target.value}})}>
+                    onChange={e=>this.setState({filter:{...this.state.filter,status:e.target.value}})}
+                  >
                     <option value='all'>All</option>
-                    <option value='checking'>Checking</option>
-                    <option value='confirmed'>Confirmed</option>
+                    <option value='waiting'>Waiting</option>
+                    <option value='processing'>Processing</option>
+                    <option value='waiting to deliver'>Waiting to deliver</option>
                     <option value='delivering'>Delivering</option>
                     <option value='delivered'>Delivered</option>
+                    <option value='partial delivering'>Partial delivering</option>
+                    <option value='partial delivered'>partial delivered</option>
+                    <option value='done'>Done</option>
+                    <option value='cancled'>Cancled</option>
                   </select>
                 </div>
               </form>
@@ -121,11 +127,17 @@ class OrderList extends Component {
                       <td onClick={()=>clickInfo(order.id)}>
                         {order.productList.map((item,index)=>{
                             if(index === 2)
-                                return(<p key={item.id}>...</p>);
-                            if(index === 3)
+                                return(<p key={index}>...</p>);
+                            if(index > 2)
                                 return(<></>);
                             return(
-                                <p>{item.product.name +" : " + item.quantity + " (cuộn)"}</p>
+                                <p key={index}>{item.product.name + ': '}{item.quantity_m ? 
+                                    (item.quantity? 
+                                      item.quantity_m + ' x m,' + item.quantity + ' x roll'
+                                      : item.quantity_m + ' x m')
+                                    :item.quantity + ' x roll'
+                                  }
+                                </p>
                             )
                         })}
                       </td>                   

@@ -20,6 +20,7 @@ class NavBar extends Component {
                   <ul className='dropdown-ul'>
                     <li><Link to='/admin'> ADMIN </Link></li>
                     <li><Link to='/shopping-cart'> CART </Link></li>
+                    <li><Link to='/purchase'> ORDER </Link></li>
                     <li><Link to='/profile'> PROFILE </Link></li>
                     <li><button onClick={(e)=>this.logoutHandle(e)} className="more-button"> LOG OUT</button></li>
                   </ul>
@@ -30,6 +31,7 @@ class NavBar extends Component {
               <li className="drop-down"><Link to='/profile'>{Cookie.get('username')}</Link>
                 <ul className='dropdown-ul'>
                   <li><Link to='/shopping-cart'> CART </Link></li>
+                  <li><Link to='/purchase'> ORDER </Link></li>
                   <li><Link to='/profile'> PROFILE </Link></li>
                   <li><button onClick={(e)=>this.logoutHandle(e)} className="more-button"> LOG OUT</button></li>
                 </ul>

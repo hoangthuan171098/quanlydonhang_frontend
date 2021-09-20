@@ -11,12 +11,14 @@ export default class Shopcart extends Component {
       loading :true,
       authenticate: true,
       note: '',
-      productList: []
+      productList: [],
+
     }
   }
 
   async componentDidMount(){
     let itemListString = Cookie.get('cart')
+    
     if(typeof(itemListString)=== "string" && itemListString !==undefined){
       let itemList = JSON.parse(itemListString)
       this.setState({productList: itemList})
@@ -27,9 +29,9 @@ export default class Shopcart extends Component {
   checkOutClick = () =>{
       axios
         .post(process.env.REACT_APP_BACKEND_URL + '/orders',{
-          status: "checking",
           productList : this.state.productList,
           note:this.state.note,
+          status: 'waiting',
           buyer:Cookie.get('id')
         },{
           headers:{
@@ -39,22 +41,34 @@ export default class Shopcart extends Component {
         .then(response =>{
           alert('Da dat hang thanh cong');
           Cookie.remove('cart');
-          this.props.location.push('/');
+          this.props.history.push('/purchase');
         })
         .catch(err => {
         })
   }
-
+  updateMeterClick = (event,index) =>{
+    let productList = this.state.productList
+    productList[index].quantity_m = Number(event.target.value)
+    this.setState({productList:productList})
+    Cookie.set('cart',JSON.stringify(productList))
+  }
+  updateProductClick = (event,index) =>{
+    let productList = this.state.productList
+    productList[index].quantity = Number(event.target.value)
+    this.setState({productList:productList})
+    Cookie.set('cart',JSON.stringify(productList))
+    
+  }
   removeProductClick = (event,index) =>{
     event.preventDefault()
     let productList = this.state.productList
     productList.splice(index,1)
     this.setState({productList:productList})
+    console.log(this.state.productList)
     Cookie.set('cart',JSON.stringify(productList))
   }
 
   render() {
-    console.log(this.state.productList)
     return (
       <div>
         <div className="breacrumb-section">
@@ -80,11 +94,12 @@ export default class Shopcart extends Component {
                   <table>
                     <thead>
                       <tr>
-                        <th>Image</th>
-                        <th className="p-name">Product Name</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Total</th>
+                        <th>Hình Ảnh</th>
+                        <th className="p-name">Tên Sản Phẩm</th>
+                        <th>Giá</th>
+                        <th>Số lượng</th>
+                        <th>Mét</th>
+                        <th>Tổng tiền</th>
                         <th>
                           <i className="ti-close" />
                         </th>
@@ -106,11 +121,22 @@ export default class Shopcart extends Component {
                             <td className="qua-col first-row">
                               <div className="quantity">
                                 <div className="pro-qty">
-                                  <input type="text" defaultValue={item.quantity} />
+                                  <input type="text" defaultValue={item.quantity} 
+                                    onChange = {(e) =>this.updateProductClick(e,index)}
+                                  />
                                 </div>
                               </div>
                             </td>
-                            <td className="total-price first-row">{item.product.price*item.quantity}</td>
+                            <td className="qua-col first-row">
+                              <div className="quantity">
+                                <div className="pro-qty">
+                                  <input type="text" defaultValue={item.quantity_m} 
+                                    onChange = {(e) =>this.updateMeterClick(e,index)}
+                                  />
+                                </div>
+                              </div>
+                            </td>
+                            <td className="total-price first-row">{item.product.price*item.quantity+item.product.price*item.quantity_m}</td>
                             <td className="close-td first-row">
                               <i className="ti-close" onClick={e=>this.removeProductClick(e,index)}/>
                             </td>
@@ -141,14 +167,6 @@ export default class Shopcart extends Component {
                   </div>
                   <div className="col-lg-4 offset-lg-4">
                     <div className="proceed-checkout">
-                      {/* <ul>
-                        <li className="subtotal">
-                          Subtotal <span>$240.00</span>
-                        </li>
-                        <li className="cart-total">
-                          Total <span>$240.00</span>
-                        </li>
-                      </ul> */}
                       <Link to="#" onClick={this.checkOutClick} className="proceed-btn">
                         PROCEED TO CHECK OUT
                       </Link>

@@ -75,12 +75,15 @@
 
     .modal-content {
         border: none;
+        width: 550px;
+        margin: auto;
         background: transparent;
         padding: 0 19px
     }
 
     .modal-header {
-        border: none
+        border: none;
+        height: 50px;
     }
 
     .modal-body {
@@ -97,7 +100,6 @@
 
     h1 {
         font-weight: bold;
-        padding-top: 120px
     }
 
     small.para {
@@ -120,7 +122,6 @@
             font-size: 0;
             display: block;
             height: 2px;
-            width: 70%;
             background: #6c757d
         }
 
@@ -164,13 +165,13 @@
         font-size: 0;
         display: block;
         height: 2px;
-        width: 70%;
         background: #6c757d
     }
 
     .btn-dark {
         width: 70%;
         height: 45px;
+        margin-left: 100px;
         border: 1px solid black;
         background: #151718;
         color: #dae0e5

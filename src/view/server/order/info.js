@@ -33,7 +33,7 @@ class OrderInfo extends Component {
 
   render() {
     const clickUpdate = () =>{
-        this.props.history.push('/admin/orders/' + this.state.product.id +'/update')
+        this.props.history.push('/admin/orders/' + this.state.order.id +'/update')
     }
 
     const clickBack = () =>{
@@ -94,7 +94,15 @@ class OrderInfo extends Component {
                             <td className="text-primary">
                                 <ul>
                                     {this.state.order.productList.map((item,index)=>{
-                                        return(<li key={index}>{item.product.name}: {item.quantity}</li>)
+                                        return(
+                                            <li key={index}>{item.product.name}:
+                                                 {item.quantity_m ? 
+                                                    (item.quantity? 
+                                                    item.quantity_m + ' x m,' + item.quantity + ' x roll'
+                                                    : item.quantity_m + ' x m')
+                                                    :item.quantity + ' x roll'
+                                                }
+                                            </li>)
                                     })}
                                 </ul>
                             </td>
