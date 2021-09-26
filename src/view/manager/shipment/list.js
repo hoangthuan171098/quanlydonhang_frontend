@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
-import {Link} from 'react-router-dom'
 import axios from 'axios'
 import Cookie from 'js-cookie'
+
+import Status from './component/status'
 
 class ShipmentList extends Component{
     constructor(props){
@@ -61,12 +62,14 @@ class ShipmentList extends Component{
                             </tr>
                             </thead>
                             <tbody>
-                                {this.state.shipments.reverse().map((shipment, index) => {
+                                {this.state.shipments.map((shipment, index) => {
                                 return (
                                     <tr key={index}>
                                         <td onClick={()=>this.infoClick(shipment.id)}>{shipment.id}</td>
                                         <td onClick={()=>this.infoClick(shipment.id)}>{shipment.buyer.username}</td>
-                                        <td onClick={()=>this.infoClick(shipment.id)}>{shipment.status}</td>
+                                        <td onClick={()=>this.infoClick(shipment.id)}>
+                                            <Status status={shipment.status}/>
+                                        </td>
                                         <td onClick={()=>this.infoClick(shipment.id)}>
                                             {shipment.productList.map((item,index)=>{
                                                 if(index === 2)
@@ -76,9 +79,9 @@ class ShipmentList extends Component{
                                                 return(
                                                     <p key={index}>{item.product.name + ': '}{item.quantity_m ? 
                                                         (item.quantity? 
-                                                          item.quantity_m + ' x m,' + item.quantity + ' x roll'
+                                                          item.quantity_m + ' x m,' + item.quantity + ' x cuộn'
                                                           : item.quantity_m + ' x m')
-                                                        :item.quantity + ' x roll'
+                                                        :item.quantity + ' x cuộn'
                                                       }
                                                     </p>
                                                 )

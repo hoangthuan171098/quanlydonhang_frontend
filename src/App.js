@@ -2,10 +2,8 @@ import React, { Component } from 'react'
 import {BrowserRouter as Router,Switch,Route} from "react-router-dom"
 
 import NavBar from './components/Navbar'
-import Topbar from './components/Topbar'
 import {Home,Login,Register,Contact,About} from './view/public/export'
 import ProductList from './view/public/Shops/ProductList'
-// import ProductList from './view/public/ProductList'
 import ProductDetail from './view/public/ProductDetails/ProductDetail'
 import Shopcart from './view/client/Shopcart'
 import Checkout from './view/client/Checkout'
@@ -14,8 +12,7 @@ import Profile from './view/client/profile'
 import Server from './view/server/'
 import Manager from './view/manager'
 import {Services,News,Team} from './view/public/components/export'
-import index from './view/client/Purchase/index';
-import Orderspurchase from './view/client/Purchase/Orderspurchase';
+import Order from './view/client/Purchase/Order'
 
 
 import './App.css'
@@ -26,11 +23,8 @@ class App extends Component {
 		return (
 			<div className='App'>
 				<Router>
-					
-
-					<Topbar />
 					<NavBar />
-					
+
 					<Switch>
 						<Route exact path='/' component={Home} />
 						<Route path='/about' component={About} />
@@ -47,8 +41,8 @@ class App extends Component {
 						<Route path='/manager' component={Manager} />
 						<Route path='/login' component={Login} />
 						<Route path='/register' component={Register} />
-						<Route path='/purchase/:id' component={index} />
-						<Route path='/purchase' component={Orderspurchase} />
+						<Route path='/purchase' component={Order} />
+
 					</Switch>
 				</Router>
 			</div>

@@ -16,9 +16,9 @@ class Orderspurchase extends Component {
   }
 
   async componentDidMount() {
-    if (Cookie.get("role")) {
+    if (Cookie.get("role") === "Public") {
       let response = await fetch(
-        process.env.REACT_APP_BACKEND_URL + "/orders?buyer=" + Cookie.get('id'),
+        process.env.REACT_APP_BACKEND_URL + "/orders",
         {
           headers: {
             Authorization: "bearer " + Cookie.get("token"),

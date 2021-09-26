@@ -3,36 +3,31 @@ import React,{Component} from 'react'
 export default class Shipment extends Component{
     render(){
         return(
-            <div className='row'>
-				<h5>Shipment: {this.props.shipment.id}</h5>
-				<h5 style={{color:'blueviolet',marginLeft:50+'px'}}>{this.props.shipment.status}</h5>
+            <div className='shipment'>
+				<h5 className='ship-id'>Shipment: #{this.props.shipment.id}</h5>
+				<h5 style={{color:'blueviolet'}}>
+					{this.props.shipment.status}
+				</h5>
 				<table className='table'>
 					<thead>
 						<tr>
-							<th></th>
-							<th>Name</th>
-							<th>Color</th>
-							<th>Quantity</th>
+							<th style={{width:40+'%'}}>Name</th>
+							<th style={{width:20+'%'}}>Color</th>
+							<th style={{width:20+'%'}}>Cuộn</th>
+							<th style={{width:20+'%'}}>M</th>
 						</tr>
 					</thead>
 					<tbody>
 					{this.props.shipment.productList.map((item,index)=>{
 						return(
 						<tr key={index}>
-							<td style={{width: 150 + 'px'}}>
-								<img className='img-preview' src={process.env.REACT_APP_BACKEND_URL + item.product.image.url}></img>
-							</td>
 							<td><span>{item.product.name}</span></td>
+							<td>{item.color}</td>
 							<td>
-								<div className='color-div' style={{backgroundColor:item.color}}></div>
+								{item.quantity? item.quantity:'0'}
 							</td>
 							<td>
-								{item.quantity_m ? 
-									(item.quantity? 
-									item.quantity_m + ' x m,' + item.quantity + ' x roll'
-									: item.quantity_m + ' x m')
-									:item.quantity + ' x roll'
-								}
+								{item.quantity_m? item.quantity_m:'0'}
 							</td>
 						</tr>
 						)

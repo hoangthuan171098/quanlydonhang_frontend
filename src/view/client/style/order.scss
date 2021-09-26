@@ -1,0 +1,341 @@
+.container_layout {
+  display: flex;
+  width: 100%;
+  background-color: #f1f1f1;
+  box-sizing: border-box;
+  line-height: 1.15;
+  text-size-adjust: 100%;
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+
+  .Account_sidebar {
+    width: 250px;
+    margin-right: 17px;
+
+    .Account_avatar {
+      display: flex;
+      -webkit-box-align: center;
+      align-items: center;
+      padding-left: 7px;
+      margin: 0 0 12px;
+
+      .info {
+        flex: 1 1 0%;
+        font-size: 13px;
+        line-height: 15px;
+        color: rgb(51, 51, 51);
+        font-weight: 300;
+
+        strong {
+          font-size: 16px;
+          line-height: 19px;
+          font-weight: 400;
+          display: block;
+          margin: 4px 0px 0px;
+        }
+      }
+    }
+
+    .Account_nav {
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+      font-size: 13px;
+
+      li {
+        display: list-item;
+        text-align: -webkit-match-parent;
+
+        a {
+          display: flex;
+          -webkit-box-align: center;
+          align-items: center;
+          padding: 7px 18px;
+          color: rgb(74, 74, 74);
+        }
+        i {
+          width: 24px;
+          height: 24px;
+          margin: 0px 22px 0px 0px;
+          font-size: 24px;
+          color: rgb(155, 155, 155);
+        }
+        a:hover,
+        a:active {
+          background-color: rgb(236, 236, 236);
+          color: #000;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .Account_layout {
+    flex: 1 1 0%;
+
+    .styles_Heading {
+      font-size: 19px;
+      line-height: 21px;
+      font-weight: 300;
+      margin: 20px 0px 15px;
+    }
+
+    .Account_info {
+      background-color: rgb(255, 255, 255);
+      padding: 30px 20px;
+      border-radius: 4px;
+      width: 95%;
+      .form-control {
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+        margin: 0px 0px 15px;
+        border: none;
+
+        input {
+          flex: 1 1 0%;
+        }
+        .input-label {
+          width: 110px;
+          min-width: 110px;
+          font-size: 13px;
+          color: rgb(51, 51, 51);
+        }
+        .input-info {
+          transition: border-color 0.15s ease-in-out 0s,
+            box-shadow 0.15s ease-in-out 0s,
+            -webkit-box-shadow 0.15s ease-in-out 0s;
+          border: 1px solid rgb(204, 204, 204);
+          border-radius: 4px;
+          height: 34px;
+          padding: 6px 12px;
+          line-height: 34px;
+          outline: none;
+          width: 490px;
+          height: 34px;
+        }
+        .input-info:focus {
+          border-color: rgb(102, 175, 233);
+        }
+        .btn-submit {
+          border: 0px;
+          width: 176px;
+          height: 40px;
+          border-radius: 4px;
+          color: rgb(74, 74, 74);
+          font-size: 14px;
+          background-color: rgb(253, 216, 53);
+          cursor: pointer;
+        }
+      }
+    }
+
+    .inner {
+      background-color: rgb(255, 255, 255);
+      border-radius: 4px;
+      padding: 1px;
+      min-height: 400px;
+
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        word-break: break-word;
+
+        thead {
+          display: table-header-group;
+          vertical-align: middle;
+          border-color: inherit;
+          tr:hover {
+            background-color: rgb(229, 255, 204);
+          }
+        }
+        tbody {
+          tr:hover {
+            background-color: rgb(229, 255, 204);
+            cursor: pointer;
+          }
+        }
+        tr {
+          border-bottom: 1px solid rgb(244, 244, 244);
+
+          th {
+            min-width: 130px;
+            padding: 20px 15px;
+            color: rgb(120, 120, 120);
+            font-size: 15px;
+            font-weight: 400;
+            text-align: left;
+          }
+          td {
+            min-width: 130px;
+            padding: 20px 15px;
+            color: rgb(120, 120, 120);
+            font-size: 15px;
+            font-weight: 400;
+            text-align: left;
+            font-size: 13px;
+            line-height: 20px;
+            color: rgb(51, 51, 51);
+
+            a {
+              color: rgb(0, 127, 240);
+              text-decoration: none;
+              background-color: transparent;
+            }
+          }
+        }
+      }
+    }
+
+    .order-detail {
+      .productlist {
+        width: 100%;
+        color: rgb(66, 66, 66);
+        display: table;
+        font-size: 13px;
+        background: rgb(255, 255, 255);
+        border-radius: 4px;
+        border-collapse: collapse;
+        border-spacing: 0px;
+        line-height: 1.5;
+        word-break: break-word;
+
+        thead {
+          display: table-header-group;
+          tr {
+            display: table-row;
+            padding: 10px;
+            th:first-child {
+              border-left: none;
+            }
+            th {
+              display: table-cell;
+              padding: 20px 15px;
+              border-top: none;
+              min-width: 100px;
+              position: relative;
+              background: 0px 0px;
+              color: rgb(120, 120, 120);
+              font-size: 15px;
+              font-weight: 400;
+              border-bottom: 1px solid rgb(244, 244, 244);
+              text-align: left;
+            }
+          }
+        }
+        tr {
+          display: table-row;
+          padding: 10px;
+        }
+        tbody {
+          display: table-row-group;
+          tr:hover{
+            background-color: rgb(229, 255, 204);
+          }
+          tr {
+            border-bottom: 1px solid rgb(244, 244, 244);
+
+            td {
+              border: none;
+              position: relative;
+              display: table-cell;
+              padding: 20px 15px;
+              color: rgb(36, 36, 36);
+              vertical-align: top;
+              min-width: 100px;
+
+              .product-item {
+                display: flex;
+
+                img {
+                  width: 60px;
+                  height: 60px;
+                  margin-right: 15px;
+                }
+
+                .product-info {
+                  .product-name {
+                    font-size: 14px;
+                    color: rgb(36, 36, 36);
+                  }
+                  a {
+                    text-decoration: none;
+                  }
+                  .product-seller {
+                    font-size: 11px;
+                  }
+                  p {
+                    margin: 12px 0px 0px;
+                  }
+                  .product-sku {
+                    margin: 12px 0px;
+                  }
+                }
+              }
+            }
+            &td:first-child {
+              border-top: none;
+              border-left: none;
+            }
+          }
+          &tr:first-child {
+            border-top: none;
+          }
+        }
+
+        tfoot {
+          display: table-row-group;
+          tr {
+            border-top: none;
+
+            td {
+              text-align: right;
+              display: table-cell;
+              padding: 5px 20px;
+              max-width: 550px;
+              min-width: 125px;
+              color: rgb(36, 36, 36);
+
+              
+              span {
+                color: rgb(120, 120, 120);
+                font-size: 14px;
+              }
+              .sum {
+                color: rgb(255, 59, 39);
+                font-size: 18px;
+              }
+              .cancel {
+                background-color: rgb(253, 216, 53);
+                color: rgb(74, 74, 74);
+                display: inline-block;
+                margin-bottom: 0px;
+                font-weight: 400;
+                text-align: center;
+                cursor: pointer;
+                border: 1px solid rgb(253, 216, 53);
+                padding: 6px 12px;
+                font-size: 14px;
+                border-radius: 4px;
+                width: 150px;
+              }
+              a {
+                text-decoration: none;
+              }
+            }
+            &td:first-child {
+              border-top: none;
+
+              td {
+                padding-top: 30px;
+              }
+            }
+            &tr:last-child td {
+              padding-bottom: 30px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

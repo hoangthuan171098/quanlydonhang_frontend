@@ -10,19 +10,20 @@ class ModalBuyProduct extends Component {
     this.state ={
       loading :true,
       authenticate: true,
-      quantity:1,
-      color : "RED",
-      met :1
+      quantity:0,
+      color : "",
+      quantity_m :0,
     }
   }
+
   handleMeter = (e) =>{
     this.setState({
-      met : e.target.value
+      quantity_m : Number(e.target.value)
     })
   }
   handleQuantity = (e) =>{
     this.setState({
-        quantity: e.target.value
+        quantity: Number(e.target.value)
     })
   }
   handlecolor = (e) =>{
@@ -38,17 +39,22 @@ class ModalBuyProduct extends Component {
 
   addtocart = () =>{
     var {productdetail} = this.props;
+    if(this.state.quantity === 0 && this.state.quantity_m === 0 ){
+      alert('Xin hãy nhập số cuộn hoặc mét')
+      return
+    }
     let item = {
-      product:       
+      product:
         {
           id:productdetail.id,
           name:productdetail.name,
           image: {url: productdetail.image.url},
-          price : productdetail.price
+          price : productdetail.price,
+          description: productdetail.description
         },
       color: this.state.color,
-      quantity: Number(this.state.quantity),
-      quantity_m : Number(this.state.met)
+      quantity: this.state.quantity,
+      quantity_m : this.state.quantity_m
     }
     let itemList = Cookie.get('cart')
     if(typeof(itemList)=== "string" && itemList !==undefined){
@@ -66,28 +72,24 @@ class ModalBuyProduct extends Component {
   render() {
     
     var {productdetail} = this.props;
+    console.log(productdetail.colors)
     return (
       <div className='ModalBuyProduct'>
         <div className="modal fade" id="exampleModal" tabIndex={-1} role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div className="modal-dialog" role="document">
-            <div className="modal-content">
+            <div className="modal-content m-4">
               <div className="modal-header"> <button type="button" className="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button> </div>
               <div className="modal-body p-0 row">
                 <div className="col-12">
                   <h1 className="modal-title" id="exampleModalLabel">{productdetail.name}</h1>
                   <p><small className="para">{productdetail.description}</small></p>
-                  <div className="form-group jkl"><input type="number" className="form-control inp" placeholder="Số Cuộn" onChange={(e)=>this.handleQuantity(e)}/></div>
-                  <div className="form-group jkl"><input type="number" className="form-control inp" placeholder="Số mét" onChange={(e)=>this.handleMeter(e)}/></div>
+                  <div className="form-group jkl pt-3"><input type="number" className="form-control inp" placeholder="Số Cuộn" onChange={(e)=>this.handleQuantity(e)}/></div>
+                  <div className="form-group jkl pt-3"><input type="number" className="form-control inp" placeholder="Số mét" onChange={(e)=>this.handleMeter(e)}/></div>
                   <div className="mt-1"> <span className="fw-bold">Color</span>
-                    <select onChange={(e) =>this.handlecolor(e)}>
-                      <option value="RED">Đỏ</option>
-                      <option value="PURPIL">Tím</option>
-                      <option value="YELLOW">Vàng</option>
-                      <option value="GREEN">Xanh Lục</option>
-                      <option value="BLACK">Đen</option>
-                      <option value="WHITE">Trắng</option>
-                      <option value="PINK">Hồng</option>
-                      <option value="BLUE">Xanh Dương</option>
+                     <select onChange={(e) =>this.handlecolor(e)}> 
+                      {productdetail.colors.map((item,index)=>{
+                        return <option value={item}>{item}</option>
+                      })}
                     </select>
                   </div>
 

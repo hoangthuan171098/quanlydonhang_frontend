@@ -3,6 +3,8 @@ import {Link} from 'react-router-dom'
 import axios from 'axios'
 import Cookie from 'js-cookie'
 
+import Status from './component/status'
+
 class OrderManager extends Component{
     constructor(props){
         super(props)
@@ -22,6 +24,7 @@ class OrderManager extends Component{
             })
             .then(res=>{
                 this.setState({orders:res.data})
+                console.log(res)
             })
             .catch(err=>{
                 console.log('Cannot connect to server')
@@ -71,7 +74,9 @@ class OrderManager extends Component{
                                     <tr key={index}>
                                         <td onClick={()=>this.infoClick(order.id)}>{order.id}</td>
                                         <td onClick={()=>this.infoClick(order.id)}>{order.buyer.username}</td>
-                                        <td onClick={()=>this.infoClick(order.id)}>{order.status}</td>
+                                        <td onClick={()=>this.infoClick(order.id)}>
+                                            <Status status={order.status} />
+                                        </td>
                                         <td onClick={()=>this.infoClick(order.id)}>
                                             {order.productList.map((item,index)=>{
                                                 if(index === 2)

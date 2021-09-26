@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import Cookie from "js-cookie"
 import axios from 'axios'
 
+import Status from './component/status'
+
 class ShipmentInfo extends Component {
 	constructor(props) {
 		super(props);
@@ -123,7 +125,7 @@ class ShipmentInfo extends Component {
       return (
         <div className="module">
             <div className="module-head">
-                <h2>Shipment detail</h2>
+                <h2>Shipment <Status status={this.state.shipment.status} /> </h2>
                 <p>ID: {this.state.shipment.id}</p>
             </div>
             <div className="module-body">
@@ -131,34 +133,27 @@ class ShipmentInfo extends Component {
                     <div className='module'>
                         <div className='module-body'>
 							<div className='row'>
-								<span>Product List: </span>
+								<span className='impress flex-v-center'>Product List: </span>
 								<table className='table'>
 									<thead>
 										<tr>
-											<th></th>
 											<th>Name</th>
 											<th>Color</th>
-											<th>Quantity</th>
+											<th>Cuộn</th>
+											<th>M</th>
 										</tr>
 									</thead>
 									<tbody>
 									{this.state.shipment.productList.map((item,index)=>{
 										return(
 											<tr key={index}>
-												<td style={{width: 150 + 'px'}}>
-													<img className='img-preview' src={process.env.REACT_APP_BACKEND_URL + item.product.image.url}></img>
-												</td>
-												<td><span>{item.product.name}</span></td>
+												<td>{item.product.name}</td>
+												<td>{item.color}</td>
 												<td>
-													<div className='color-div' style={{backgroundColor:item.color}}></div>
+													{item.quantity? item.quantity:'0'}
 												</td>
 												<td>
-													{item.quantity_m ? 
-														(item.quantity? 
-														item.quantity_m + ' x m,' + item.quantity + ' x roll'
-														: item.quantity_m + ' x m')
-														:item.quantity + ' x roll'
-													}
+													{item.quantity_m? item.quantity_m:'0'}
 												</td>
 											</tr>
 										)
@@ -174,7 +169,7 @@ class ShipmentInfo extends Component {
 					<div className='module-body'>
 						<div className='row'>
 							<div className='w-50'>
-								<span>BUYER:</span>
+								<span className='impress'>BUYER:</span>
 							</div>
 							<div className='w-50'>
 								<span>{this.state.shipment.buyer.username}</span>
@@ -182,7 +177,7 @@ class ShipmentInfo extends Component {
 						</div>
 						<div className='row'>
 							<div className='w-50'>
-								<span>CREATED AT:</span>
+								<span className='impress'>CREATED AT:</span>
 							</div>
 							<div className='w-50'>
 								<span>{this.state.shipment.createdAt.slice(0,10)}</span><br/>

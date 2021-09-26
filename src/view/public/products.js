@@ -121,7 +121,7 @@ class ProductList extends Component {
       if(true){
         axios
           .post(process.env.REACT_APP_BACKEND_URL + '/orders', {
-            status: "Checking",
+            status: "waiting",
             productList: Cookie.get('cart'),
             creator: Cookie.get('username'),
           },{

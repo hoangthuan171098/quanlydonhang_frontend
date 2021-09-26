@@ -1,37 +1,41 @@
 import React, { Component } from "react";
-import { NavLink,Link } from "react-router-dom";
-
+import { Link } from "react-router-dom";
+import Cookie from "js-cookie";
 export default class Nav extends Component {
   render() {
-    let {id} = this.props;
-    
-    return (
-      <>
-        <NavLink to={`/purchase/${id}`} className="tab-item " activeClassName="active" exact={true}>
-         
-          Tất cả
-        </NavLink>
-        <NavLink to={`/purchase/${id}/checking`} className="tab-item" activeClassName="active">
-          
-          Chờ xác nhận
-        </NavLink>
-        <NavLink  to={`/purchase/${id}/confirmed`} className="tab-item" activeClassName="active">
-          
-          Chờ lấy hàng
-        </NavLink>
-        <NavLink to={`/purchase/${id}/delivering`} className="tab-item" activeClassName="active">
-         
-          Đang giao
-        </NavLink>
-        <NavLink to={`/purchase/${id}/delivered`} className="tab-item" activeClassName="active">
-          
-          Đã giao
-        </NavLink>
-        <NavLink to={`/purchase/${id}/cancelled`} className="tab-item" activeClassName="active">
-          
-          Đã Hủy
-        </NavLink>
-      </>
+    return ( 
+      <ul className="Account_nav">
+        <li>
+          <Link to={`/purchase/user/${Cookie.get('id')}`} className="is_acitve" activeClassName="is_active" exact={true}>
+            <i class="fas fa-user"></i>
+            <span>Thông tin tài khoản</span>
+          </Link>
+        </li>
+        <li>
+          <Link  className="is_acitve" activeClassName="is_active">
+            <i class="fas fa-bell"></i>
+            <span>Thông báo của tôi</span>
+          </Link>
+        </li>
+        <li>
+          <Link to='/purchase' className="is_acitve" activeClassName="is_active"> 
+            <i class="fas fa-clipboard"></i>
+            <span>Quản lý đơn hàng</span>
+          </Link>
+        </li>
+        <li>
+          <Link className="is_acitve" activeClassName="is_active">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Số địa chỉ</span>
+          </Link>
+        </li>
+        <li>
+          <Link className="is_acitve" >
+            <i class="far fa-credit-card"></i>
+            <span>Thông tin thanh toán</span>
+          </Link>
+        </li>
+      </ul>
     );
   }
 }

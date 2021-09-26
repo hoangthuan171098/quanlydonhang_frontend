@@ -102,7 +102,7 @@ class OrderUpdate extends Component {
       })
       .then(response => {
         alert("Update order success!");
-        this.props.history.push('/manager/orders/' + this.state.order.id)
+        this.componentDidMount();
       })
       .catch(error => {
         alert('An error occurred, please check again.');
@@ -314,7 +314,8 @@ class OrderUpdate extends Component {
                           <th></th>
                           <th>Name</th>
                           <th>Color</th>
-                          <th>Quantity</th>
+                          <th>M</th>
+                          <th>Cuộn</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -325,14 +326,12 @@ class OrderUpdate extends Component {
                               <img className='img-preview' src={process.env.REACT_APP_BACKEND_URL + item.product.image.url}></img>
                             </td>
                             <td>{item.product.name}</td>
-                            <td><div className='color-div' style={{backgroundColor:item.color}}></div></td>
+                            <td>{item.color}</td>
                             <td>
-                              {item.quantity_m ? 
-                                (item.quantity? 
-                                  item.quantity_m + ' x m,' + item.quantity + ' x roll'
-                                  : item.quantity_m + ' x m')
-                                :item.quantity + ' x roll'
-                              }
+                              {item.quantity_m? item.quantity_m:0}
+                            </td>
+                            <td>
+                              {item.quantity? item.quantity:0}
                             </td>
                             <td>
                               <button className='hiden-btn' onClick={e=>this.removeProductClick(e,index)}>

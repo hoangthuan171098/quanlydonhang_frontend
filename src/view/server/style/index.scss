@@ -83,17 +83,26 @@
         border: none;
     }
 
-    .bg-checking{
+    .status-waiting{
         background-color: #fac552 !important;
     }
-    .bg-confirmed{
+    .status-processing{
         background-color: #29b7d3 !important;
     }
-    .bg-delivering{
+    .status-waiting2deliver{
+        background-color: #CFFFB8 !important;
+    }
+    .status-delivering{
         background-color: aqua !important;
     }
-    .bg-delivered{
+    .status-delivered{
         background-color: #28a745 !important;
+    }
+    .status-done{
+        background-color: #19f0d0 !important;
+    }
+    .status-cancled{
+        background-color: red;
     }
 }
 

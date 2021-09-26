@@ -11,8 +11,7 @@ export default class Shopcart extends Component {
       loading :true,
       authenticate: true,
       note: '',
-      productList: [],
-
+      productList: []
     }
   }
 
@@ -29,9 +28,9 @@ export default class Shopcart extends Component {
   checkOutClick = () =>{
       axios
         .post(process.env.REACT_APP_BACKEND_URL + '/orders',{
+          status:'waiting',
           productList : this.state.productList,
           note:this.state.note,
-          status: 'waiting',
           buyer:Cookie.get('id')
         },{
           headers:{
@@ -41,7 +40,7 @@ export default class Shopcart extends Component {
         .then(response =>{
           alert('Da dat hang thanh cong');
           Cookie.remove('cart');
-          this.props.history.push('/purchase');
+          this.props.location.push('/purchase');
         })
         .catch(err => {
         })
@@ -136,7 +135,7 @@ export default class Shopcart extends Component {
                                 </div>
                               </div>
                             </td>
-                            <td className="total-price first-row">{item.product.price*item.quantity+item.product.price*item.quantity_m}</td>
+                            <td className="total-price first-row">{item.product.price*item.quantity}</td>
                             <td className="close-td first-row">
                               <i className="ti-close" onClick={e=>this.removeProductClick(e,index)}/>
                             </td>
