@@ -1,0 +1,129 @@
+.Shipment{
+    background-color: #eee;
+    .SideBar{
+        padding: 10px 5px 10px 5px;
+        position: absolute;
+        min-height: 600px;  
+        overflow-y: auto;
+        width: 240px;
+        box-sizing: border-box;
+        .Group-name{
+            display: flex;
+            -webkit-box-pack: justify;
+            justify-content: space-between;
+            padding: 10px 16px 0px 20px;
+            margin-bottom: 9px;
+            font-size: 20px;
+            color: rgb(91, 98, 111);
+            text-transform: uppercase;
+            max-height: 26px;
+            box-sizing: border-box;
+            font-family: Lato;
+            a{
+                color: inherit;
+            }
+            a:hover{
+                text-decoration: none;
+            }
+        }
+        .Group-items{
+            max-height: 180px;
+            margin-bottom: 19px;
+            overflow: auto;
+            box-sizing: border-box;
+            font-family: Lato;
+            font-size: 15px;
+            a{
+                color: rgba(255, 255, 255, 0.568);
+                padding:7px 0 2px 25px;
+                display: block;
+            }
+            a:hover{
+                background-color: rgb(28,36,49);
+                text-decoration: none;
+                border-left: solid 5px blue;
+            }
+        }
+    }
+
+    .flex-v-center{
+        display: flex;
+        align-items: center;
+    }
+
+    .impress{
+        text-transform: uppercase;
+        font-weight: 900;
+    }
+
+    .content{
+        min-height:550px;
+        margin-left: 240px;
+        padding: 10px;
+    }
+
+    .row{
+        margin-left: 0px !important;
+    }
+
+    input{
+        min-height: 30px;
+    }
+    span{
+        min-height: 30px;
+    }
+    .icon{
+        color: #27b3d2;
+        font-size: 20px;
+    }
+    .hiden-btn{
+        background-color: inherit;
+        border: none;
+    }
+
+    .status{
+        color: white;
+        border-radius: 5px;
+        padding: 0 5px 0 5px;
+    }
+    .status-waiting{
+        background-color: #f4ba01 !important;
+    }
+    .status-processing{
+        background-color: #d482ca !important;
+    }
+    .status-waiting2deliver{
+        background-color: #81d742 !important;
+    }
+    .status-delivering{
+        background-color: #8b19e6 !important;
+    }
+    .status-delivered{
+        background-color: #73a724 !important;
+    }
+    .status-done{
+        background-color: #19f0d0 !important;
+    }
+    .status-cancled{
+        background-color: #ab1600;
+    }
+
+
+    .img-preview{
+        padding: 5px;
+    }
+
+    .btn{
+        min-height: 35px;
+    }
+
+    label{
+        font-weight: bolder;
+    }
+
+    table{
+        margin-bottom: 10px;
+    }
+
+}
+

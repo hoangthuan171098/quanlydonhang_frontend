@@ -44,8 +44,6 @@ class DashBoard extends Component{
             <div>
                 <div className="footer">
                     <div className="container">
-                        
-
                         <b className="copyright">&copy; 2014 Edmin - EGrappler.com </b> All rights reserved.
                     </div>
                 </div>

@@ -10,43 +10,35 @@ class SideBar extends Component{
                 <ul className="widget widget-menu unstyled">
                     <li className="active">
                         <Link to='/admin'>
-                            <i className="menu-icon icon-dashboard"></i>
+                            <i className="menu-icon fa fa-tachometer"></i>
                             Dashboard
                         </Link>
                     </li>
                     <li>
                         <Link to="/admin/accounts">
-                            <i class="menu-icon icon-bullhorn"></i>
+                            <i class="menu-icon fa fa-user"></i>
                             Accounts
                         </Link>
                     </li>
                     <li>
                         <Link to="/admin/products">
-                            <i class="menu-icon icon-inbox"></i>
+                            <i class="menu-icon fa fa-cube"></i>
                             Products
                         </Link>
                     </li>
                     
                     <li>
                         <Link to="/admin/orders">
-                            <i class="menu-icon icon-tasks"></i>
+                            <i class="menu-icon fa fa-server"></i>
                             Orders
                         </Link>
                     </li>
                 </ul>
 
                 <ul class="widget widget-menu unstyled">
-                        <li><Link to="/manager/orders"><i class="menu-icon icon-tasks"></i> Orders </Link></li>
-                        <li><Link to="/manager/shipements"><i class="menu-icon icon-tasks"></i> Shipments </Link></li>
-                        <li><Link to="#"><i class="menu-icon icon-tasks"></i> More </Link></li>
-                        <li><Link to="#"><i class="menu-icon icon-tasks"></i> More </Link></li>
-                        <li><Link to="#"><i class="menu-icon icon-tasks"></i> More </Link></li>
-                    </ul>
-
-                <ul class="widget widget-menu unstyled">
                     <li>
                         <a class="collapsed" data-toggle="collapse" href="#togglePages">
-                            <i class="menu-icon icon-cog"></i>
+                            <i class="menu-icon fa fa-cog"></i>
                             <i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right"></i>
                             More Pages
                         </a>

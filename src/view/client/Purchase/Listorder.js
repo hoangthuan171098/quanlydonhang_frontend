@@ -8,12 +8,12 @@ export default class Listorder extends Component {
           loading: true,
           authenticate: true,
           note: "",
-          orders: [],
+          orders: []
         };
       }
     
       async componentDidMount() {
-        if (true) {
+        if (Cookie.get('role') === 'Customer') {
           let response = await fetch(
             process.env.REACT_APP_BACKEND_URL + "/orders",
             {
@@ -36,9 +36,7 @@ export default class Listorder extends Component {
         this.setState({ authenticate: false });
       }
   render() {
-      
       var name = '';
-      
     return (
       <div className="Account_layout">
         <h3 className="styles_Heading">Đơn hàng của tôi</h3>
@@ -56,7 +54,8 @@ export default class Listorder extends Component {
             </thead>
             <tbody>
             {this.state.orders.reverse().map((order,index)=>{
-              var total =0;
+              if(order.buyer._id === Cookie.get('id')){
+                var total = 0;
                 return(
                 <tr key={index}>
                     <td>
@@ -70,7 +69,15 @@ export default class Listorder extends Component {
                         
                     
                     {order.productList.map((item,index)=>{
+                      if(item.quantity && item.quantity_m){
+                        total = total + item.product.price * item.quantity + item.product.price * item.quantity_m;
+                      }
+                      else if(item.quantity){
                         total += item.product.price * item.quantity;
+                      }
+                      else{
+                        total += item.product.price * item.quantity_m;
+                      }
                         name += item.product.name + ','
                         
                         return <></>
@@ -86,12 +93,12 @@ export default class Listorder extends Component {
                     </td>
               </tr>
                 )
+              }
             })}
             </tbody>
           </table>
         </div>
       </div>
-    
     );
   }
 }

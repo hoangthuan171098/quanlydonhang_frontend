@@ -23,8 +23,6 @@ export default class Order extends Component {
             </div>
 
               <Switch>
-                    {/* <Route exact path='/purchase/order' component={Ordermaga} /> */}
-                    <Route path='/purchase/user/:id' component={Account} />
                     <Route path='/purchase' exact component={Listorder} />
                     <Route path='/purchase/:id' component={OrderlistDetail} />
                </Switch> 

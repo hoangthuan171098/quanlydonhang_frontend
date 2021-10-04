@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {BrowserRouter as Router,Switch,Route} from "react-router-dom"
 
 import NavBar from './components/Navbar'
+import Chat from './components/chat'
 import {Home,Login,Register,Contact,About} from './view/public/export'
 import ProductList from './view/public/Shops/ProductList'
 import ProductDetail from './view/public/ProductDetails/ProductDetail'
@@ -16,6 +17,9 @@ import Order from './view/client/Purchase/Order'
 
 
 import './App.css'
+import Shipment from './view/shipment'
+import Shippingaddress from './view/client/Shippingaddress'
+import Payment from './view/client/Purchase/Payment'
 
 
 class App extends Component {
@@ -24,7 +28,7 @@ class App extends Component {
 			<div className='App'>
 				<Router>
 					<NavBar />
-
+					<Chat />
 					<Switch>
 						<Route exact path='/' component={Home} />
 						<Route path='/about' component={About} />
@@ -42,7 +46,9 @@ class App extends Component {
 						<Route path='/login' component={Login} />
 						<Route path='/register' component={Register} />
 						<Route path='/purchase' component={Order} />
-
+						<Route path='/shipment' component={Shipment} />
+						<Route path='/a' component={Shippingaddress} />
+						<Route path='/b' component={Payment} />
 					</Switch>
 				</Router>
 			</div>

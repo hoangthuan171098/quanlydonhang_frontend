@@ -12,7 +12,7 @@ class OrderCreate extends Component {
       authenticate: true,
       products: [],
       users: [],
-      buyingItem:{color:'RED',quantity:'',quantity_m:''},
+      buyingItem:{color:'',quantity:'',quantity_m:''},
       order: {
         productList: []
       },
@@ -78,6 +78,7 @@ class OrderCreate extends Component {
     this.setState({authenticate: false});
   }
 
+  
   createOrderClick = (event) =>{
     event.preventDefault()
     axios
@@ -109,19 +110,28 @@ class OrderCreate extends Component {
 
   confirmProductClick = (event,item) =>{
     event.preventDefault()
-
+    if(item.quantity === 0 && item.quantity_m===0){
+      alert('Xin hãy nhập số cuộn hoặc mét!')
+      return
+    }
+    if(item.quantity === 0){
+      delete item.quantity
+    }
+    if(item.quantity_m === 0){
+      delete item.quantity_m
+    }
     let newList = [...this.state.order.productList,item]
     this.setState({order:{...this.state.order,productList:newList}})
-    this.setState({buyingItem:{...this.state.buyingItem,color:'RED',quantity:'',quantity_m:''}})
+    this.setState({buyingItem:{...this.state.buyingItem,color:this.state.buyingItem.product.colors[0],quantity:'',quantity_m:''}})
   }
 
   closeProductClick = async (event) =>{
     event.preventDefault()
-    await this.setState({buyingItem:{color:'RED',quantity:0}})
+    await this.setState({buyingItem:{color:'',quantity:'',quantity_m:''}})
   }
 
   chooseProductClick = (product) =>{
-    this.setState({buyingItem:{...this.state.buyingItem,product: product}})
+    this.setState({buyingItem:{...this.state.buyingItem,product: product,color:product.colors[0]}})
     this.closeModal()
   }
 
@@ -139,8 +149,6 @@ class OrderCreate extends Component {
   closeModal = () =>{
     this.setState({modal:{isOpen: false}})
   }
-
-
 
   render() {
 
@@ -167,10 +175,11 @@ class OrderCreate extends Component {
                     <div className='float-left'>
                       <select onChange={e=>this.setState({buyingItem:{...this.state.buyingItem,color:e.target.value}})} 
                         value={this.state.buyingItem.color} className='short-input'>
-                        <option value='RED'>red</option>
-                        <option value='YELLOW'>yellow</option>
-                        <option value='BLUE'>blue</option>
-                        <option value='GREEN'>green</option>
+                          {this.state.buyingItem.product.colors.map((color,index)=>{
+                            return(
+                              <option value={color}>{color}</option>
+                            )
+                          })}
                       </select>
                     </div>
                   </div>
@@ -213,6 +222,7 @@ class OrderCreate extends Component {
             isOpen={this.state.modal.isOpen}
             onRequestClose={this.closeModal}
             contentLabel="Select product"
+            ariaHideApp={false}
           >
             <div style={{marginBottom: 30+'px'}}>
                 <h2 className='pull-left'>Select product</h2>
@@ -337,7 +347,7 @@ class OrderCreate extends Component {
                                 alt='preview img'></img>
                             </td>
                             <td>{item.product.name}</td>
-                            <td style={{color:item.color.toLowerCase()}}>{item.color}</td>
+                            <td>{item.color}</td>
                             <td>
                               {item.quantity_m ? 
                                 (item.quantity? 

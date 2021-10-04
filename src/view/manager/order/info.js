@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
 import Cookie from "js-cookie"
 import axios from 'axios'
+import Modal from 'react-modal'
+
 
 import Shipment from './component/shipment'
 import Status from './component/status'
+import UserInfo from '../components/UserInfo'
+
 
 class OrderInfo extends Component {
 	constructor(props) {
@@ -15,7 +19,9 @@ class OrderInfo extends Component {
 			order: {},
 			isPartial: false,
 			productList: [],
-			packList: []
+			packList: [],
+			openModal: false,
+			shipment: null
 		}
 	}
 
@@ -42,6 +48,14 @@ class OrderInfo extends Component {
 			return
 		}
 		this.setState({authenticate: false});
+	}
+
+	openModal = () =>{
+		this.setState({openModal:true})
+	}
+
+	closeModal = () =>{
+		this.setState({openModal:false})
 	}
 
 	confirmClick = async () =>{
@@ -131,15 +145,33 @@ class OrderInfo extends Component {
 	}
 
 	showPackClick = ()=>{
-		this.setState({isPartial: !this.state.isPartial})
+		if(this.state.order.remainProductList){
+			this.setState({isPartial: !this.state.isPartial,show:'remainProducts'})
+			return
+		}
+		this.setState({isPartial: !this.state.isPartial,show:'products'})
 	}
 
-	showRemainProducts = ()=>{
-		if(this.state.order.remainProductList.length === 0){
-			return(<span className='flex-v-center'>Empty</span>)
+	showProductList = () =>{
+		let productList
+		let title
+		if(!this.state.order.remainProductList){
+			productList = this.state.order.productList
+			title = "Product list"
 		}
 		else{
-			return(
+			if(this.state.order.remainProductList.length === 0){
+				productList = this.state.order.productList
+				title = "Product list"
+			}
+			else{
+				productList = this.state.order.remainProductList
+				title = "Remain Product"
+			}
+		}
+		return(
+			<div className='row'>
+				<span className='flex-v-center impress'>{title}</span>
 				<table className='table'>
 					<thead>
 						<tr>
@@ -151,7 +183,7 @@ class OrderInfo extends Component {
 						</tr>
 					</thead>
 					<tbody>
-					{this.state.order.remainProductList.map((item,index)=>{
+					{productList.map((item,index)=>{
 						return(
 						<tr key={index}>
 							<td><span>{item.product.name}</span></td>
@@ -181,55 +213,158 @@ class OrderInfo extends Component {
 					})}
 					</tbody>
 				</table>
+			</div>
+		)
+	}
+
+
+
+	showNote = () =>{
+		if(this.state.order.note && this.state.order.note!==""){
+			return(
+				<div className='row'>
+					<span className='impress'>Note : </span>
+					{this.state.order.note}
+				</div>
+			)
+		}
+		return(<></>)
+	}
+
+	showShipment = () =>{
+		if(this.state.shipment){
+			return(
+				<Shipment shipment={this.state.shipment} shipIndex={this.state.shipIndex}/>
+			)
+		}
+		return(
+			<></>
+		)
+	}
+
+	showShipments = () =>{
+		if(this.state.order.shipments.length !== 0){
+			return(
+				<div className='module'>
+					<div className='module-body'>
+						<div className='row'>
+							<div className='w-100'>
+								<span className='impress'>SHIPMENT:</span>
+							</div>
+							{this.state.order.shipments.map((shipment,index)=>{
+								return(
+									<span index={index} onClick={(e)=>this.selectShipmentClick(e,shipment,index+1)}
+										style={{cursor:'pointer'}}
+									>#{index+1} - {shipment.status}</span>
+								)
+							})}
+						</div>
+					</div>
+				</div>
 			)
 		}
 	}
 
+	showButton = () =>{
+		let status = this.state.order.status
+		if(status === 'waiting'){
+			return(
+				<div className='row'>
+					<button onClick={this.confirmClick} className='btn btn-primary mr-4'>Confirm</button>
+					<button onClick={this.cancleClick} className='btn btn-danger mr-4'>Cancle</button>
+				</div>
+			)
+		}
+		else if(status === 'processing'){
+			return(
+				<div className='row'>
+					<button onClick={this.packAllClick}
+						className={!this.state.isPartial? 'btn btn-primary mr-4':'d-none'}
+					>Pack All</button>
+					<button onClick={this.showPackClick}
+						className={!this.state.isPartial? 'btn btn-primary mr-4':'d-none' }
+					>Partial Pack</button>
+					<button onClick={this.submitPackClick}
+						className={this.state.isPartial? 'btn btn-primary mr-4':'d-none'}
+					>Submit</button>
+				</div>
+			)
+		}
+		else if(status === 'partial delivered'||status === 'partial delivering'){
+			return(
+				<div className='row'>
+					<button onClick={this.showPackClick}
+						className={!this.state.isPartial? 'btn btn-primary mr-4':'d-none' }
+					>Partial Pack</button>
+					<button onClick={this.submitPackClick}
+						className={this.state.isPartial? 'btn btn-primary mr-4':'d-none'}
+					>Submit</button>
+				</div>
+			)
+		}
+		else if(status === 'waiting to deliver' && this.state.order.remainProductList){
+			if(this.state.order.remainProductList.length !==0){
+				return(
+					<div className='row'>
+						<button onClick={this.showPackClick}
+							className={!this.state.isPartial? 'btn btn-primary mr-4':'d-none' }
+						>Partial Pack</button>
+						<button onClick={this.submitPackClick}
+							className={this.state.isPartial? 'btn btn-primary mr-4':'d-none'}
+						>Submit</button>
+					</div>
+				)
+			}
+		}
+		return(
+			<></>
+		)
+	}
+
+	selectShipmentClick = (event,shipment,index) =>{
+		event.preventDefault()
+		this.setState({shipment:shipment,shipIndex:index})
+	}
+
  	render() {
     if (!this.state.loading && Cookie.get('token')) {
-		if(this.state.order.remainProductList){
-			return(
-				<div className="module">
-					<div className="module-head">
-						<h2>Order  
-							<Status status={this.state.order.status} />
-							<span className='ml-4 text-primary fa fa-edit'
-								onClick={e=>this.updateClick(e)}></span>
-						</h2>
-						ID: {this.state.order.id}
+    	return (
+			<div className="module">
+				<div className="module-head">
+					<h2>Order detail 
+						<Status status={this.state.order.status} />
+						<span className='ml-4 text-primary fa fa-edit'
+							onClick={e=>this.updateClick(e)}></span>
+					</h2>
+					<p>ID: {this.state.order.id}</p>
+				</div>
+				
+				<div className="module-body">
+					
+					<div className='w-100 d-flex flex-row-reverse' style={{marginBottom:10+'px'}}>
+						{this.showButton()}
 					</div>
-					<div className="module-body">
-						<div className='w-75 float-left'>
-							<div className='module'>
-								<div className='module-body'>
-									<div className='row' style={{marginBottom:20+'px'}}>
-										<span className='impress flex-v-center'>Remain products: </span>
-										{this.showRemainProducts()}
-									</div>
 
-									{(!this.state.order.shipments[0].theLast)
-										&&this.state.order.shipments.map((shipment,id)=>{
-										return(
-											<Shipment shipment={this.state.order.shipments[id]}/>
-										)
-									})}
-									
-									<div className='row'>
-										<span className='flex-v-center impress'>Note :</span><br />
-										{this.state.order.note}
-									</div>
-								</div>
+					<div className='w-75 float-left'>
+						<div className='module'>
+							<div className='module-body'>
+								{this.showProductList()}
+								{this.showNote()}
 							</div>
 						</div>
+					</div>
 
-						<div className='module float-right' style={{width: 20 + '%'}}>
+					<div className='float-right' style={{width: 20 + '%'}}>
+						<div className='module'>
 							<div className='module-body'>
 								<div className='row'>
 									<div className='w-50'>
 										<span className='impress'>BUYER:</span>
 									</div>
 									<div className='w-50'>
-										<span>{this.state.order.buyer.username}</span>
+										<span onClick={()=>this.openModal()}
+											style={{cursor:'pointer'}}
+										>{this.state.order.buyer.username}</span>
 									</div>
 								</div>
 								<div className='row'>
@@ -243,12 +378,14 @@ class OrderInfo extends Component {
 								</div>
 							</div>
 						</div>
+						
+						{this.showShipments()}
 
-						<div className='module float-right' style={{width: 20 + '%'}}>
-							<div className='module-body'>
+						<div className='module'>
+							<div className='module-body' >
 								<div className='row'>
 									<div className='w-50'>
-										<span className='imperss'>LAST UPDATE:</span>
+										<span className='impress'>LAST UPDATE:</span>
 									</div>
 									<div className='w-50'>
 										<span>{this.state.order.updatedAt.slice(0,10)}</span><br/>
@@ -257,161 +394,20 @@ class OrderInfo extends Component {
 								</div>
 							</div>
 						</div>
-
-						<div className='clear'>
-							<div className={this.state.order.status==='waiting'? 'row':'d-none'}>
-								<button onClick={this.confirmClick}
-									className='btn btn-primary mr-4'
-								>Confirm</button>
-								<button onClick={this.cancleClick}
-									className='btn btn-danger mr-4'
-								>Cancle</button>
-							</div>
-							<div className={(this.state.order.status === 'processing'
-											|| this.state.order.status === "partial delivered")? 
-											'row':'d-none'}>
-								<button onClick={this.packAllClick}
-									className={!this.state.isPartial? 'btn btn-primary mr-4':'d-none'}
-								>Pack All</button>
-								<button onClick={this.showPackClick}
-									className={!this.state.isPartial? 'btn btn-primary mr-4':'d-none' }
-								>Partial Pack</button>
-								<button onClick={this.submitPackClick}
-									className={this.state.isPartial? 'btn btn-primary mr-4':'d-none'}
-								>Submit</button>
-							</div>
-						</div>
 					</div>
+
+					{this.showShipment()}
+					<div className='clear'></div>
 				</div>
-			)
-		}
-    	return (
-			<div className="module">
-				<div className="module-head">
-					<h2>Order detail 
-						<Status status={this.state.order.status} />
-						<span className='ml-4 text-primary fa fa-edit'
-							onClick={e=>this.updateClick(e)}></span>
-					</h2>
-					<p>ID: {this.state.order.id}</p>
-				</div>
-				<div className="module-body">
-					<div className='w-75 float-left'>
-						<div className='module'>
-							<div className='module-body'>
-								<div className='row'>
-									<span className='flex-v-center impress'>Product List: </span>
-									<table className='table'>
-										<thead>
-											<tr>
-												<th>Name</th>
-												<th>Color</th>
-												<th>Cuộn</th>
-												<th>M</th>
-												<th style={{width:250+'px'}} className={this.state.isPartial? '':'d-none'}></th>
-											</tr>
-										</thead>
-										<tbody>
-										{this.state.order.productList.map((item,index)=>{
-											return(
-											<tr key={index}>
-												<td><span>{item.product.name}</span></td>
-												<td>{item.color}</td>
-												<td>
-													{item.quantity? item.quantity:0}
-												</td>
-												<td>
-													{item.quantity_m? item.quantity_m:0}
-												</td>
-												<td className={this.state.isPartial? '':'d-none'}>
-													Roll:
-													<input type='number' className='short-input mr-4'
-														min='0'
-														max={item.quantity? item.quantity.toString():'0'}
-														onChange={e=>{this.changePackQuantity(e,index)}}
-													></input>
-													M:
-													<input type='number' className='short-input'
-														min='0'
-														max={item.quantity_m? item.quantity_m.toString():'0'}
-														onChange={e=>{this.changePackQuantityM(e,index)}}
-													></input>
-												</td>
-											</tr>
-											)
-										})}
-										</tbody>
-									</table>
-								</div>
-
-								<div className='row'>
-									<span className='flex-v-center impress'>Note :</span><br />
-									{this.state.order.note}
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div className='module float-right' style={{width: 20 + '%'}}>
-						<div className='module-body'>
-							<div className='row'>
-								<div className='w-50'>
-									<span className='impress'>BUYER:</span>
-								</div>
-								<div className='w-50'>
-									<span>{this.state.order.buyer.username}</span>
-								</div>
-							</div>
-							<div className='row'>
-								<div className='w-50'>
-									<span className='impress'>CREATED AT:</span>
-								</div>
-								<div className='w-50'>
-									<span>{this.state.order.createdAt.slice(0,10)}</span><br/>
-									<span>{this.state.order.createdAt.slice(11,19)}</span>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div className='module float-right' style={{width: 20 + '%'}}>
-						<div className='module-body'>
-							<div className='row'>
-								<div className='w-50'>
-									<span className='impress'>LAST UPDATE:</span>
-								</div>
-								<div className='w-50'>
-									<span>{this.state.order.updatedAt.slice(0,10)}</span><br/>
-									<span>{this.state.order.updatedAt.slice(11,19)}</span>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div className='clear'>
-						<div className={this.state.order.status==='waiting'? 'row':'d-none'}>
-							<button onClick={this.confirmClick}
-								className='btn btn-primary mr-4'
-							>Confirm</button>
-							<button onClick={this.cancleClick}
-								className='btn btn-danger mr-4'
-							>Cancle</button>
-						</div>
-						<div className={(this.state.order.status === 'processing'
-										|| this.state.order.status === "partial delivered")? 
-										'row':'d-none'}>
-							<button onClick={this.packAllClick}
-								className={!this.state.isPartial? 'btn btn-primary mr-4':'d-none'}
-							>Pack All</button>
-							<button onClick={this.showPackClick}
-								className={!this.state.isPartial? 'btn btn-primary mr-4':'d-none' }
-							>Partial Pack</button>
-							<button onClick={this.submitPackClick}
-								className={this.state.isPartial? 'btn btn-primary mr-4':'d-none'}
-							>Submit</button>
-						</div>
-					</div>
-				</div>
+				
+				<Modal
+					isOpen={this.state.openModal}
+					onRequestClose={this.closeModal}
+					contentLabel="Select product"
+					ariaHideApp={false}
+				>
+					<UserInfo user={this.state.order.buyer} clickBack={this.closeModal}/>
+				</Modal>
 			</div>
 		)
     }
@@ -553,7 +549,7 @@ class OrderInfo extends Component {
 					alert('Cannot pack products')
 					console.log('An error occurred:', error.response)
 				});
-			alert("Packed all product success!")
+			alert("Packed partial product success!")
 			this.componentDidMount()
 		})
 		.catch(err=>{

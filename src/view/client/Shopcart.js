@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Cookie from 'js-cookie';
 import { Link } from "react-router-dom";
 import axios from "axios";
-
+import "./style/shoppingcart.scss"
 
 export default class Shopcart extends Component {
   constructor(props){
@@ -69,7 +69,7 @@ export default class Shopcart extends Component {
 
   render() {
     return (
-      <div>
+      <div className="carts">
         <div className="breacrumb-section">
           <div className="container">
             <div className="row">
@@ -93,7 +93,7 @@ export default class Shopcart extends Component {
                   <table>
                     <thead>
                       <tr>
-                        <th>Hình Ảnh</th>
+                        <th>Hinh anh </th>
                         <th className="p-name">Tên Sản Phẩm</th>
                         <th>Giá</th>
                         <th>Số lượng</th>
@@ -119,8 +119,8 @@ export default class Shopcart extends Component {
                             <td className="p-price first-row">{item.product.price}</td>
                             <td className="qua-col first-row">
                               <div className="quantity">
-                                <div className="pro-qty">
-                                  <input type="text" defaultValue={item.quantity} 
+                                <div className="pro-qty" >
+                                  <input type="text" value={item.quantity} 
                                     onChange = {(e) =>this.updateProductClick(e,index)}
                                   />
                                 </div>

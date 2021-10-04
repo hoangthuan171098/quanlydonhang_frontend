@@ -1,4 +1,3 @@
-import axios from "axios";
 import Cookie from "js-cookie";
 import React, { Component } from "react";
 import { withRouter } from "react-router";
@@ -41,6 +40,10 @@ class ModalBuyProduct extends Component {
     var {productdetail} = this.props;
     if(this.state.quantity === 0 && this.state.quantity_m === 0 ){
       alert('Xin hãy nhập số cuộn hoặc mét')
+      return
+    }
+    if(!Cookie.get('username')){
+      alert('Bạn cần phải đăng nhập để đặt hàng!')
       return
     }
     let item = {

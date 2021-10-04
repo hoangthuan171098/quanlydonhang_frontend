@@ -12,7 +12,7 @@ class OrderUpdate extends Component {
       authenticate: true,
       products: [],
       users: [],
-      buyingItem:{color:'RED',quantity:'',quantity_m:''},
+      buyingItem:{color:'',quantity:'',quantity_m:''},
       order: {
         productList: []
       },
@@ -118,15 +118,25 @@ class OrderUpdate extends Component {
   }
 
   confirmProductClick = (event,item) =>{
+    if(item.quantity === 0 && item.quantity_m===0){
+      alert('Xin hãy nhập số cuộn hoặc mét!')
+      return
+    }
+    if(item.quantity === 0){
+      delete item.quantity
+    }
+    if(item.quantity_m === 0){
+      delete item.quantity_m
+    }
     event.preventDefault()
     let newList = [...this.state.order.productList,item]
     this.setState({order:{...this.state.order,productList:newList}})
-    this.setState({buyingItem:{...this.state.buyingItem,color:'RED',quantity:'',quantity_m:''}})
+    this.setState({buyingItem:{...this.state.buyingItem,color:'',quantity:'',quantity_m:''}})
   }
 
   closeProductClick = (event) =>{
     event.preventDefault()
-    this.setState({buyingItem:{color:'RED',quantity:'',quantity:''}})
+    this.setState({buyingItem:{color:'',quantity:'',quantity:''}})
   }
 
   chooseProductClick = (product) =>{
@@ -174,10 +184,11 @@ class OrderUpdate extends Component {
                     <div className='float-left'>
                       <select onChange={e=>this.setState({buyingItem:{...this.state.buyingItem,color:e.target.value}})} 
                         value={this.state.buyingItem.color} className='short-input'>
-                        <option value='RED'>red</option>
-                        <option value='YELLOW'>yellow</option>
-                        <option value='BLUE'>blue</option>
-                        <option value='GREEN'>green</option>
+                        {this.state.buyingItem.product.colors.map((color,index)=>{
+                          return(
+                            <option value={color}>{color}</option>
+                          )
+                        })}
                       </select>
                     </div>
                   </div>
@@ -344,7 +355,7 @@ class OrderUpdate extends Component {
                                 alt='preview image'></img>
                             </td>
                             <td>{item.product.name}</td>
-                            <td style={{color:item.color.toLowerCase()}}>{item.color}</td>
+                            <td>{item.color}</td>
                             <td>
                               {item.quantity_m ? 
                                 (item.quantity? 

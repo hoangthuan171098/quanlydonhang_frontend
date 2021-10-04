@@ -16,7 +16,7 @@ export default class OrderlistDetail extends Component {
   }
 
   async componentDidMount() {
-    if (true) {
+    if (Cookie.get('role') === 'Customer') {
       let response = await fetch(
         process.env.REACT_APP_BACKEND_URL + "/orders",
         {
@@ -87,6 +87,7 @@ export default class OrderlistDetail extends Component {
                 <th>Giá</th>
                 <th>Số cuộn</th>
                 <th>Số mét</th>
+                <th>Mau</th>
                 <th>Tạm tính</th>
                 
               </tr>
@@ -97,8 +98,20 @@ export default class OrderlistDetail extends Component {
                 if (order.id === this.props.match.params.id) {
                   return (
                     <>
-                      {order.productList.map((item, index) => {
-                          total += item.product.price * item.quantity;
+                      {order.productList.map((item, index) => { 
+                        let money 
+                        if(item.quantity && item.quantity_m){
+                          money = item.product.price * item.quantity + item.product.price * item.quantity_m
+                          total += money
+                        }
+                        else if(item.quantity){
+                          money = item.product.price * item.quantity
+                          total += money
+                        }
+                        else{
+                          money = item.product.price * item.quantity_m
+                          total += money
+                        }
                         return (
                           <tr>
                             <td>
@@ -109,17 +122,16 @@ export default class OrderlistDetail extends Component {
                                 />
                                 <div className="product-info">
                                   <a className="product-name">
-                                  {item.product.name}
+                                    {item.product.name}
                                   </a>
-                                  <p className="product-seller">{item.product.description}</p>
-                                  <p className="product-sku">Màu: {item.color}</p>
                                 </div>
                               </div>
                             </td>
                             <td className="price">{item.product.price}đ</td>
                             <td className="quantity">{item.quantity}</td>
                             <td className="discount">{item.quantity_m}</td>
-                            <td className="total">{item.product.price * item.quantity}đ</td>
+                            <td className="discount">{item.color}</td>
+                            <td className="total">{money}đ</td>
                           </tr>
                         );
                       })}

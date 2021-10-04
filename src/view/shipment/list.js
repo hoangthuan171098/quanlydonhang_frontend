@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import axios from 'axios'
 import Cookie from 'js-cookie'
 
-import Status from './component/status'
+import Status from './components/status'
 
 class ShipmentList extends Component{
     constructor(props){
@@ -10,13 +10,13 @@ class ShipmentList extends Component{
         this.state={
             loading: true,
             filter: {},
-            shipments: []
+            shipments: [], 
         }
     }
 
     async componentDidMount(){
         await axios
-            .get(process.env.REACT_APP_BACKEND_URL + '/shipments',{
+            .get(process.env.REACT_APP_BACKEND_URL + '/shipments?shipper=' + Cookie.get('id'),{
                 headers:{
                     'Authorization' : 'bearer ' + Cookie.get('token')
                 }
@@ -31,9 +31,9 @@ class ShipmentList extends Component{
     }
 
     infoClick = (id) =>{
-        this.props.history.push('/manager/shipments/' + id)
+        this.props.history.push('/shipment/shipments-orders/' + id)
     }
-
+    
     render(){
         return(
             <div className='ShipmentManager'>
@@ -51,18 +51,20 @@ class ShipmentList extends Component{
                         </select>
                     </div>
                     <div className='module-body'>
-                        <table className="table list-table">
+                        <table className="table">
                             <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Buyer</th>
                                 <th>Status</th>
+                                <th>Address</th>
                                 <th>productList</th>
-                                <th></th>
+                                <td></td>
                             </tr>
                             </thead>
                             <tbody>
-                                {this.state.shipments.map((shipment, index) => {
+                                {
+                                this.state.shipments.map((shipment, index) => {
                                 return (
                                     <tr key={index}>
                                         <td onClick={()=>this.infoClick(shipment.id)}>{shipment.id}</td>
@@ -70,6 +72,7 @@ class ShipmentList extends Component{
                                         <td onClick={()=>this.infoClick(shipment.id)}>
                                             <Status status={shipment.status}/>
                                         </td>
+                                        <td onClick={()=>this.infoClick(shipment.id)}>{shipment.address}</td>
                                         <td onClick={()=>this.infoClick(shipment.id)}>
                                             {shipment.productList.map((item,index)=>{
                                                 if(index === 2)
@@ -86,7 +89,7 @@ class ShipmentList extends Component{
                                                     </p>
                                                 )
                                             })}
-                                        </td>
+                                        </td>                                        
                                     </tr>
                                 )
                                 })}

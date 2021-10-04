@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import {Link} from 'react-router-dom'
 import axios from 'axios'
 import Cookie from 'js-cookie'
 
@@ -24,7 +23,6 @@ class OrderManager extends Component{
             })
             .then(res=>{
                 this.setState({orders:res.data})
-                console.log(res)
             })
             .catch(err=>{
                 console.log('Cannot connect to server')
@@ -58,15 +56,15 @@ class OrderManager extends Component{
                         </select>
                     </div>
                     <div className='module-body'>
-                        <table className="table">
+                        <table className="table list-table">
                             <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Buyer</th>
-                                <th>Status</th>
-                                <th>productList</th>
-                                <th></th>
-                            </tr>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Buyer</th>
+                                    <th>Status</th>
+                                    <th>productList</th>
+                                    <th></th>
+                                </tr>
                             </thead>
                             <tbody>
                                 {this.state.orders.reverse().map((order, index) => {
