@@ -13,7 +13,7 @@ export default class Listorder extends Component {
       }
     
       async componentDidMount() {
-        if (Cookie.get('role') === 'Customer') {
+        if (Cookie.get('role') === 'Public') {
           let response = await fetch(
             process.env.REACT_APP_BACKEND_URL + "/orders",
             {
@@ -37,6 +37,7 @@ export default class Listorder extends Component {
       }
   render() {
       var name = '';
+      console.log(this.state.orders)
     return (
       <div className="Account_layout">
         <h3 className="styles_Heading">Đơn hàng của tôi</h3>

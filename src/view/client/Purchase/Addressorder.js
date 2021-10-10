@@ -8,8 +8,7 @@ export default class Addressorder extends Component {
             <div className="Account_sidebar">
                 <div className="Account_avatar">
                   <div className="info">
-                    Tài khoản của
-                    <strong>Kiếm Tiền Nuôi Em</strong>
+                      
                   </div>
                 </div>
                 <ul className="Account_nav">

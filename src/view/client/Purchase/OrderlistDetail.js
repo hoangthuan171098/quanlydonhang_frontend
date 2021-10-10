@@ -16,7 +16,7 @@ export default class OrderlistDetail extends Component {
   }
 
   async componentDidMount() {
-    if (Cookie.get('role') === 'Customer') {
+    if (Cookie.get('role') === 'Public') {
       let response = await fetch(
         process.env.REACT_APP_BACKEND_URL + "/orders",
         {
@@ -89,7 +89,7 @@ export default class OrderlistDetail extends Component {
                 <th>Số mét</th>
                 <th>Mau</th>
                 <th>Tạm tính</th>
-                
+                <th>Trạng thái </th>
               </tr>
             </thead>
             <tbody>
@@ -132,6 +132,7 @@ export default class OrderlistDetail extends Component {
                             <td className="discount">{item.quantity_m}</td>
                             <td className="discount">{item.color}</td>
                             <td className="total">{money}đ</td>
+                            <td className="total">{item.product.status}</td>
                           </tr>
                         );
                       })}
