@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class Hero extends Component {
     render() {
         return (
-            <div id="heroCarousel" className="carousel slide carousel-fade" data-ride="carousel">
+            <div id="heroCarousel" className="carousel slide carousel-fade" data-ride="carousel" >
             <div className="carousel-inner" role="listbox">
               {/* Slide 1 */}
               <div className="carousel-item active" style={{backgroundImage: 'url(assets/img/slide/slide-1.jpg)'}}>

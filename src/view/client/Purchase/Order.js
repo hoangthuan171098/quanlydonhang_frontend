@@ -15,8 +15,8 @@ export default class Order extends Component {
             <div className="Account_sidebar">
                 <div className="Account_avatar">
                   <div className="info">
-                    Tài khoản của
-                    <strong>{Cookie.get('username').toUpperCase()}</strong>
+                  
+                    <strong></strong>
                   </div>
                 </div>
                 <Nav />
