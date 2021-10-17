@@ -9,11 +9,14 @@ class ProductList extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      search:  "",
       categories: [],
       price:'cao',
       cate:'all',
       currentpage : 1,
-      perPage :10
+      perPage :12,
+      task: []
+
     };
   }
 
@@ -33,17 +36,31 @@ class ProductList extends Component {
     this.setState({ categories: categories });
     this.props.fetchAllProducts();
   }
-
+  paginate = ( pageNumber) =>{
+    this.setState({currentpage:pageNumber})
+  }
   render() {
     var { products } = this.props;
+    var currentproducts
     const indexOfLast = this.state.currentpage * this.state.perPage;
     const indexOfFirst = indexOfLast - this.state.perPage;
-    const currentproducts = products.slice(indexOfFirst,indexOfLast);
+    currentproducts = products.slice(indexOfFirst,indexOfLast);
     const pageNumber =[];
-    for(let i=1;i<=Math.ceil(5);i++){
+    for(let i=1;i<=Math.ceil(products.length / this.state.perPage);i++){
       pageNumber.push(i)
     }
-    console.log(this.state.cate)
+    var {cate,search }= this.state;
+    if(cate !== "all"){
+      currentproducts = products.filter((val)=>{
+        return val.category.name === this.state.cate
+      })
+    }
+    if(search){
+      currentproducts = products.filter((val)=>{
+          return val.name.toLowerCase().indexOf(search) !== -1;
+        })  
+    }
+    console.log(products.length)
     return (
       <div className="app__container">
         <div className="grid wide">
@@ -83,6 +100,7 @@ class ProductList extends Component {
                       type="text"
                       className="header__search-input"
                       placeholder="Nhập để tìm kiếm sản phẩm"
+                      onChange={(e) =>this.setState({search:e.target.value})}
                     />
                   </div>
                   <button className="header__search-btn">
@@ -113,7 +131,7 @@ class ProductList extends Component {
               <div className="home-product">
                 <div className="row sm-gutter">
                   {/* Product item */}
-                  {products.filter(product =>this.state.cate==='all' ? true :  product.category.name===this.state.cate).map((product, index) => {
+                  {currentproducts.map((product, index) => {
                     return (
                   
                       <div className="col l-2-4 m-4 c-6" key={index}>
@@ -187,13 +205,17 @@ class ProductList extends Component {
                     <i className="pagination-item__icon fas fa-angle-left" />
                   </a>
                 </li>
+                {pageNumber.map((number)=>{
+                  return(
+                    <li className="pagination-item pagination-item--active" style={{cursor:"pointer"}}>
+                      <a href onClick={() => this.paginate(number)} className="pagination-item__link">
+                        {number}
+                      </a>
+                    </li>
+                  )
+                })}
                 
-                <li className="pagination-item pagination-item--active">
-                  <a href className="pagination-item__link">
-                    1
-                  </a>
-                </li>
-                <li className="pagination-item">
+                {/* <li className="pagination-item">
                   <a href className="pagination-item__link">
                     2
                   </a>
@@ -223,11 +245,12 @@ class ProductList extends Component {
                     14
                   </a>
                 </li>
+                */}
                 <li className="pagination-item">
                   <a href className="pagination-item__link">
                     <i className="pagination-item__icon fas fa-angle-right" />
                   </a>
-                </li>
+                </li> 
               </ul>
             </div>
           </div>

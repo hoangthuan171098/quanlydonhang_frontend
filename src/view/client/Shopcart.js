@@ -3,8 +3,8 @@ import Cookie from "js-cookie";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./style/shoppingcart.scss";
-
-export default class Shopcart extends Component {
+import {withRouter} from "react-router"
+class Shopcart extends Component {
   constructor(props){
     super(props);
     this.state ={
@@ -39,8 +39,8 @@ export default class Shopcart extends Component {
         })
         .then(response =>{
           alert('Da dat hang thanh cong');
-          Cookie.remove('cart');
-          this.props.location.push('/purchase');
+          // Cookie.remove('cart')
+          window.location.href="/location"
         })
         .catch(err => {
         })
@@ -123,7 +123,7 @@ export default class Shopcart extends Component {
                     <td className="text-center">
                       <div className="count-input">
                       
-                        <input type="text" style={{ width: 110 + "px" }} defaultValue={item.quantity}
+                        <input type="text" style={{ width: 110 + "px" }} defaultValue={item.quantity_m}
                            onChange = {(e) =>this.updateMeterClick(e,index)}
                          />
                         
@@ -202,3 +202,4 @@ export default class Shopcart extends Component {
     );
   }
 }
+export default withRouter(Shopcart)
