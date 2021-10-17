@@ -5,7 +5,8 @@ import "../Cart/styles/buycart.scss";
 import { Link } from "react-router-dom";
 import "./styleproductitem.scss";
 import Cookie from "js-cookie";
-export default class ProductDetailItem extends Component {
+import {withRouter} from "react-router"
+class ProductDetailItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -70,7 +71,8 @@ export default class ProductDetailItem extends Component {
       Cookie.set("cart", JSON.stringify([item]));
     }
     alert("Them san pham vao gio hang thanh cong!");
-    window.location.href="/products";
+    
+    window.location.href="/products"
   };
   render() {
     var { productdetail } = this.props;
@@ -213,3 +215,4 @@ export default class ProductDetailItem extends Component {
     );
   }
 }
+export default  withRouter(ProductDetailItem)

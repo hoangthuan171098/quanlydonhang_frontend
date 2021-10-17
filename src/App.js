@@ -23,6 +23,8 @@ import Shippingaddress from './view/client/Shippingaddress'
 import Payment from './view/client/Purchase/Payment'
 import Topbar from './components/Topbar'
 import Footer from './components/Footer'
+import Addressorder from './view/client/Purchase/Addressorder'
+import Account from './view/client/Purchase/Account'
 
 
 class App extends Component {
@@ -30,9 +32,7 @@ class App extends Component {
 		return (
 			<div className='app'>
 				<Router>
-				
 					<Topbar />
-					
 					<Chat />
 					<Switch>
 						<Route exact path='/' component={Home} />
@@ -52,8 +52,9 @@ class App extends Component {
 						<Route path='/register' component={Register} />
 						<Route path='/purchase' component={Order} />
 						<Route path='/shipment' component={Shipment} />
-						<Route path='/a' component={Shippingaddress} />
-						<Route path='/b' component={Payment} />
+						<Route path='/location' component={Shippingaddress} />
+						<Route path='/payment' component={Payment} />
+						<Route path='/a' component={Account} />
 					</Switch>
 					<Footer />
 				</Router>
