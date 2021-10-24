@@ -2,11 +2,16 @@ import React, { Component } from "react";
 import Cookie from "js-cookie";
 import axios from "axios";
 import { withRouter } from "react-router";
-class Account extends Component {
+import "../style/order.scss";
+import "antd/dist/antd.css";
+import {Avatar} from 'antd';
+import {Link} from "react-router-dom";
+class Profileuser extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      profileimage: "",
       firstname_error: "",
       lastname_error: "",
       firm_error: "",
@@ -76,7 +81,85 @@ class Account extends Component {
       });
     }
   }
-  handleSubmit = (event) => {
+  onSubmitAddAvatar = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    Array.from(this.state.images).forEach((image) => {
+      formData.append("files", image);
+    });
+
+    formData.append("ref", "user");
+    formData.append("refId", this.state.user.id);
+    formData.append("field", "avatar");
+    formData.append("source", "users-permissions");
+
+    await axios
+      .post(`http://localhost:1337/upload`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: "bearer " + Cookie.get("token"),
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        alert("Thêm avatar thành công!");
+      })
+      .catch((err) => {
+        console.log(err.response);
+        alert("Thêm avatar thất bại!");
+      });
+    window.location.href = "/profile";
+  };
+
+  onSubmitChangeAvatar = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+
+    Array.from(this.state.images).forEach((image) => {
+      formData.append("files", image);
+    });
+
+    formData.append("ref", "user");
+    formData.append("refId", this.state.user.id);
+    formData.append("field", "avatar");
+    formData.append("source", "users-permissions");
+
+    await axios
+      .delete(
+        `http://localhost:1337/upload/files/` + this.state.user.avatar.id,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: "bearer " + Cookie.get("token"),
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+
+    await axios
+      .post(`http://localhost:1337/upload`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: "bearer " + Cookie.get("token"),
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+    window.location.href = "/profile";
+  };
+  handleSubmit = async (event) => {
     event.preventDefault();
     // if(this.state.info.firstName === ""){
     //   this.setState({firstname_error: "Vui lòng nhập vào  Họ của bạn!"})
@@ -99,6 +182,30 @@ class Account extends Component {
     //   return
     // }
     if (this.state.info.id) {
+
+      const formData = new FormData();
+    
+        Array.from(this.state.images).forEach(image => {
+          formData.append('files', image);
+        });
+
+        formData.append('ref','user');
+        formData.append('refId',this.state.user.id);
+        formData.append('field','avatar');
+        formData.append('source', 'users-permissions');
+    
+        await axios
+          .post(`http://localhost:1337/upload`, formData, {
+            headers: { 'Content-Type': 'multipart/form-data','Authorization':'bearer '+ Cookie.get('token') },
+          })
+          .then(res => {
+            console.log(res);
+            alert('Thêm avatar thành công!')
+          })
+          .catch(err => {
+            console.log(err.response);
+            alert('Thêm avatar thất bại!')
+        });
       axios
         .put(
           process.env.REACT_APP_BACKEND_URL +
@@ -113,10 +220,6 @@ class Account extends Component {
             firm: this.state.info.firm,
             dateOfBirth: this.state.info.dateOfBirth,
             customerId: this.state.user.id,
-            region: this.state.info.region,
-            district: this.state.info.district,
-            wards: this.state.info.wards,
-            street: this.state.info.street,
           },
           {
             headers: {
@@ -125,7 +228,7 @@ class Account extends Component {
           }
         )
         .then((response) => {
-          this.props.history.push("/purchase/loca");
+          this.props.history.push(`/purchase/profile`);
         })
         .catch((error) => {
           alert("Update failed !!!");
@@ -143,10 +246,6 @@ class Account extends Component {
             firm: this.state.info.firm,
             location: this.state.info.location,
             customerId: this.state.user.id,
-            region: this.state.info.region,
-            district: this.state.info.district,
-            wards: this.state.info.wards,
-            street: this.state.info.street,
           },
           {
             headers: {
@@ -156,7 +255,7 @@ class Account extends Component {
         )
         .then((response) => {
           alert("update profile success.");
-          this.props.history.push("/purchase/loca");
+          this.props.history.push("/purchase/profile");
         })
         .catch((error) => {
           alert("Update failed !!!");
@@ -165,89 +264,27 @@ class Account extends Component {
     }
     return;
   };
+
+  onImageChange = (event) =>{
+    if(event.target.files && event.target.files[0]){
+      let reader = new FileReader();
+      reader.onload = (e) =>{
+        this.setState({profileimage:e.target.result});
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+  }
   render() {
-    var regions_list = [
-      "Hồ Chí Minh",
-      "Hà Nội",
-      "Bà Rịa - Vũng Tàu",
-      "Đà Nẵng",
-      "Bình Phước",
-      "Bình Dương",
-    ];
-    var district_list = [
-      "Quận 1",
-      "Quận 2",
-      "Quận 3",
-      "Quận 4",
-      "Quận 5",
-      "Quận 6",
-      "Quận 7",
-      "Quận 8",
-      "Quận 9",
-      "Quận 10",
-      "Quận 11",
-      "Quận 12",
-      "Quận Bình Tân",
-      "Quận Bình Thạnh",
-      "Quận Gò Vấp",
-      "Quận Phú Nhuận",
-      "Quận Tân Bình",
-      "Quận Tân Phú",
-      "Quận Thủ Đức",
-      "Huyện Bình Chánh",
-      "Huyện Cần Giờ",
-      "Huyện Củ Chi",
-      "Huyện Hóc Môn",
-      "Huyện Nhà Bè",
-    ];
-    var ward_list = [
-      // 0  quan 1
-      "Phường Bến Nghé",
-      "Phường Bến Thành",
-      "Phường Cầu Kho",
-      "Phường Cầu Ông Lãnh",
-      "Phường Cô Giang",
-      "Phường Đa Kao",
-      "Phường Nguyễn Cư Trinh",
-      "Phường Nguyễn Thái Bình",
-      "Phường Phạm Ngũ Lão",
-      "Phường Tân Định", // 9
-      "Phường An Khánh", // quan 2 10
-      "Phường An Lợi Đông",
-      "Phường An Phú",
-      "Phường Bình An",
-      "Phường Bình Khánh",
-      "Phường Bình Trưng Đông",
-      "Phường Bình Trưng Tây",
-      "Phường Cát Lái",
-      "Phường Thạnh Mỹ Lợi",
-      "Phường Thảo Điền",
-      "Phường Thủ Thiêm",
-      // quan 3
-      "Phường 01",
-      "Phường 02",
-      "Phường 03",
-      "Phường 04",
-      "Phường 05",
-      "Phường 06",
-      "Phường 07",
-      "Phường 08",
-      "Phường 09",
-      "Phường 10",
-      "Phường 11",
-      "Phường 12",
-      "Phường 13",
-      "Phường 14",
-      "Phường 15",
-    ];
+    console.log(this.state.profileimage)
+    var  image = "https://cf.shopee.vn/file/059dfcece821ff6afb80ef012dfa2447";
     if (!this.state.loading && Cookie.get("token")) {
       return (
         <div className="Account_layout">
-          <h3 className="styles_Heading">Tạo sổ địa chỉ</h3>
+          <h3 className="styles_Heading">Thông tin tài khoản</h3>
           <div className="Account_info">
             <form onSubmit={this.handleSubmit}>
               <div className="form-control">
-                <label className="input-label">Họ:</label>
+                <label className="input-label">Họ </label>
                 <div>
                   <input
                     type="text"
@@ -264,7 +301,7 @@ class Account extends Component {
                 </div>
               </div>
               <div className="form-control">
-                <label className="input-label">Tên:</label>
+                <label className="input-label">Tên</label>
                 <div>
                   <input
                     type="text"
@@ -330,136 +367,26 @@ class Account extends Component {
                 </div>
               </div>
               <div className="form-control">
-                <label for="region" className="input-label">
-                  Tỉnh/Thành phố:
-                </label>
-                <select
-                  required
-                  onChange={(e) =>
-                    this.setState({
-                      info: { ...this.state.info, region: e.target.value },
-                    })
-                  }
-                >
-                  {this.state.info.region === "" ? (
-                    <option value="">Chọn Tỉnh/Thành phố</option>
-                  ) : (
-                    <option defaultValue={this.state.info.region}>
-                      {this.state.info.region}
-                    </option>
-                  )}
-                  {regions_list.map((region, index) => {
-                    if (this.state.info.region === region) {
-                      return <></>;
+                <label className="input-label">Địa Chỉ</label>
+                <div>
+                  <input
+                    type="text"
+                    name="address"
+                    maxLength="128"
+                    className="input-info"
+                    value={this.state.info.address}
+                    onChange={(e) =>
+                      this.setState({
+                        info: { ...this.state.info, address: e.target.value },
+                      })
                     }
-                    return <option defaultValue={region}>{region}</option>;
-                  })}
-                </select>
-              </div>
-
-              <div className="form-control">
-                <label for="district" className="input-label">
-                  Quận huyện:
-                </label>
-                <select
-                  required
-                  onChange={(e) =>
-                    this.setState({
-                      info: { ...this.state.info, district: e.target.value },
-                    })
-                  }
-                >
-                  {this.state.info.region === "" ? (
-                    <option value="">Chọn Quận/Huyện</option>
-                  ) : (
-                    <option defaultValue={this.state.info.district}>
-                      {this.state.info.district}
-                    </option>
-                  )}
-                  {district_list.map((district, index) => {
-                    if (this.state.info.district === district) {
-                      return <></>;
-                    }
-                    if (this.state.info.region === "Hồ Chí Minh") {
-                      return (
-                        <option defaultValue={district}>{district}</option>
-                      );
-                    } else {
-                      return (
-                        <>
-                          <option value="Quận 1">Huyện Bù Đăng</option>
-                          <option value="Quận 2">Huyện Bù Na</option>
-                          <option value="Quận 3">Huyện Bù Đốp</option>
-                          <option value="Quận 4">Huyện Đồng Xoài</option>
-                          <option value="Quận 5">Huyện Phước Long</option>
-                          <option value="Quận 6">Huyện Bù Gia Mập</option>
-                        </>
-                      );
-                    }
-                  })}
-                </select>
-              </div>
-
-              <div className="form-control">
-                <label for="ward" className="input-label">
-                  Phường xã:
-                </label>
-                <select
-                  required
-                  onChange={(e) =>
-                    this.setState({
-                      info: { ...this.state.info, wards: e.target.value },
-                    })
-                  }
-                >
-                  {this.state.info.region === "" ? (
-                    <option value="">Chọn Phường/Xã</option>
-                  ) : (
-                    <option defaultValue={this.state.info.wards}>
-                      {this.state.info.wards}
-                    </option>
-                  )}
-                  {ward_list.map((ward, index) => {
-                    if (this.state.info.district === "Quận 1") {
-                      if (index >= 10) {
-                        return <></>;
-                      } else {
-                        return <option value={ward}>{ward}</option>;
-                      }
-                    } else if (this.state.info.district === "Quận 2") {
-                      if (index < 10 || index > 20) {
-                        return <></>;
-                      } else {
-                        return <option value={ward}>{ward}</option>;
-                      }
-                    } else {
-                      if (index <= 20) {
-                        return <></>;
-                      } else {
-                        return <option value={ward}>{ward}</option>;
-                      }
-                    }
-                  })}
-                </select>
+                  />
+                </div>
               </div>
               <div className="form-control">
-                <label for="address" className="input-label">
-                  Địa chỉ:
-                </label>
-                <textarea
-                  required=""
-                  name="street"
-                  rows="5"
-                  placeholder="Nhập địa chỉ"
-                  defaultValue={this.state.info.street}
-                  onChange={(e) =>
-                    this.setState({
-                      info: { ...this.state.info, street: e.target.value },
-                    })
-                  }
-                ></textarea>
+                <label className="input-label"></label>
+                <Link to="/purchase/password"><p className="pass">Thay đổi mật khẩu?</p> </Link>
               </div>
-
               <div className="form-control">
                 <label className="input-label">&nbsp;</label>
                 <button type="submit" className="btn-submit">
@@ -467,6 +394,35 @@ class Account extends Component {
                 </button>
               </div>
             </form>
+            <div className="image-user">
+              <div className="X1SONv">
+                <div className="_1FzaUZ">
+                  <div
+                    className="TgSfgo"
+                    style={{ backgroundImage: `url(${this.state.profileimage !== "" ? this.state.profileimage :  image})`}}
+                  ></div>
+                  {/* <Avatar size={64} icon="user" src={this.state.profileimage} /> */}
+                </div>
+                {/* <input
+                  className="_2xS5eV"
+                  type="file"
+                  accept=".jpg,.jpeg,.png"
+                  onChange={e=>this.setState({images:e.target.files})}
+                /> */}
+                {/* <button
+                  type="button"
+                  className="btn btn-light btn--m btn--inline"
+                >
+                  Chọn ảnh
+                </button> */}
+                <input type="file" name="file" id="file" className="inputfile" onChange={this.onImageChange}/>
+                <label for="file" style={{padding:2 + 'px'}}>Chọn ảnh</label>
+                <div className="_3Jd4Zu">
+                  <div className="_3UgHT6">Dụng lượng file tối đa 1 MB</div>
+                  <div className="_3UgHT6">Định dạng:.JPEG, .PNG</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       );
@@ -478,4 +434,4 @@ class Account extends Component {
   }
 }
 
-export default withRouter(Account)
+export default withRouter(Profileuser);

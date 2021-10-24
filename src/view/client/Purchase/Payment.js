@@ -117,6 +117,7 @@ class Payment extends Component {
           return(
             `
             ${product.quantity} Cuộn x ${product.quantity_m} Mét - ${product.product.name} - Màu ${product.color}
+            
             ` 
           )
         })}

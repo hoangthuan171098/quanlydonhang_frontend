@@ -54,7 +54,7 @@ class App extends Component {
 						<Route path='/shipment' component={Shipment} />
 						<Route path='/location' component={Shippingaddress} />
 						<Route path='/payment' component={Payment} />
-						<Route path='/a' component={Account} />
+						<Route path='/a' component={Addressorder} />
 					</Switch>
 					<Footer />
 				</Router>

@@ -330,7 +330,7 @@ export default class Shippingaddress extends Component {
                       info: { ...this.state.info, phoneNumber: e.target.value },
                     })
                   }
-                  t
+                  
                 />
               </div>
             </div>

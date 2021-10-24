@@ -44,7 +44,7 @@ export default class Listorder extends Component {
     var name = "";
     var {orders} = this.state
     console.log(this.state.orders[this.state.orders.length - 1]);
-    
+   
     const indexOfLast = this.state.currentpage * this.state.perPage;
     const indexOfFirst = indexOfLast - this.state.perPage;
     const currentorders = orders.reverse().slice(indexOfFirst,indexOfLast);
@@ -107,7 +107,7 @@ export default class Listorder extends Component {
                       <td>{total}đ</td>
                       <td>{order.status}</td>
                       <td>
-                        <Link to={`purchase/${order.id}`}>
+                        <Link to={`/purchase/${order.id}`}>
                           {" "}
                           chi tiết đơn hàng{" "}
                         </Link>
