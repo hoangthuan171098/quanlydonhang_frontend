@@ -3,7 +3,7 @@ import Cookie from "js-cookie";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-export default class OrderlistDetail extends Component {
+export default class Paymentdetail extends Component {
   
   constructor(props) {
     super(props);
@@ -65,7 +65,7 @@ export default class OrderlistDetail extends Component {
     return
   }
   render() {
-      
+    console.log(this.props.match.params.id)
     var total = 0
     return (
       <div className="Account_layout">

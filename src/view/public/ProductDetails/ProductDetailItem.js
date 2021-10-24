@@ -1,140 +1,218 @@
-import React, { Component } from 'react'
-import ModalBuyProduct from '../Cart/ModalBuyProduct';
-import Category from '../components/Category';
-import '../Cart/styles/buycart.scss';
-import { Link } from 'react-router-dom';
-import './styleproductitem.scss';
-export default class ProductDetailItem extends Component {
-    render() {
-        var {productdetail} = this.props;
-      
-        return (
-      <div className="productDetailItem">
-        <div className="breacrumb-section">
+import React, { Component } from "react";
+import ModalBuyProduct from "../Cart/ModalBuyProduct";
+import Category from "../components/Category";
+import "../Cart/styles/buycart.scss";
+import { Link } from "react-router-dom";
+import "./styleproductitem.scss";
+import Cookie from "js-cookie";
+import {withRouter} from "react-router"
+class ProductDetailItem extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: true,
+      authenticate: true,
+      quantity: 0,
+      color: "",
+      quantity_m: 0,
+    };
+  }
+  handleMeter = (e) => {
+    this.setState({
+      quantity_m: Number(e.target.value),
+    });
+  };
+  handleQuantity = (e) => {
+    this.setState({
+      quantity: Number(e.target.value),
+    });
+  };
+  handlecolor = (e) => {
+    this.setState({
+      color: e.target.value,
+    });
+  };
+  handlenote = (e) => {
+    this.setState({
+      note: e.target.value,
+    });
+  };
+
+  addtocart = () => {
+    var { productdetail } = this.props;
+    if (this.state.quantity === 0 && this.state.quantity_m === 0) {
+      alert("Xin hãy nhập số cuộn hoặc mét");
+      return;
+    }
+    if (!Cookie.get("username")) {
+      alert("Bạn cần phải đăng nhập để đặt hàng!");
+      return;
+    }
+    let item = {
+      product: {
+        id: productdetail.id,
+        name: productdetail.name,
+        image: { url: productdetail.image.url },
+        price: productdetail.price,
+        description: productdetail.description,
+        status:'watting'
+      },
+      color: this.state.color,
+      quantity: this.state.quantity,
+      quantity_m: this.state.quantity_m,
+    };
+    let itemList = Cookie.get("cart");
+    if (typeof itemList === "string" && itemList !== undefined) {
+      console.log("a");
+      let list = JSON.parse(itemList);
+      let newlist = [...list, item];
+      Cookie.set("cart", JSON.stringify(newlist));
+    } else {
+      Cookie.set("cart", JSON.stringify([item]));
+    }
+    alert("Them san pham vao gio hang thanh cong!");
+    
+    window.location.href="/products"
+  };
+  render() {
+    var { productdetail } = this.props;
+   
+    return (
+      <div className="product-detail">
+        <div className="pd-wrap">
           <div className="container">
+            <div className="heading-section">
+              <h2>Chi tiết sản phẩm</h2>
+            </div>
             <div className="row">
-              <div className="col-lg-12">
-                <div className="breadcrumb-text product-more">
-                  <Link to="/">
-                    <i className="fa fa-home" /> Home
-                  </Link>
-                  <Link to="">Shop</Link>
-                  <span>Detail</span>
+              <div className="col-md-6">
+                <img
+                  alt=""
+                  src={
+                    process.env.REACT_APP_BACKEND_URL + productdetail.image.url
+                  }
+                />
+                {/* <div id="slider" className="owl-carousel product-slider">
+               
+                <div className="item">
+                 
+                </div>
+              </div> */}
+              </div>
+              <div className="col-md-6">
+                <div className="product-dtl">
+                  <div className="product-info">
+                    <div className="product-name">{productdetail.name}</div>
+                    <div className="reviews-counter">
+                      <div className="rate">
+                        <input
+                          type="radio"
+                          id="star5"
+                          name="rate"
+                          defaultValue={5}
+                          defaultChecked
+                        />
+                        <label htmlFor="star5" title="text">
+                          5 stars
+                        </label>
+                        <input
+                          type="radio"
+                          id="star4"
+                          name="rate"
+                          defaultValue={4}
+                          defaultChecked
+                        />
+                        <label htmlFor="star4" title="text">
+                          4 stars
+                        </label>
+                        <input
+                          type="radio"
+                          id="star3"
+                          name="rate"
+                          defaultValue={3}
+                          defaultChecked
+                        />
+                        <label htmlFor="star3" title="text">
+                          3 stars
+                        </label>
+                        <input
+                          type="radio"
+                          id="star2"
+                          name="rate"
+                          defaultValue={2}
+                        />
+                        <label htmlFor="star2" title="text">
+                          2 stars
+                        </label>
+                        <input
+                          type="radio"
+                          id="star1"
+                          name="rate"
+                          defaultValue={1}
+                        />
+                        <label htmlFor="star1" title="text">
+                          1 star
+                        </label>
+                      </div>
+                      <span>3 Reviews</span>
+                    </div>
+                    <div className="product-price-discount">
+                      <span>{productdetail.price}$</span>
+                      <span className="line-through">
+                        {parseInt(productdetail.price) + 200}$
+                      </span>
+                    </div>
+                  </div>
+                  <p> {productdetail.description}</p>
+                  <div className="row">
+                    <div className="col-md-6">
+                      <label htmlFor="size">Số cuộn</label>
+                      <br />
+                      <input
+                        type="number"
+                        onChange={(e) => this.handleQuantity(e)}
+                      ></input>
+                    </div>
+                    <div className="col-md-6">
+                      <label htmlFor="color">Màu</label>
+                      <select
+                        onChange={(e) => this.handlecolor(e)}
+                        id="color"
+                        name="color"
+                        className="form-control"
+                      >
+                        {productdetail.colors.map((item, index) => {
+                          return <option value={item}>{item}</option>
+                        })}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="product-count">
+                    <div className="row">
+                      <div className="col-md-6">
+                        <label htmlFor="size">Số mét</label>
+                        <br />
+                        <input
+                          type="number"
+                          onChange={(e) => this.handleMeter(e)}
+                        ></input>
+                      </div>
+                    </div>
+                    <Link
+                      
+                      className="round-black-btn"
+                      onClick={() => this.addtocart()}
+                    >
+                      Thêm vào giỏ hàng
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-        <section className="product-shop spad page-details">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-3">
-                <Category />
-              </div>
-              <div className="col-lg-9">
-                <div className="row">
-                  <div className="col-lg-6">
-                    <div className="product-pic-zoom">
-                      <img
-                        className="product-big-img"
-                        src={process.env.REACT_APP_BACKEND_URL + productdetail.image.url}
-                        alt=""
-                      />
-                      <div className="zoom-icon">
-                        <i className="fa fa-search-plus" />
-                      </div>
-                    </div>
-                    <div className="product-thumbs">
-                      <div className="product-thumbs-track ps-slider owl-carousel">
-                        <div
-                          className="pt active"
-                          data-imgbigurl="img/product-single/product-1.jpg"
-                        >
-                          <img src={process.env.REACT_APP_BACKEND_URL + productdetail.image.url} alt="" />
-                        </div>
-                        <div
-                          className="pt"
-                          data-imgbigurl="img/product-single/product-2.jpg"
-                        >
-                          <img src={process.env.REACT_APP_BACKEND_URL + productdetail.image.url} alt="" />
-                        </div>
-                        <div
-                          className="pt"
-                          data-imgbigurl="img/product-single/product-3.jpg"
-                        >
-                          <img src={process.env.REACT_APP_BACKEND_URL + productdetail.image.url} alt="" />
-                        </div>
-                        <div
-                          className="pt"
-                          data-imgbigurl="img/product-single/product-3.jpg"
-                        >
-                          <img src={process.env.REACT_APP_BACKEND_URL + productdetail.image.url} alt="" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-6">
-                    <div className="product-details">
-                      <div className="pd-title">
-                        
-                        <h3>{productdetail.name}</h3>
-                        <a href="#" className="heart-icon">
-                          <i className="icon_heart_alt" />
-                        </a>
-                      </div>
-                      <div className="pd-rating">
-                        <i className="fa fa-star" />
-                        <i className="fa fa-star" />
-                        <i className="fa fa-star" />
-                        <i className="fa fa-star" />
-                        <i className="fa fa-star-o" />
-                        <span>(5)</span>
-                      </div>
-                      <div className="pd-desc">
-                        <p>
-                         {productdetail.description}
-                        </p>
-                        <h4>
-                          {productdetail.price}$ <span>{productdetail.price}$</span>
-                        </h4>
-                      </div>
-                      <div className="quantity">
-                        <Link to="#" className="primary-btn pd-cart" data-toggle="modal" data-target="#exampleModal">
-                          Add To Cart
-                        </Link>
-                        <ModalBuyProduct 
-                          productdetail ={productdetail}
-                        />
-                      </div>
-                      
-                      <ul className="pd-tags">
-                        <li>
-                          <span>CATEGORIES</span>: {productdetail.category.name}
-                        </li>
-                      </ul>
-                      <div className="pd-share">
-                        <div className="p-code">Sku : 00012</div>
-                        <div className="pd-social">
-                          <Link to="#">
-                            <i className="ti-facebook" />
-                          </Link>
-                          <Link to="#">
-                            <i className="ti-twitter-alt" />
-                          </Link>
-                          <Link to="#">
-                            <i className="ti-linkedin" />
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
       </div>
-        )
-    }
+    );
+  }
 }
+export default  withRouter(ProductDetailItem)

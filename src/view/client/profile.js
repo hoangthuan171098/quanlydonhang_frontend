@@ -46,7 +46,7 @@ class Profile extends Component {
             this.setState({info: data2[0]});
         }
         if(!this.state.user.avatar){
-            this.setState({displayAddAvatar: 'block',displayChangeAvatar:'none',imgURL: '/uploads/avatar-default.jpg'});
+            this.setState({displayAddAvatar: 'block',displayChangeAvatar:'none',imgURL:  'http://localhost:1337/uploads/avatar-default.jpg'});
         }
         else{
             this.setState({displayAddAvatar: 'none',displayChangeAvatar:'block',imgURL: this.state.user.avatar.url});

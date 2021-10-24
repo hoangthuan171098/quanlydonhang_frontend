@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import Cookie from 'js-cookie';
+import Cookie from "js-cookie";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import "./style/shoppingcart.scss"
-
-export default class Shopcart extends Component {
+import "./style/shoppingcart.scss";
+import {withRouter} from "react-router"
+class Shopcart extends Component {
   constructor(props){
     super(props);
     this.state ={
@@ -39,11 +39,12 @@ export default class Shopcart extends Component {
         })
         .then(response =>{
           alert('Da dat hang thanh cong');
-          Cookie.remove('cart');
-          this.props.location.push('/purchase');
+          // Cookie.remove('cart')
+          window.location.href="/location"
         })
         .catch(err => {
         })
+       
   }
   updateMeterClick = (event,index) =>{
     let productList = this.state.productList
@@ -68,115 +69,137 @@ export default class Shopcart extends Component {
   }
 
   render() {
+    var total =0;
+    console.log(this.state.productList)
     return (
-      <div className="carts">
-        <div className="breacrumb-section">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-12">
-                <div className="breadcrumb-text product-more">
-                  <Link to="/">
-                    <i className="fa fa-home" /> Home
-                  </Link>
-                  <Link to="/products">Shop</Link>
-                  <span>Shopping Cart</span>
-                </div>
-              </div>
-            </div>
+      <div className="container padding-bottom-3x mb-1">
+        <div className="table-responsive shopping-cart">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Tên sản phẩm</th>
+                <th className="text-center">Số Cuộn</th>
+                <th className="text-center">Số Mét</th>
+                <th className="text-center">Giá</th>
+                <th className="text-center">Tổng</th>
+                <th className="text-center">
+                  <a className="btn btn-sm btn-outline-danger" href="!#">
+                    Xóa giỏ hàng
+                  </a>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.productList.map((item, index) => {
+                total += parseInt(item.product.price)*item.quantity
+                return (
+                  <tr key={index}>
+                    <td>
+                      <div className="product-item">
+                        <a className="product-thumb" href="!#">
+                          <img
+                            src={process.env.REACT_APP_BACKEND_URL + item.product.image.url}
+                            alt="Product"
+                          />
+                        </a>
+                        <div className="product-info">
+                          <h4 className="product-title">
+                            <a href="!#">{item.product.name}</a>
+                          </h4>
+                         
+                          <span>
+                            <em>Màu:</em> {item.color}
+                          </span>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="text-center">
+                      <div className="count-input" >
+                        <input type="text" style={{ width: 110 + "px" }} defaultValue={item.quantity}
+                          onChange = {(e) =>this.updateProductClick(e,index)}
+                         />
+                      </div>
+                    </td>
+                    <td className="text-center">
+                      <div className="count-input">
+                      
+                        <input type="text" style={{ width: 110 + "px" }} defaultValue={item.quantity_m}
+                           onChange = {(e) =>this.updateMeterClick(e,index)}
+                         />
+                        
+                      </div>
+                    </td>
+                    <td className="text-center text-lg text-medium">{item.product.price}$</td>
+                    <td className="text-center text-lg text-medium">{parseInt(item.product.price)*item.quantity}$</td>
+                    <td className="text-center">
+                      <Link
+                        className="remove-from-cart"
+                        href="#"
+                        data-toggle="tooltip"
+                        title
+                        data-original-title="Remove item"
+                      >
+                        <i className="fa fa-trash" onClick={e=>this.removeProductClick(e,index)} />
+                      </Link>
+                    </td>
+                     
+                  </tr>
+                );
+              })}
+
+              
+            </tbody>
+          </table>
+        </div>
+        <div className="shopping-cart-footer">
+          <div className="column">
+            <form className="coupon-form" method="post">
+              <input
+                className="form-control form-control-sm"
+                type="text"
+                placeholder="Ghi chú"
+                required
+              />
+              
+            </form>
+          </div>
+          <div className="column text-lg" style={{ fontSize: 20 + "px" }}>
+            Tổng cộng:{" "}
+            <span
+              className="text-medium"
+              style={{ fontSize: 20 + "px", color: "red" }}
+            >
+              {total}$
+            </span>
           </div>
         </div>
-        <section className="shopping-cart spad">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-12">
-                <div className="cart-table">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Hinh anh </th>
-                        <th className="p-name">Tên Sản Phẩm</th>
-                        <th>Giá</th>
-                        <th>Số lượng</th>
-                        <th>Mét</th>
-                        <th>Tổng tiền</th>
-                        <th>
-                          <i className="ti-close" />
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {this.state.productList.map((item,index)=>{
-                        return(
-                          <tr key={index}>
-                            <td className="cart-pic first-row">
-                              <img style={{width:200+'px'}}
-                                src={process.env.REACT_APP_BACKEND_URL + item.product.image.url} alt="" 
-                              />
-                            </td>
-                            <td className="cart-title first-row">
-                              <h5>{item.product.name}</h5>
-                            </td>
-                            <td className="p-price first-row">{item.product.price}</td>
-                            <td className="qua-col first-row">
-                              <div className="quantity">
-                                <div className="pro-qty" >
-                                  <input type="text" value={item.quantity} 
-                                    onChange = {(e) =>this.updateProductClick(e,index)}
-                                  />
-                                </div>
-                              </div>
-                            </td>
-                            <td className="qua-col first-row">
-                              <div className="quantity">
-                                <div className="pro-qty">
-                                  <input type="text" defaultValue={item.quantity_m} 
-                                    onChange = {(e) =>this.updateMeterClick(e,index)}
-                                  />
-                                </div>
-                              </div>
-                            </td>
-                            <td className="total-price first-row">{item.product.price*item.quantity}</td>
-                            <td className="close-td first-row">
-                              <i className="ti-close" onClick={e=>this.removeProductClick(e,index)}/>
-                            </td>
-                          </tr>
-                        )
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-                <label>NOTE :</label><br/>
-                <textarea cols='65' onChange={e=>this.setState({note:e.target.value})} />
-                <div className="row">
-                  <div className="col-lg-4">
-                    <div className="cart-buttons">
-                      <Link to="/products" className="primary-btn continue-shop">
-                        Continue shopping
-                      </Link>
-                    </div>
-                    <div className="discount-coupon">
-                      <h6>Discount Codes</h6>
-                      <form action="#" className="coupon-form">
-                        <input type="text" placeholder="Enter your codes" />
-                        <button type="submit" className="site-btn coupon-btn">
-                          Apply
-                        </button>
-                      </form>
-                    </div>
-                  </div>
-                  <div className="col-lg-4 offset-lg-4">
-                    <div className="proceed-checkout">
-                      <Link to="#" onClick={this.checkOutClick} className="proceed-btn">
-                        PROCEED TO CHECK OUT
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <div className="shopping-cart-footer">
+          <div className="column">
+            <a className="btn btn-outline-secondary" href="!#">
+              <i className="icon-arrow-left" />
+              &nbsp;Back to Shopping
+            </a>
           </div>
-        </section>
+          <div className="column">
+            <a
+              className="btn btn-primary"
+              href="!#"
+              data-toast
+              data-toast-type="success"
+              data-toast-position="topRight"
+              data-toast-icon="icon-circle-check"
+              data-toast-title="Your cart"
+              data-toast-message="is updated successfully!"
+            >
+              Update Cart
+            </a>
+            <Link className="btn btn-success" onClick={this.checkOutClick} >
+              Checkout
+            </Link>
+          </div>
+        </div>
       </div>
     );
   }
 }
+export default withRouter(Shopcart)

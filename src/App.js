@@ -14,20 +14,25 @@ import Server from './view/server/'
 import Manager from './view/manager'
 import {Services,News,Team} from './view/public/components/export'
 import Order from './view/client/Purchase/Order'
-
-
-import './App.css'
+import './responsive.scss'
+import './base.scss'
+import './grid.scss'
+import './App.scss'
 import Shipment from './view/shipment'
 import Shippingaddress from './view/client/Shippingaddress'
 import Payment from './view/client/Purchase/Payment'
+import Topbar from './components/Topbar'
+import Footer from './components/Footer'
+import Addressorder from './view/client/Purchase/Addressorder'
+import Account from './view/client/Purchase/Account'
 
 
 class App extends Component {
 	render() {
 		return (
-			<div className='App'>
+			<div className='app'>
 				<Router>
-					<NavBar />
+					<Topbar />
 					<Chat />
 					<Switch>
 						<Route exact path='/' component={Home} />
@@ -47,9 +52,11 @@ class App extends Component {
 						<Route path='/register' component={Register} />
 						<Route path='/purchase' component={Order} />
 						<Route path='/shipment' component={Shipment} />
-						<Route path='/a' component={Shippingaddress} />
-						<Route path='/b' component={Payment} />
+						<Route path='/location' component={Shippingaddress} />
+						<Route path='/payment' component={Payment} />
+						<Route path='/a' component={Addressorder} />
 					</Switch>
+					<Footer />
 				</Router>
 			</div>
 		)

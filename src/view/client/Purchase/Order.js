@@ -6,6 +6,11 @@ import Listorder from "./Listorder";
 import Nav from "./component/Nav";
 import OrderlistDetail from "./OrderlistDetail";
 import Cookie from "js-cookie";
+import Location from "./Location";
+import Paymentinfo from "./Paymentinfo";
+import Paymentdetail from "./Paymentdetail";
+import Profileuser from "./Profileuser";
+import ChangePass from "./ChangePass";
 export default class Order extends Component {
   render() {
     
@@ -15,8 +20,8 @@ export default class Order extends Component {
             <div className="Account_sidebar">
                 <div className="Account_avatar">
                   <div className="info">
-                    Tài khoản của
-                    <strong>{Cookie.get('username').toUpperCase()}</strong>
+                  
+                    <strong></strong>
                   </div>
                 </div>
                 <Nav />
@@ -24,7 +29,14 @@ export default class Order extends Component {
 
               <Switch>
                     <Route path='/purchase' exact component={Listorder} />
-                    <Route path='/purchase/:id' component={OrderlistDetail} />
+                    <Route path='/purchase/password' component={ChangePass} />
+                    <Route path='/purchase/profile' component={Profileuser} />
+                    <Route path='/purchase/loca'  component={Location} />
+                    <Route path='/purchase/user'  component={Account} />
+                    <Route path='/purchase/paymentinfo' component={Paymentinfo} />
+                    <Route path='/purchase/payment/:id' component={Paymentdetail} />
+                    <Route path='/purchase/:id'  component={OrderlistDetail} />
+                    
                </Switch> 
           </div>
       </div>

@@ -15,6 +15,9 @@
   background-color: brown;
 }
 
+.app{
+  font-family: "Roboto", sans-serif;
+}
 .header {
   height: var(--header-height);
   background-image: linear-gradient(0, #669999, #339999);
@@ -517,7 +520,6 @@
   align-items: center;
   margin-right: 10px;
 
-}
 .header__search-checkbox:checked ~ .header__search{
   display: flex;
 }
@@ -1412,4 +1414,5 @@ i.home-product-item__like-icon-fill {
 .active{
   background-color: #FF6633;
   
+}
 }

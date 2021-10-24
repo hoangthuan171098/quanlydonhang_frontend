@@ -6,7 +6,7 @@
   line-height: 1.15;
   text-size-adjust: 100%;
   font-size: 14px;
-  font-family: "Roboto", sans-serif;
+  font-family: Arial, Helvetica, sans-serif !important;
 
   .Account_sidebar {
     width: 250px;
@@ -72,7 +72,86 @@
 
   .Account_layout {
     flex: 1 1 0%;
+    font-family: "Roboto", sans-serif;
+    .address {
+      .heading {
+        font-size: 19px;
+        line-height: 21px;
+        font-weight: 300;
+        margin: 20px 0px 15px;
+      }
+      .inner {
+        .new {
+          a {
+            background-color: rgb(255, 255, 255);
+            font-size: 15px;
+            height: 60px;
+            border: 1px dashed rgb(216, 216, 216);
+            margin: 0px 0px 10px;
+            display: flex;
+            -webkit-box-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            justify-content: center;
+          }
+          i {
+            color: rgb(120, 120, 120);
+            font-size: 28px;
+            margin: 0px 20px;
+          }
+        }
 
+        .item {
+          background-color: rgb(255, 255, 255);
+          padding: 17px;
+          border-radius: 4px;
+          margin: 0px 0px 10px;
+          display: flex;
+          -webkit-box-pack: justify;
+          justify-content: space-between;
+          font-size: 13px;
+          line-height: 19px;
+          font-size: 15px;
+          font-family: Arial, Helvetica, sans-serif !important;
+          .info {
+            .name {
+              text-transform: uppercase;
+              margin: 0px 0px 10px;
+
+              span {
+                font-size: 12px;
+                margin: 0px 0px 0px 15px;
+                display: inline-block;
+                -webkit-box-align: center;
+                align-items: center;
+                color: rgb(38, 188, 78);
+                text-transform: none;
+              }
+            }
+            .address {
+              margin: 0px 0px 5px;
+              span {
+                color: rgb(120, 120, 120);
+              }
+            }
+            .phone {
+              margin: 0px 0px 5px;
+              span {
+                color: rgb(120, 120, 120);
+              }
+            }
+          }
+          .action {
+            .edit {
+              font-size: 14px;
+              color: rgb(27, 168, 255);
+              display: inline-block;
+              padding: 6px 12px;
+            }
+          }
+        }
+      }
+    }
     .styles_Heading {
       font-size: 19px;
       line-height: 21px;
@@ -85,13 +164,111 @@
       padding: 30px 20px;
       border-radius: 4px;
       width: 95%;
+      display: flex;
+      .image-user {
+        width: 17.5rem;
+        overflow: hidden;
+        border-left: 0.0625rem solid #efefef;
+        width: 100%;
+        .X1SONv {
+          flex-direction: column;
+          align-items: center;
+          margin-left: 110px;
+          ._1FzaUZ {
+            height: 6.25rem;
+            width: 6.25rem;
+            margin: 1.25rem 0;
+            position: relative;
+            margin-bottom: 50px;
+            .TgSfgo {
+              // background-image: url(https://cf.shopee.vn/file/059dfcece821ff6afb80ef012dfa2447);
+              width: 100px;
+              height: 100px;
+              background-position: 50%;
+              background-size: cover;
+              background-repeat: no-repeat;
+              cursor: pointer;
+              margin-left: 14px;
+              border-radius: 50%;
+              // position: relative;
+            }
+          }
+
+          // ._2xS5eV {
+          //   position: absolute;
+          //   top : 337px;
+          //   right : -10px;
+          //   // display: none;
+          //   opacity: 1;
+          //   cursor: pointer;
+          // }
+          // ._2xS5eV:hover{
+          //   cursor: pointer;
+          // }
+          .inputfile {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+            padding: 80px;
+          }
+          .inputfile + label {
+            font-size: 14px;
+            font-weight: 700;
+            color: #000;
+
+            display: inline-block;
+            width: 100px;
+            text-align: center;
+            height: 36px;
+            line-height: 36px;
+            margin-left: 15px;
+            color: rgb(41, 36, 36);
+            border: 1px solid rgb(212, 209, 209);
+          }
+
+          .inputfile:focus + label,
+          .inputfile + label:hover {
+            background-color: rgb(223, 219, 219);
+          }
+          .inputfile + label {
+            cursor: pointer; /* "hand" cursor */
+          }
+          .inputfile:focus + label {
+            outline: 1px dotted rgb(223, 219, 219);
+            outline: -webkit-focus-ring-color auto 5px;
+          }
+        }
+      }
       .form-control {
         display: flex;
         -webkit-box-align: center;
         align-items: center;
         margin: 0px 0px 15px;
         border: none;
-
+        margin-right: 19px;
+        .pass{
+          color: royalblue;
+          cursor: pointer;
+        }
+        .pass:hover{
+          cursor: pointer;
+          text-decoration: underline;
+        }
+        .check{
+          height: 34px;
+          width: 140px;
+          font-size: 13px;
+          
+          position: absolute;
+          top:355px;
+          text-align: center;
+          background-color: rgb(216, 216, 216);
+          color: rgb(36, 36, 36);
+          line-height: 17px;
+        }
         input {
           flex: 1 1 0%;
         }
@@ -114,10 +291,33 @@
           width: 490px;
           height: 34px;
         }
+        textarea {
+          margin-top: 60px;
+          border: 1px solid rgb(204, 204, 204);
+          border-radius: 4px;
+          width: 490px;
+          padding: 6px 12px;
+          height: 100px;
+        }
+        select {
+          width: 490px;
+          border: 1px solid rgb(204, 204, 204);
+          height: 34px;
+          padding: 6px 12px;
+          line-height: 34px;
+          outline: none;
+          background: 0px center;
+          border-radius: 4px;
+          box-shadow: none;
+          color: #000;
+          margin-left: 0px;
+          font-size: 14px;
+        }
         .input-info:focus {
           border-color: rgb(102, 175, 233);
         }
         .btn-submit {
+          margin-top: 120px;
           border: 0px;
           width: 176px;
           height: 40px;
@@ -140,7 +340,7 @@
         border-collapse: collapse;
         width: 100%;
         word-break: break-word;
-
+        font-family: Arial, Helvetica, sans-serif !important;
         thead {
           display: table-header-group;
           vertical-align: middle;
@@ -199,7 +399,7 @@
         border-spacing: 0px;
         line-height: 1.5;
         word-break: break-word;
-
+        font-family: Arial, Helvetica, sans-serif !important;
         thead {
           display: table-header-group;
           tr {
@@ -229,7 +429,7 @@
         }
         tbody {
           display: table-row-group;
-          tr:hover{
+          tr:hover {
             background-color: rgb(229, 255, 204);
           }
           tr {
@@ -285,6 +485,8 @@
 
         tfoot {
           display: table-row-group;
+          padding-right: 0px;
+
           tr {
             border-top: none;
 
@@ -296,7 +498,6 @@
               min-width: 125px;
               color: rgb(36, 36, 36);
 
-              
               span {
                 color: rgb(120, 120, 120);
                 font-size: 14px;
