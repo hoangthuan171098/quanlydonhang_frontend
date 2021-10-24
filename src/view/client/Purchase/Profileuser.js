@@ -3,9 +3,7 @@ import Cookie from "js-cookie";
 import axios from "axios";
 import { withRouter } from "react-router";
 import "../style/order.scss";
-import "antd/dist/antd.css";
-import {Avatar} from 'antd';
-import {Link} from "react-router-dom";
+import {Link} from "react-router-dom"
 class Profileuser extends Component {
   constructor(props) {
     super(props);
