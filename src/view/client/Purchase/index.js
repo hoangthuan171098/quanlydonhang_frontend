@@ -8,7 +8,7 @@ export default class index extends Component {
         return (
             <div>
                <Switch>
-                    <Route exact path='/purchase/order' component={Ordermaga} />
+                    
                     <Route   path='/purchase/user' component={Order} />          
                </Switch> 
             </div>
