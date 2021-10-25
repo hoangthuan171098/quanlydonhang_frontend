@@ -62,8 +62,8 @@ class ShipmentInfo extends Component {
 	showShipper = () =>{
 		if(this.state.shipment.shipper){
 			return(
-				<div className='module'>
-					<div className='module-body'>
+				<div className='card'>
+					<div className='card-body'>
 						<div className='row'>
 							<div className='w-50'>
 								<span className='impress'>SHIPPER:</span>
@@ -87,7 +87,7 @@ class ShipmentInfo extends Component {
 				<div className='row'>
 					<div className='col-lg-6'>
 						<div className="form-group">
-						<label> Shipper: </label>
+						<label> Người giao: </label>
 						<input type='text' className='row-fluid' list='user-list'
 							onChange={e=>this.setState({shipper:e.target.value})}
 						/>
@@ -243,40 +243,48 @@ class ShipmentInfo extends Component {
   	render() {
     if (!this.state.loading && Cookie.get('token')) {
       return (
-        <div className="module">
-            <div className="module-head">
-                <h2>Shipment <Status status={this.state.shipment.status} /> </h2>
-                <p>ID: {this.state.shipment.id}</p>
-            </div>
+        <div>
+			<div className="page-header">
+				<div className="page-block">
+					<div className="row align-items-center">
+						<div className="col-md-12 p-0">
+							<div className="page-header-title">
+								<h5>Thông tin giao hàng</h5>
+								ID: {this.state.shipment.id} <Status status={this.state.shipment.status} />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
-            <div className="module-body">
+            <div>
 				<div className='w-100 d-flex flex-row-reverse' style={{marginBottom:10+'px'}}>
 					<div className='row'>
 						<button onClick={this.deliverClick}
 							className={this.state.shipment.status === 'waiting to deliver'?
 								'btn btn-primary mr-4':'btn btn-primary mr-4 d-none'}
-						>Deliver</button>
+						>Giao hàng</button>
 						
 						<button onClick={this.doneClick}
 							className={this.state.shipment.status === 'delivering'?
 								'btn btn-primary mr-4':'btn btn-primary mr-4 d-none'}
-						>Done</button>
-						<button className='btn btn-success' onClick={this.backClick}>Back</button>
+						>Hoàn thành</button>
+						<button className='btn btn-success' onClick={this.backClick}>Trở lại</button>
 					</div>
 				</div>
 
                 <div className='w-75 float-left'>
-                    <div className='module'>
-                        <div className='module-body'>
+                    <div className='card'>
+                        <div className='card-body'>
 							<div className='row'>
-								<span className='impress flex-v-center'>Product List: </span>
+								<span className='impress flex-v-center'>Danh sách sản phẩm: </span>
 								<table className='table'>
 									<thead>
 										<tr>
-											<th>Name</th>
-											<th>Color</th>
+											<th>Tên</th>
+											<th>Màu</th>
 											<th>Cuộn</th>
-											<th>M</th>
+											<th>Mét</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -305,11 +313,11 @@ class ShipmentInfo extends Component {
 				
 
 				<div className='float-right' style={{width: 20 + '%'}}>
-					<div className='module'>		
-						<div className='module-body'>
+					<div className='card'>		
+						<div className='card-body'>
 							<div className='row'>
 								<div className='w-50'>
-									<span className='impress'>BUYER:</span>
+									<span className='impress'>NGƯỜI MUA:</span>
 								</div>
 								<div className='w-50'>
 									<span onClick={()=>this.openModal()}
@@ -319,7 +327,7 @@ class ShipmentInfo extends Component {
 							</div>
 							<div className='row'>
 								<div className='w-50'>
-									<span className='impress'>CREATED AT:</span>
+									<span className='impress'>Tạo lúc:</span>
 								</div>
 								<div className='w-50'>
 									<span>{this.state.shipment.createdAt.slice(0,10)}</span><br/>
@@ -331,11 +339,11 @@ class ShipmentInfo extends Component {
 
 					{this.showShipper()}
 
-					<div className='module'>
-							<div className='module-body'>
+					<div className='card'>
+							<div className='card-body'>
 								<div className='row'>
 									<div className='w-50'>
-										<span className='impress'>LAST UPDATE:</span>
+										<span className='impress'>Cập nhật:</span>
 									</div>
 									<div className='w-50'>
 										<span>{this.state.shipment.updatedAt.slice(0,10)}</span><br/>
@@ -354,6 +362,7 @@ class ShipmentInfo extends Component {
 						onRequestClose={this.closeModal}
 						contentLabel="Select product"
 						ariaHideApp={false}
+						style={{content:{marginLeft:300+'px',marginTop: 50+'px'}}}
 					>
 					<UserInfo user={this.state.shipment.buyer} clickBack={this.closeModal}/>
 				</Modal>

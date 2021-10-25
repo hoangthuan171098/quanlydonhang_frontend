@@ -124,16 +124,38 @@ class ShipmentInfo extends Component {
     if (!this.state.loading && Cookie.get('token')) {
 		var total =0
       return (
-        <div className="module">
-            <div className="module-head">
-                <h2>Shipment <Status status={this.state.shipment.status} /> </h2>
-                <p>ID: {this.state.shipment.id}</p>
-            </div>
+        <div>
+            <div className="page-header">
+				<div className="page-block">
+					<div className="row align-items-center">
+						<div className="col-md-12 p-0">
+							<div className="page-header-title">
+								<h5>SHIPMENT INFO</h5>
+								ID: {this.state.shipment.id}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
-            <div className="module-body"  >
+            <div>
+				<div className='row'>
+					<div className='clear'>
+						<button onClick={this.deliverClick}
+							className={this.state.shipment.status === 'waiting to deliver'?
+								'btn btn-primary mr-4':'btn btn-primary mr-4 d-none'}
+						>Deliver</button>
+						
+						<button onClick={this.doneClick}
+							className={this.state.shipment.status === 'delivering'?
+								'btn btn-primary mr-4':'btn btn-primary mr-4 d-none'}
+						>Done</button>
+						<button className='btn btn-success' onClick={this.backClick}>Back</button>
+					</div>
+				</div>
                 <div className='w-75 float-left' style={{height: 50 + 'vh'}}>
-                    <div className='module' >
-                        <div className='module-body'>
+                    <div className='card' >
+                        <div className='card-body'>
 							<div className='row'>
 								<span className='impress flex-v-center'>Product List: </span>
 								<table className='table' >
@@ -167,8 +189,8 @@ class ShipmentInfo extends Component {
                     </div>
                 </div>
 
-				<div className='module float-right' style={{width: 20 + '%'}}>
-					<div className='module-body'>
+				<div className='card float-right' style={{width: 20 + '%'}}>
+					<div className='card-body'>
 						<div className='row'>
 							<div className='w-50'>
 								<span className='impress'>BUYER:</span>
@@ -189,8 +211,8 @@ class ShipmentInfo extends Component {
 					</div>
 				</div>
 
-				<div className='module float-right' style={{width: 20 + '%'}}>
-					<div className='module-body'>
+				<div className='card float-right' style={{width: 20 + '%'}}>
+					<div className='card-body'>
 						<div className='row'>
 							<div className='w-50'>
 								<span>Tổng tiền:</span>
@@ -205,19 +227,6 @@ class ShipmentInfo extends Component {
 						</div>
 					</div>
 				</div>
-				
-                <div className='clear'>
-					<button onClick={this.deliverClick}
-						className={this.state.shipment.status === 'waiting to deliver'?
-							'btn btn-primary mr-4':'btn btn-primary mr-4 d-none'}
-					>Deliver</button>
-					
-					<button onClick={this.doneClick}
-						className={this.state.shipment.status === 'delivering'?
-							'btn btn-primary mr-4':'btn btn-primary mr-4 d-none'}
-					>Done</button>
-					<button className='btn btn-success' onClick={this.backClick}>Back</button>
-                </div>
               </div>
         </div>
 		

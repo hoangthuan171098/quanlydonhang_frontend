@@ -296,73 +296,85 @@ class OrderUpdate extends Component {
             </table>
           </Modal>
 
-          <div className='module'>
-            <div className='module-head'>
-              <h2>Update Order</h2>
+          <div>
+            <div className="page-header">
+                <div className="page-block">
+                    <div className="row align-items-center">
+                        <div className="col-md-12 p-0">
+                            <div className="page-header-title">
+                                <h5>Chỉnh sửa đơn hàng</h5>
+                                ID: {this.props.match.params.id}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div className='module-body'>
-              <form>
-                <div className='row' style={{marginBottom:20+'px'}}>
-                  <div className='col-lg-12'>
-                    <label>Products list:</label>
-                    <button className='btn btn-info' onClick={e=>this.addProductClick(e)}>Add products</button>
-                    {showBuyingProduct()}
-                    <table className='table'>
-                      <thead>
-                        <tr>
-                          <th></th>
-                          <th>Name</th>
-                          <th>Color</th>
-                          <th>M</th>
-                          <th>Cuộn</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                      {this.state.order.productList.map((item,index)=>{
-                        return(
-                          <tr key={index}>
-                            <td style={{width: 200 + 'px'}}>
-                              <img className='img-preview' src={process.env.REACT_APP_BACKEND_URL + item.product.image.url}></img>
-                            </td>
-                            <td>{item.product.name}</td>
-                            <td>{item.color}</td>
-                            <td>
-                              {item.quantity_m? item.quantity_m:0}
-                            </td>
-                            <td>
-                              {item.quantity? item.quantity:0}
-                            </td>
-                            <td>
-                              <button className='hiden-btn' onClick={e=>this.removeProductClick(e,index)}>
-                                <i className='fa fa-trash icon' style={{color:'red'}}></i>
-                              </button>
-                            </td>
+            <div className='card'>
+              <div className='card-body'>
+                <form>
+                  <div className='row' style={{marginBottom:20+'px'}}>
+                    <div className='col-lg-12'>
+                      <label>Danh sách sản phẩm:</label>
+                      <button className='btn btn-info' onClick={e=>this.addProductClick(e)}>Thêm</button>
+                      {showBuyingProduct()}
+                      <table className='table'>
+                        <thead>
+                          <tr>
+                            <th></th>
+                            <th>Tên</th>
+                            <th>Màu</th>
+                            <th>Mét</th>
+                            <th>Cuộn</th>
+                            <th></th>
                           </tr>
-                        )
-                      })}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                
-                <div className='row'>
-                  <div className='col-lg-6'>
-                    <div className="form-group">
-                      <label> Note: </label>
-                      ​<textarea className='row-fluid' value={this.state.order.note}
-                        onChange={e=>this.setState({order:{...this.state.order,note:e.target.value}})}></textarea>
+                        </thead>
+                        <tbody>
+                        {this.state.order.productList.map((item,index)=>{
+                          return(
+                            <tr key={index}>
+                              <td style={{width: 200 + 'px'}}>
+                                <img className='img-preview' src={process.env.REACT_APP_BACKEND_URL + item.product.image.url}></img>
+                              </td>
+                              <td>{item.product.name}</td>
+                              <td>{item.color}</td>
+                              <td>
+                                {item.quantity_m? item.quantity_m:0}
+                              </td>
+                              <td>
+                                {item.quantity? item.quantity:0}
+                              </td>
+                              <td>
+                                <button className='hiden-btn' onClick={e=>this.removeProductClick(e,index)}>
+                                  <i className='fa fa-trash icon' style={{color:'red'}}></i>
+                                </button>
+                              </td>
+                            </tr>
+                          )
+                        })}
+                        </tbody>
+                      </table>
                     </div>
                   </div>
-                </div>
-
-                <div className='row'>
-                  <div className='col-2'>
-                    <button className='btn btn-primary' onClick={e=>this.updateOrderClick(e)}>Update</button>
+                  
+                  <div className='row'>
+                    <div className='col-lg-6'>
+                      <div className="form-group">
+                        <label> Ghi chú: </label>
+                        ​<textarea className='row-fluid' value={this.state.order.note}
+                          onChange={e=>this.setState({order:{...this.state.order,note:e.target.value}})}></textarea>
+                      </div>
+                    </div>
                   </div>
-                  <button className='btn btn-primary' onClick={e=>this.backClick(e)}>Back</button>
-                </div>
-              </form>
+
+                  <div className='row'>
+                    <div className='col-2'>
+                      <button className='btn btn-primary' onClick={e=>this.updateOrderClick(e)}>Cập Nhật</button>
+                    </div>
+                    <button className='btn btn-primary' onClick={e=>this.backClick(e)}>Trở về</button>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>

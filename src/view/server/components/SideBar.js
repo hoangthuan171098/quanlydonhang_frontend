@@ -7,63 +7,35 @@ class SideBar extends Component{
     render(){
         return(
             <div className="SideBar">
-                <ul className="widget widget-menu unstyled">
-                    <li className="active">
-                        <Link to='/admin'>
-                            <i className="menu-icon fa fa-tachometer"></i>
-                            Dashboard
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/admin/accounts">
-                            <i class="menu-icon fa fa-user"></i>
-                            Accounts
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to="/admin/products">
-                            <i class="menu-icon fa fa-cube"></i>
-                            Products
-                        </Link>
-                    </li>
-                    
-                    <li>
-                        <Link to="/admin/orders">
-                            <i class="menu-icon fa fa-server"></i>
-                            Orders
-                        </Link>
-                    </li>
-                </ul>
-
-                <ul class="widget widget-menu unstyled">
-                    <li>
-                        <a class="collapsed" data-toggle="collapse" href="#togglePages">
-                            <i class="menu-icon fa fa-cog"></i>
-                            <i class="icon-chevron-down pull-right"></i><i class="icon-chevron-up pull-right"></i>
-                            More Pages
-                        </a>
-                        <ul id="togglePages" class="collapse unstyled">
-                            <li>
-                                <a href="other-login.html">
-                                    <i class="icon-inbox"></i>
-                                    Login
-                                </a>
-                            </li>
-                            <li>
-                                <a href="other-user-profile.html">
-                                    <i class="icon-inbox"></i>
-                                    Profile
-                                </a>
-                            </li>
-                            <li>
-                                <a href="other-user-listing.html">
-                                    <i class="icon-inbox"></i>
-                                    All Users
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+                <nav class="pcoded-navbar menupos-fixed menu-light brand-blue ">
+                    <div class="navbar-wrapper ">
+                        <div class="navbar-brand header-logo">
+                            <a href="index.html" class="b-brand">
+                                <img src="/assets/images/logo.svg" alt="" class="logo images"/>
+                                <img src="/assets/images/logo-icon.svg" alt="" class="logo-thumb images"/>
+                            </a>
+                            <a class="mobile-menu" id="mobile-collapse" href="#!">
+                                {/* <span></span> */}
+                            </a>
+                        </div>
+                        <div class="navbar-content scroll-div">
+                            <ul class="nav pcoded-inner-navbar">
+                                <li class="nav-item pcoded-menu-caption">
+                                    <label>ADMIN</label>
+                                </li>
+                                <li class="nav-item">
+                                    <Link to="/admin/accounts" class="nav-link"><span class="pcoded-micon"><i class="fa fa-navicon"></i></span><span class="pcoded-mtext">TÀI KHOẢN</span></Link>
+                                </li>
+                                <li class="nav-item">
+                                    <Link to="/admin/orders" class="nav-link"><span class="pcoded-micon"><i class="fa fa-truck"></i></span><span class="pcoded-mtext">ĐƠN HÀNG</span></Link>
+                                </li>
+                                <li class="nav-item">
+                                    <Link to="/admin/products" class="nav-link"><span class="pcoded-micon"><i class="fa fa-cubes"></i></span><span class="pcoded-mtext">SẢN PHẨM</span></Link>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
             </div>
         );
     }

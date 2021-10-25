@@ -15,7 +15,7 @@ export default class Listorder extends Component {
   }
 
   async componentDidMount() {
-    if (Cookie.get("role") === "Public") {
+    if (Cookie.get("role") === "Public" || Cookie.get("role") === "Customer") {
       let response = await fetch(
         process.env.REACT_APP_BACKEND_URL + "/orders",
         {

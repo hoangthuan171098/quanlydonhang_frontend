@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Cookie from "js-cookie"
 import axios from "axios"
-import './style/products.scss'
+// import './style/products.scss'
 
 
 class ProductList extends Component {

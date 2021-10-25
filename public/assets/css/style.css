@@ -58,7 +58,6 @@ ul,
 li,
 fieldset,
 form,
-select,
 label,
 legend,
 table,
@@ -400,13 +399,11 @@ button,
 /*form element */
 
 input[type="text"],input[type="email"],input[type="number"],input[type="password"],
-input[type="tel"],input[type="date"],textarea {
+input[type="tel"],input[type="date"],textarea,select {
 	background: #fff;
 	padding: 8px 15px;
 	border: 1px solid #cccccc;
 	font-size: 14px;
-	-webkit-border-radius: 10px;
-	border-radius: 10px;
 }
 
 input[type="text"]:focus,

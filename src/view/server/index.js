@@ -7,10 +7,9 @@ import AdminProduct from './product'
 import AdminOrder from './order'
 
 import SideBar from './components/SideBar'
+import Header from '../manager/components/Header'
 
 import './style/index.scss'
-import './style/bootstrap.min.scss'
-import './style/theme.scss'
 
 class Server extends Component{
     render(){
@@ -23,6 +22,7 @@ class Server extends Component{
         return(
             <div className='Server'>
                 <SideBar/>
+                <Header/>
                 <div className='content'>
                     <Switch>
                         <Route exact path='/admin' component={DashBoard} />

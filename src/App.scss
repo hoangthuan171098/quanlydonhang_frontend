@@ -519,6 +519,7 @@
   display: flex;
   align-items: center;
   margin-right: 10px;
+}
 
 .header__search-checkbox:checked ~ .header__search{
   display: flex;
@@ -1414,5 +1415,4 @@ i.home-product-item__like-icon-fill {
 .active{
   background-color: #FF6633;
   
-}
 }

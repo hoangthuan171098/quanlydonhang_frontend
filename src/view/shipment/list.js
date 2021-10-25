@@ -37,20 +37,28 @@ class ShipmentList extends Component{
     render(){
         return(
             <div className='ShipmentManager'>
-                <div className='module'>
-                    <div className='module-head'>
-                        <h2>Shipments</h2>
+                <div className="page-header">
+                    <div className="page-block">
+                        <div className="row align-items-center">
+                            <div className="col-md-12 p-0">
+                                <div className="page-header-title">
+                                    <h5>SHIPMENTS</h5>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className='module-option'>
-                        <select onChange={(e)=>this.setState({filter:{...this.state.filter,status: e.target.value}})}>
-                            <option value='all'>All</option>
-                            <option value='waiting to deliver'>Waiting to deliver</option>
-                            <option value='delivering'>Delivering</option>
-                            <option value='delivered'>Delivered</option>
-                            <option value='cancled'>Cancled</option>
-                        </select>
-                    </div>
-                    <div className='module-body'>
+                </div>
+                <div className='card'>
+                    <div className='card-body'>
+                        <div>
+                            <select onChange={(e)=>this.setState({filter:{...this.state.filter,status: e.target.value}})}>
+                                <option value='all'>All</option>
+                                <option value='waiting to deliver'>Waiting to deliver</option>
+                                <option value='delivering'>Delivering</option>
+                                <option value='delivered'>Delivered</option>
+                                <option value='cancled'>Cancled</option>
+                            </select>
+                        </div>
                         <table className="table">
                             <thead>
                             <tr>

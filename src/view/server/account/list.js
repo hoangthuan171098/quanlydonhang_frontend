@@ -58,7 +58,17 @@ class AccountList extends Component {
 
         return(
             <div className="DataList">
-                <h2 className="DataList-title">Accounts ({this.state.users.length})</h2>
+                <div className="page-header">
+                    <div className="page-block">
+                        <div className="row align-items-center">
+                            <div className="col-md-12 p-0">
+                                <div className="page-header-title">
+                                    <h5>TÀI KHOẢN ({this.state.users.length})</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <Link to='/admin/accounts/create'><button className="btn btn-primary"> Create A New Account</button></Link>
                 <div className="DataList-container">
                     

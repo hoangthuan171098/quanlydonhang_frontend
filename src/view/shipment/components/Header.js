@@ -158,8 +158,6 @@ export default withRouter(connect(mapStateToProps,mapDispatchToProps)(class Head
 									<ul className="pro-body">
 										<li><Link to="/shipment" className="dropdown-item"><i className="feather icon-settings" /> Shipment</Link></li>
 										<li><Link to="/profile" className="dropdown-item"><i className="feather icon-user" /> Profile</Link></li>
-										<li><Link to="#" className="dropdown-item"><i className="feather icon-mail" /> My Messages</Link></li>
-										<li><Link to="#" className="dropdown-item"><i className="feather icon-lock" /> Lock Screen</Link></li>
 									</ul>
 								</div>
 							</div>

@@ -4,19 +4,19 @@ export default class Shipment extends Component{
     render(){
         return(
 			<div className='w-75 float-left Shipment-show'>
-				<div className='module'>
-					<div className='module-body'>
+				<div className='card'>
+					<div className='card-body'>
 						<div className='row'>
-							<span className='impress w-100'>Shipment #{this.props.shipIndex}</span><br/>
+							<span className='impress w-100'>Giao hàng #{this.props.shipIndex}</span><br/>
 							<span> ID: {this.props.shipment.id} -&ensp;</span>
 							<span>  {this.props.shipment.status}</span>
 							<table className='table'>
 								<thead>
 									<tr>
-										<th>Name</th>
-										<th>Color</th>
+										<th>Tên</th>
+										<th>Màu</th>
 										<th>Cuộn</th>
-										<th>M</th>
+										<th>Mét</th>
 									</tr>
 								</thead>
 								<tbody>

@@ -154,6 +154,10 @@ class Topbar extends Component {
     );
   };
   render() {
+    if(Cookie.get("role") === "Manager" || Cookie.get("role") === "Admin" || Cookie.get("role") === "Shipper"  ){
+      return(<></>)
+    }
+
     var lenght = 0;
     return (
       <header className="header">
@@ -162,18 +166,6 @@ class Topbar extends Component {
             <ul className="header__navbar-list">
               <li className="header__navbar-item header__navbar-item--has-qr header__navbar-item--separate">
                 Cửa hàng shopping SSS+
-                {/* Header QR Code */}
-                {/* <div className="header__qr">
-                    <img src="./assets/img/qr_code.png" alt="QR Code" className="header__qr-img" />
-                    <div className="header__qr-apps">
-                      <a href className="header__qr-link">
-                        <img src="./assets/img/google_play.png" alt="Google Play" className="header__qr-download-img" />
-                      </a>
-                      <a href className="header__qr-link">
-                        <img src="./assets/img/appstore.png" alt="App Store" className="header__qr-download-img" />
-                      </a>
-                    </div>
-                  </div> */}
               </li>
               <li className="header__navbar-item">
                 <span className="header__navbar-title--no-pointer">

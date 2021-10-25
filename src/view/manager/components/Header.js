@@ -36,8 +36,8 @@ export default withRouter(connect(mapStateToProps,mapDispatchToProps)(class Head
 				<div className="m-header">
 					<a className="mobile-menu" id="mobile-collapse1" href="#!"><span /></a>
 					<Link to="/manager" className="b-brand">
-						<img src="../assets/images/logo.svg" alt="" className="logo images" />
-						<img src="../assets/images/logo-icon.svg" alt="" className="logo-thumb images" />
+						<img src="/assets/images/logo.svg" alt="" className="logo images" />
+						<img src="/assets/images/logo-icon.svg" alt="" className="logo-thumb images" />
 					</Link>
 				</div>
 				<a className="mobile-menu" id="mobile-header" href="#!">
@@ -80,7 +80,7 @@ export default withRouter(connect(mapStateToProps,mapDispatchToProps)(class Head
 										</li>
 										<li className="notification">
 											<div className="media">
-												<img className="img-radius" src="../assets/images/user/avatar-1.jpg" alt="Generic placeholder image" />
+												<img className="img-radius" src="/assets/images/user/avatar-1.jpg" alt="Generic placeholder image" />
 												<div className="media-body">
 													<p><strong>John Doe</strong><span className="n-time text-muted"><i className="icon feather icon-clock m-r-10" />5 min</span></p>
 													<p>New ticket Added</p>
@@ -92,7 +92,7 @@ export default withRouter(connect(mapStateToProps,mapDispatchToProps)(class Head
 										</li>
 										<li className="notification">
 											<div className="media">
-												<img className="img-radius" src="../assets/images/user/avatar-2.jpg" alt="Generic placeholder image" />
+												<img className="img-radius" src="/assets/images/user/avatar-2.jpg" alt="Generic placeholder image" />
 												<div className="media-body">
 													<p><strong>Joseph William</strong><span className="n-time text-muted"><i className="icon feather icon-clock m-r-10" />10 min</span></p>
 													<p>Prchace New Theme and make payment</p>
@@ -101,7 +101,7 @@ export default withRouter(connect(mapStateToProps,mapDispatchToProps)(class Head
 										</li>
 										<li className="notification">
 											<div className="media">
-												<img className="img-radius" src="../assets/images/user/avatar-3.jpg" alt="Generic placeholder image" />
+												<img className="img-radius" src="/assets/images/user/avatar-3.jpg" alt="Generic placeholder image" />
 												<div className="media-body">
 													<p><strong>Sara Soudein</strong><span className="n-time text-muted"><i className="icon feather icon-clock m-r-10" />12 min</span></p>
 													<p>currently login</p>
@@ -110,7 +110,7 @@ export default withRouter(connect(mapStateToProps,mapDispatchToProps)(class Head
 										</li>
 										<li className="notification">
 											<div className="media">
-												<img className="img-radius" src="../assets/images/user/avatar-1.jpg" alt="Generic placeholder image" />
+												<img className="img-radius" src="/assets/images/user/avatar-1.jpg" alt="Generic placeholder image" />
 												<div className="media-body">
 													<p><strong>Joseph William</strong><span className="n-time text-muted"><i className="icon feather icon-clock m-r-10" />30 min</span></p>
 													<p>Prchace New Theme and make payment</p>
@@ -119,7 +119,7 @@ export default withRouter(connect(mapStateToProps,mapDispatchToProps)(class Head
 										</li>
 										<li className="notification">
 											<div className="media">
-												<img className="img-radius" src="../assets/images/user/avatar-3.jpg" alt="Generic placeholder image" />
+												<img className="img-radius" src="/assets/images/user/avatar-3.jpg" alt="Generic placeholder image" />
 												<div className="media-body">
 													<p><strong>Sara Soudein</strong><span className="n-time text-muted"><i className="icon feather icon-clock m-r-10" />1 hour</span></p>
 													<p>currently login</p>
@@ -128,7 +128,7 @@ export default withRouter(connect(mapStateToProps,mapDispatchToProps)(class Head
 										</li>
 										<li className="notification">
 											<div className="media">
-												<img className="img-radius" src="../assets/images/user/avatar-1.jpg" alt="Generic placeholder image" />
+												<img className="img-radius" src="/assets/images/user/avatar-1.jpg" alt="Generic placeholder image" />
 												<div className="media-body">
 													<p><strong>Joseph William</strong><span className="n-time text-muted"><i className="icon feather icon-clock m-r-10" />2 hour</span></p>
 													<p>Prchace New Theme and make payment</p>
@@ -149,7 +149,7 @@ export default withRouter(connect(mapStateToProps,mapDispatchToProps)(class Head
 								</a>
 								<div className="dropdown-menu dropdown-menu-right profile-notification">
 									<div className="pro-head">
-										<img src="../assets/images/user/avatar-1.jpg" className="img-radius" alt="User-Profile-Image" />
+										<img src="/assets/images/user/avatar-1.jpg" className="img-radius" alt="User-Profile-Image" />
 										<span>John Doe</span>
 										<a href="auth-signin.html" className="dud-logout" onClick={e=>this.logoutHandle(e)}>
 											<i className="feather icon-log-out" />

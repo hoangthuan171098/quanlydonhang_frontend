@@ -157,16 +157,16 @@ class OrderInfo extends Component {
 		let title
 		if(!this.state.order.remainProductList){
 			productList = this.state.order.productList
-			title = "Product list"
+			title = "Danh sách sản phẩm"
 		}
 		else{
 			if(this.state.order.remainProductList.length === 0){
 				productList = this.state.order.productList
-				title = "Product list"
+				title = "Danh sách sản phẩm"
 			}
 			else{
 				productList = this.state.order.remainProductList
-				title = "Remain Product"
+				title = "sản phẩm chưa giao"
 			}
 		}
 		return(
@@ -175,10 +175,10 @@ class OrderInfo extends Component {
 				<table className='table'>
 					<thead>
 						<tr>
-							<th>Name</th>
-							<th>Color</th>
+							<th>Tên</th>
+							<th>Màu</th>
 							<th>Cuộn</th>
-							<th>M</th>
+							<th>Mét</th>
 							<th style={{width:250+'px'}} className={this.state.isPartial? '':'d-none'}></th>
 						</tr>
 					</thead>
@@ -195,13 +195,13 @@ class OrderInfo extends Component {
 								{item.quantity_m? item.quantity_m:'0'}
 							</td>
 							<td className={this.state.isPartial? '':'d-none'}>
-								Roll:
+								CUỘN:
 								<input type='number' className='short-input mr-4'
 									min='0'
 									max={item.quantity? item.quantity.toString():'0'}
 									onChange={e=>{this.changePackQuantity(e,index)}}
 								></input>
-								M:
+								Mét:
 								<input type='number' className='short-input'
 									min='0'
 									max={item.quantity_m? item.quantity_m.toString():'0'}
@@ -223,7 +223,7 @@ class OrderInfo extends Component {
 		if(this.state.order.note && this.state.order.note!==""){
 			return(
 				<div className='row'>
-					<span className='impress'>Note : </span>
+					<span className='impress'>Ghi chú : </span>
 					{this.state.order.note}
 				</div>
 			)
@@ -245,11 +245,11 @@ class OrderInfo extends Component {
 	showShipments = () =>{
 		if(this.state.order.shipments.length !== 0){
 			return(
-				<div className='module'>
-					<div className='module-body'>
+				<div className='card'>
+					<div className='card-body'>
 						<div className='row'>
 							<div className='w-100'>
-								<span className='impress'>SHIPMENT:</span>
+								<span className='impress'>Giao hàng:</span>
 							</div>
 							{this.state.order.shipments.map((shipment,index)=>{
 								return(
@@ -270,8 +270,8 @@ class OrderInfo extends Component {
 		if(status === 'waiting'){
 			return(
 				<div className='row'>
-					<button onClick={this.confirmClick} className='btn btn-primary mr-4'>Confirm</button>
-					<button onClick={this.cancleClick} className='btn btn-danger mr-4'>Cancle</button>
+					<button onClick={this.confirmClick} className='btn btn-primary mr-4'>Xác nhận</button>
+					<button onClick={this.cancleClick} className='btn btn-danger mr-4'>Hủy</button>
 				</div>
 			)
 		}
@@ -280,13 +280,13 @@ class OrderInfo extends Component {
 				<div className='row'>
 					<button onClick={this.packAllClick}
 						className={!this.state.isPartial? 'btn btn-primary mr-4':'d-none'}
-					>Pack All</button>
+					>Đóng gói hết</button>
 					<button onClick={this.showPackClick}
 						className={!this.state.isPartial? 'btn btn-primary mr-4':'d-none' }
-					>Partial Pack</button>
+					>Chọn sản phẩm</button>
 					<button onClick={this.submitPackClick}
 						className={this.state.isPartial? 'btn btn-primary mr-4':'d-none'}
-					>Submit</button>
+					>Xác nhận</button>
 				</div>
 			)
 		}
@@ -295,10 +295,10 @@ class OrderInfo extends Component {
 				<div className='row'>
 					<button onClick={this.showPackClick}
 						className={!this.state.isPartial? 'btn btn-primary mr-4':'d-none' }
-					>Partial Pack</button>
+					>Chọn sản phẩm</button>
 					<button onClick={this.submitPackClick}
 						className={this.state.isPartial? 'btn btn-primary mr-4':'d-none'}
-					>Submit</button>
+					>Xác nhận</button>
 				</div>
 			)
 		}
@@ -308,10 +308,10 @@ class OrderInfo extends Component {
 					<div className='row'>
 						<button onClick={this.showPackClick}
 							className={!this.state.isPartial? 'btn btn-primary mr-4':'d-none' }
-						>Partial Pack</button>
+						>Chọn sản phẩm </button>
 						<button onClick={this.submitPackClick}
 							className={this.state.isPartial? 'btn btn-primary mr-4':'d-none'}
-						>Submit</button>
+						>Xác nhận</button>
 					</div>
 				)
 			}
@@ -329,25 +329,34 @@ class OrderInfo extends Component {
  	render() {
     if (!this.state.loading && Cookie.get('token')) {
     	return (
-			<div className="module">
-				<div className="module-head">
-					<h2>Order detail 
-						<Status status={this.state.order.status} />
-						<span className='ml-4 text-primary fa fa-edit'
-							onClick={e=>this.updateClick(e)}></span>
-					</h2>
-					<p>ID: {this.state.order.id}</p>
-				</div>
+			<div>
+				<div className="page-header">
+                    <div className="page-block">
+                        <div className="row align-items-center">
+                            <div className="col-md-12 p-0">
+                                <div className="page-header-title">
+                                    <h5>Thông tin đơn hàng 
+										<i className='fa fa-edit' style={{cursor:'pointer',color:'blue'}}
+										onClick={()=>{this.props.history.push("/manager/orders/"+this.state.order.id+"/update")}}
+										></i>
+									</h5>
+									ID: {this.state.order.id + ' '}
+									<Status status={this.state.order.status} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 				
-				<div className="module-body">
+				<div className="card-body">
 					
 					<div className='w-100 d-flex flex-row-reverse' style={{marginBottom:10+'px'}}>
 						{this.showButton()}
 					</div>
 
 					<div className='w-75 float-left'>
-						<div className='module'>
-							<div className='module-body'>
+						<div className='card'>
+							<div className='card-body'>
 								{this.showProductList()}
 								{this.showNote()}
 							</div>
@@ -355,11 +364,11 @@ class OrderInfo extends Component {
 					</div>
 
 					<div className='float-right' style={{width: 20 + '%'}}>
-						<div className='module'>
-							<div className='module-body'>
+						<div className='card'>
+							<div className='card-body'>
 								<div className='row'>
 									<div className='w-50'>
-										<span className='impress'>BUYER:</span>
+										<span className='impress'>Người Mua:</span>
 									</div>
 									<div className='w-50'>
 										<span onClick={()=>this.openModal()}
@@ -369,7 +378,7 @@ class OrderInfo extends Component {
 								</div>
 								<div className='row'>
 									<div className='w-50'>
-										<span className='impress'>CREATED AT:</span>
+										<span className='impress'>Tạo lúc:</span>
 									</div>
 									<div className='w-50'>
 										<span>{this.state.order.createdAt.slice(0,10)}</span><br/>
@@ -381,11 +390,11 @@ class OrderInfo extends Component {
 						
 						{this.showShipments()}
 
-						<div className='module'>
-							<div className='module-body' >
+						<div className='card'>
+							<div className='card-body' >
 								<div className='row'>
 									<div className='w-50'>
-										<span className='impress'>LAST UPDATE:</span>
+										<span className='impress'>Cập nhật:</span>
 									</div>
 									<div className='w-50'>
 										<span>{this.state.order.updatedAt.slice(0,10)}</span><br/>
@@ -405,6 +414,7 @@ class OrderInfo extends Component {
 					onRequestClose={this.closeModal}
 					contentLabel="Select product"
 					ariaHideApp={false}
+					style={{content:{marginLeft:300+'px',marginTop: 50+'px'}}}
 				>
 					<UserInfo user={this.state.order.buyer} clickBack={this.closeModal}/>
 				</Modal>

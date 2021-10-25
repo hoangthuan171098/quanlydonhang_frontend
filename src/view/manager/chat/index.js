@@ -122,18 +122,21 @@ export default class ManagerChat extends React.Component{
   render(){
 		return(
 			<div className="container ManagerChat">
-				<div className="page-title">
-					<div className="row gutters">
-						<div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
-							<h5 className="title">Chat</h5>
-						</div>
-						<div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12"> </div>
-					</div>
-				</div>
+				<div className="page-header">
+                    <div className="page-block">
+                        <div className="row align-items-center">
+                            <div className="col-md-12 p-0">
+                                <div className="page-header-title">
+                                    <h5>CHAT</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 				<div className="content-wrapper">
 					<div className="row gutters">
 						<div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-							<div className="card m-0">
+							<div className="card"><div className='card-body'>
 								<div className="row no-gutters">
 									<div className="col-xl-4 col-lg-4 col-md-4 col-sm-3 col-3">
 										<div className="users-container">
@@ -228,7 +231,7 @@ export default class ManagerChat extends React.Component{
 								</div>
 
 								</div>
-							</div>
+							</div></div>
 							</div>
 						</div>
 					</div>

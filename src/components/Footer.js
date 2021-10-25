@@ -1,8 +1,12 @@
 import React, { Component } from "react";
+import Cookie from 'js-cookie';
 
 export default class Footer extends Component {
   
   render() {
+    if(Cookie.get("role") === "Manager" || Cookie.get("role") === "Admin" || Cookie.get("role") === "Shipper"  ){
+      return(<></>)
+    }
     return (
       <footer className="footer" style={{marginTop:100 + 'px'}}>
         <div className="grid wide footer__content">

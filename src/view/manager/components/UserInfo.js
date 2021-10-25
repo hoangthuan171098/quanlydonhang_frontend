@@ -84,7 +84,7 @@ class AccountInfo extends Component {
 		if (!this.state.loading && Cookie.get('token')) {
 			return (
 				<div className="container">
-					<div className="container col-lg-10">
+					<div className="container col-lg-8">
                         <table className="table td-none-border">
                             <tbody>
                                 <tr>  

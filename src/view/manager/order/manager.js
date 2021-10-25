@@ -37,37 +37,49 @@ class OrderManager extends Component{
     render(){
         return(
             <div className='OrderManager'>
-                <div className='module'>
-                    <div className='module-head'>
-                        <h2>Orders</h2>
+                <div className="page-header">
+                    <div className="page-block">
+                        <div className="row align-items-center">
+                            <div className="col-md-12 p-0">
+                                <div className="page-header-title">
+                                    <h5>ĐƠN HÀNG</h5>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className='module-option'>
-                        <select onChange={(e)=>this.setState({filter:{...this.state.filter,status: e.target.value}})}>
-                            <option value='all'>All</option>
-                            <option value='waiting'>Waiting</option>
-                            <option value='processing'>Processing</option>
-                            <option value='waiting to deliver'>Waiting to deliver</option>
-                            <option value='delivering'>Delivering</option>
-                            <option value='delivered'>Delivered</option>
-                            <option value='partial delivering'>Partial delivering</option>
-                            <option value='partial delivered'>partial delivered</option>
-                            <option value='done'>Done</option>
-                            <option value='cancled'>Cancled</option>
-                        </select>
-                    </div>
-                    <div className='module-body'>
+                </div>
+
+                <div className='card'>
+                    <div className='card-body'>
+                        <div className='module-option'>
+                            <select onChange={(e)=>this.setState({filter:{...this.state.filter,status: e.target.value}})}>
+                                <option value='all'>Tất cả</option>
+                                <option value='waiting'>Đang chờ</option>
+                                <option value='processing'>Đang xử lý</option>
+                                <option value='waiting to deliver'>Đợi giao hàng</option>
+                                <option value='delivering'>Đang giao</option>
+                                <option value='delivered'>Đã giao</option>
+                                <option value='partial delivering'>Đang giao một phần</option>
+                                <option value='partial delivered'>Đã giao một phần</option>
+                                <option value='done'>Hoàn tất</option>
+                                <option value='cancled'>Hủy</option>
+                            </select>
+                        </div>
+
                         <table className="table list-table">
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Buyer</th>
-                                    <th>Status</th>
-                                    <th>productList</th>
+                                    <th>Người mua</th>
+                                    <th>Trạng thái</th>
+                                    <th>Danh sách</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {this.state.orders.reverse().map((order, index) => {
+                                {this.state.orders
+                                .sort((a,b)=>(new Date(b.updatedAt.slice(0,19)+'Z')) - (new Date(a.updatedAt.slice(0,19)+'Z')))
+                                .map((order, index) => {
                                 return (
                                     <tr key={index}>
                                         <td onClick={()=>this.infoClick(order.id)}>{order.id}</td>

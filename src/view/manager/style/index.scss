@@ -1,50 +1,5 @@
 .Manager{
     background-color: #eee;
-    .SideBar{
-        padding: 10px 5px 10px 5px;
-        position: absolute;
-        min-height: 600px;  
-        overflow-y: auto;
-        width: 240px;
-        box-sizing: border-box;
-        .Group-name{
-            display: flex;
-            -webkit-box-pack: justify;
-            justify-content: space-between;
-            padding: 10px 16px 0px 20px;
-            margin-bottom: 9px;
-            font-size: 20px;
-            color: rgb(91, 98, 111);
-            text-transform: uppercase;
-            max-height: 26px;
-            box-sizing: border-box;
-            font-family: Lato;
-            a{
-                color: inherit;
-            }
-            a:hover{
-                text-decoration: none;
-            }
-        }
-        .Group-items{
-            max-height: 180px;
-            margin-bottom: 19px;
-            overflow: auto;
-            box-sizing: border-box;
-            font-family: Lato;
-            font-size: 15px;
-            a{
-                color: rgba(255, 255, 255, 0.568);
-                padding:7px 0 2px 25px;
-                display: block;
-            }
-            a:hover{
-                background-color: rgb(28,36,49);
-                text-decoration: none;
-                border-left: solid 5px blue;
-            }
-        }
-    }
 
     .flex-v-center{
         display: flex;
@@ -59,7 +14,8 @@
 
     .content{
         min-height:550px;
-        margin-left: 240px;
+        margin-left: 265px;
+        margin-top: 60px;
         padding: 10px;
     }
 
@@ -72,10 +28,6 @@
     }
     span{
         min-height: 30px;
-    }
-    .icon{
-        color: #27b3d2;
-        font-size: 20px;
     }
     .hiden-btn{
         background-color: inherit;
@@ -164,7 +116,7 @@
     }
     
     .chat-search-box .input-group .input-group-btn .btn i {
-        font-size: 1.2rem;
+        // font-size: 1.2rem;
         line-height: 100%;
         vertical-align: middle;
     }
@@ -278,13 +230,13 @@
     
     .users .person p.name-time {
         font-weight: 600;
-        font-size: .85rem;
+        // font-size: .85rem;
         display: inline-block;
     }
     
     .users .person p.name-time .time {
         font-weight: 400;
-        font-size: .7rem;
+        // font-size: .7rem;
         text-align: right;
         color: #8796af;
     }
@@ -356,7 +308,7 @@
     }
     
     .chat-container li .chat-name {
-        font-size: .75rem;
+        // font-size: .75rem;
         color: #999999;
         text-align: center;
     }
@@ -396,7 +348,7 @@
     .chat-container li .chat-hour {
         padding: 0;
         margin-bottom: 10px;
-        font-size: .75rem;
+        // font-size: .75rem;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -450,7 +402,7 @@
             margin-right: 5px;
         }
         .chat-container li .chat-text {
-            font-size: .8rem;
+            // font-size: .8rem;
         }
     }
     
@@ -471,7 +423,6 @@
     }
     .card {
         border: 0;
-        background: #f4f5fb;
         -webkit-border-radius: 2px;
         -moz-border-radius: 2px;
         border-radius: 2px;

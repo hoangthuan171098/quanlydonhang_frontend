@@ -5,12 +5,13 @@ import Cookie from 'js-cookie'
 import ManagerOrder from './order'
 import ManagerShipment from './shipment'
 import ManagerChat from './chat'
+import ManagerWarehouse from './warehouse'
 
 import SideBar from './components/SideBar'
+import Header from './components/Header'
 
 import './style/index.scss'
-import './style/bootstrap.min.scss'
-import './style/theme.scss'
+import './style/style.scss'
 
 
 class Manager extends Component{
@@ -24,11 +25,13 @@ class Manager extends Component{
         return(
             <div className='Manager'>
                 <SideBar/>
+                <Header/>
                 <div className='content'>
                     <Switch>
                         <Route exact path='/manager' component={ManagerOrder} />
                         <Route path='/manager/orders' component={ManagerOrder} />
                         <Route path='/manager/shipments' component={ManagerShipment} />
+                        <Route path='/manager/warehouse' component={ManagerWarehouse} />
                         <Route path='/manager/chat' component={ManagerChat} />
                     </Switch>
                 </div>

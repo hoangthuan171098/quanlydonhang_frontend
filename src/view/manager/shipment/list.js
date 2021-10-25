@@ -37,20 +37,27 @@ class ShipmentList extends Component{
     render(){
         return(
             <div className='ShipmentManager'>
-                <div className='module'>
-                    <div className='module-head'>
-                        <h2>Shipments</h2>
+                <div className="page-header">
+                    <div className="page-block">
+                        <div className="row align-items-center">
+                            <div className="col-md-12 p-0">
+                                <div className="page-header-title">
+                                    <h5>GIAO HÀNG</h5>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div className='module-option'>
+                </div>
+
+                <div className='card'>
+                    <div className='card-body'>
                         <select onChange={(e)=>this.setState({filter:{...this.state.filter,status: e.target.value}})}>
-                            <option value='all'>All</option>
-                            <option value='waiting to deliver'>Waiting to deliver</option>
-                            <option value='delivering'>Delivering</option>
-                            <option value='delivered'>Delivered</option>
-                            <option value='cancled'>Cancled</option>
+                            <option value='all'>Tất cả</option>
+                            <option value='waiting to deliver'>Chờ giao</option>
+                            <option value='delivering'>Đang giao</option>
+                            <option value='delivered'>Đã giao</option>
+                            <option value='cancled'>Hủy</option>
                         </select>
-                    </div>
-                    <div className='module-body'>
                         <table className="table list-table">
                             <thead>
                             <tr>

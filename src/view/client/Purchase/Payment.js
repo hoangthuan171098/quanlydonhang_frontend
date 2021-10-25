@@ -133,28 +133,6 @@ class Payment extends Component {
           console.log("FAILED...", error);
         }
       );
-    // axios
-    //   .post(
-    //     process.env.REACT_APP_BACKEND_URL + "/orders",
-    //     {
-    //       status: "waiting",
-    //       productList: this.state.productList,
-    //       note: this.state.note,
-    //       buyer: Cookie.get("id"),
-    //     },
-    //     {
-    //       headers: {
-    //         Authorization: "bearer " + Cookie.get("token"),
-    //       },
-    //     }
-    //   )
-    //   .then((response) => {
-    //     alert("Da dat hang thanh cong");
-       
-    //     this.props.location.push("/products");
-    //   })
-    //   .catch((err) => {});
-
     
     axios
         .post(process.env.REACT_APP_BACKEND_URL + '/transections',{
@@ -164,7 +142,6 @@ class Payment extends Component {
           buyer : Cookie.get("id"),
           note:this.state.note,
           order : this.state.orders[this.state.orders.length - 1].id
-
         },{
           headers:{
             'Authorization':'bearer '+ Cookie.get('token'),
